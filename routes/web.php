@@ -52,8 +52,12 @@ Route::get('/print_pdf/{id}', [CustomerController::class, 'print_pdf']);
 // 	$detail->save();
 // });
 
+Route::get('orderhistory', [OrderhisController::class, 'index'])->name('orderhistory');
+Route::get('orderhistory/records', [OrderhisController::class, 'records'])->name('orderhistory/records');
+
 Route::get('/cartform/{id}', [App\Http\Controllers\CustomerController::class, 'custdetail'])->name('custdetail');
 Route::get('/address/{id}', [App\Http\Controllers\CustomerController::class, 'address'])->name('address');
+Route::get('/payment/{id}', [App\Http\Controllers\CustomerController::class, 'payment'])->name('payment');
 Route::post('/cartform', [App\Http\Controllers\CustomerController::class, 'saveCartDetails'])->name('saveCartDetails');
 Route::get('/search', [App\Http\Controllers\CustomerController::class, 'searchdata'])->name('searchdata');
 
@@ -62,8 +66,12 @@ Route::get('/search', [App\Http\Controllers\CustomerController::class, 'searchda
 
 Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('cust');
 Route::get('/productshow', [App\Http\Controllers\CustomerController::class, 'productshow']);
-Route::get('/stripe/{totalprice}', [App\Http\Controllers\CustomerController::class, 'stripe'])->name('stripe');
-Route::post('/stripe/{totalprice}', [App\Http\Controllers\CustomerController::class, 'stripePost'])->name('stripe.post');
+Route::get('/stripe/{token}', [App\Http\Controllers\CustomerController::class, 'stripe'])
+    ->name('stripe')
+    ->middleware('auth');
+Route::post('/stripe/post', [App\Http\Controllers\CustomerController::class, 'stripePost'])
+    ->name('stripe.post')
+    ->middleware('auth');
 
 
 
@@ -78,7 +86,7 @@ Route::get('/remove_cart/{id}', [App\Http\Controllers\CustomerController::class,
 Route::get('/addMultipleRow', [App\Http\Controllers\ProductController::class, 'test'])->name('testing-page');
 
 
-Route::post('/add_cart/{id}', [App\Http\Controllers\CustomerController::class, 'add_cart']);
+Route::post('/add_cart/{id}', [App\Http\Controllers\CustomerController::class, 'add_cart'])->name('add_cart');	
 
 
 Route::get('invoice', [InvoiceController::class, 'Invoice']);

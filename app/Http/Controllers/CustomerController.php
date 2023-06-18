@@ -117,7 +117,7 @@ class CustomerController extends Controller
     {
         $id = $request->id; // Get the user ID
         $cid = $request->cid; // Get the cid
-        $totalprice = $request->totalprice;
+        $totalPrice = $request->totalprice;
 
         // Clear the session data
         session()->forget('stripe_data');
@@ -125,7 +125,7 @@ class CustomerController extends Controller
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         // $totalprice = 3;
         Stripe\Charge::create([
-            "amount" => $totalprice * 100,
+            "amount" => $totalPrice * 100,
             "currency" => "myr",
             "source" => $request->stripeToken,
             "description" => "Thanks for payment."
@@ -141,7 +141,7 @@ class CustomerController extends Controller
         $order = new Order();
         $order->user_id = $id;
         $order->payment_id = $payment->id;
-        $order->totalprice = $totalprice;
+        $order->totalprice = $totalPrice;
         $order->save();
 
         $pid = Cart::where('product_id', $id)->get();
