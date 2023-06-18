@@ -96,7 +96,7 @@ Route::get('/order-detail', [SalesController::class, 'viewOrderDetail'])->name('
 Route::get('/weekly-sales', [SalesController::class, 'viewWeeklySales'])->name('sales.weekly.sales');
 Route::get('/monthly-report', [SalesController::class, 'generateMonthlyReport'])->name('sales.monthly.report');
 Route::get('/monthly-report/download/', [SalesController::class, 'downloadMonthlyReport'])->name('sales.monthly.report.download');
-
+Route::get('/sales/dashboard', [SalesController::class, 'dashboard'])->name('sales.dashboard');
 
 
 

@@ -5,18 +5,35 @@
                 <img src="/images/favicon.png">
             </div>
         </a>
+        <?php $role = Auth::user()->role; ?>
+        @if($role == 1)
+        <a href="{{ route('sales.dashboard') }}" class="simple-text logo-normal">
+            {{ __('TSK SYNERGY') }}
+        </a>
+        @else
         <a href="{{ route('page.index', 'dashboard') }}" class="simple-text logo-normal">
             {{ __('TSK SYNERGY') }}
         </a>
+        @endif
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
+            
+            @if($role == 1)
+            <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
+                <a href="{{ route('sales.dashboard') }}">
+                    <i class="nc-icon nc-bank"></i>
+                    <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
+            @else
             <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'dashboard') }}">
                     <i class="nc-icon nc-bank"></i>
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+            @endif
            
             
            

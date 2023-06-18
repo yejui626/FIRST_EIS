@@ -5,14 +5,142 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\Items;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
+use DateInterval;
+use DatePeriod;
+use DateTime;
+
 
 class SalesController extends Controller
 {
+    public function dashboard(Request $request)
+{
+    $selectedYear = $request->input('year') ?? ''; // Get the selected year from the request, default to empty string for "All Years"
+
+    $yearList = DB::table('orders')
+        ->select(DB::raw('YEAR(created_at) as year'))
+        ->distinct()
+        ->orderBy('year', 'desc')
+        ->pluck('year');
+
+    $totalOrdersQuery = DB::table('orders');
+    $totalRevenueQuery = DB::table('orders');
+    $totalCostQuery = DB::table('orders')
+        ->join('items', 'orders.id', '=', 'items.order_id')
+        ->join('products', 'items.product_id', '=', 'products.id');
+    
+    if (!empty($selectedYear)) {
+        $totalOrdersQuery->whereYear('created_at', $selectedYear);
+        $totalRevenueQuery->whereYear('created_at', $selectedYear);
+        $totalCostQuery->whereYear('orders.created_at', $selectedYear);
+    }
+
+    $totalOrders = $totalOrdersQuery
+        ->select(DB::raw('COUNT(*) as total_orders'))
+        ->first()->total_orders;
+
+    $totalRevenue = $totalRevenueQuery
+        ->select(DB::raw('SUM(totalprice) as total_revenue'))
+        ->first()->total_revenue;
+
+    $totalCost = $totalCostQuery
+        ->select(DB::raw('SUM(items.product_quantity * products.product_supplierprice) as total_cost'))
+        ->first()->total_cost;
+
+    $totalProfit = $totalRevenue - $totalCost;
+    $profitPercentage = ($totalRevenue != 0) ? ($totalProfit / $totalRevenue) * 100 : 0;
+
+    $salesDataQuery = Order::query();
+
+    if (!empty($selectedYear)) {
+        $salesDataQuery->whereYear('created_at', $selectedYear);
+    }
+
+    $salesData = $salesDataQuery
+        ->select(DB::raw("DATE_FORMAT(created_at, '%M') as month"), DB::raw('IFNULL(SUM(totalprice), 0) as sales'))
+        ->groupBy('month')
+        ->orderByRaw('MONTH(created_at)')
+        ->get();
+
+    $chartLabels = $this->generateMonthRange(date('Y-m-01', strtotime('-5 months')), date('Y-m-t'), 'F');
+    $chartData = [];
+
+    foreach ($chartLabels as $label) {
+        $monthSales = $salesData->firstWhere('month', $label);
+
+        if ($monthSales) {
+            $chartData[] = $monthSales->sales;
+        } else {
+            $chartData[] = 0;
+        }
+    }
+
+    // Get the product categories for the pie chart
+    $productCategories = ProductCategory::pluck('category_name');
+    $pieChartLabels = $productCategories->toArray();
+    $pieChartData = [];
+
+    foreach ($productCategories as $category) {
+        $categorySalesQuery = Items::query()
+            ->join('products', 'items.product_id', '=', 'products.id')
+            ->join('product_category', 'products.product_category', '=', 'product_category.category_id')
+            ->where('product_category.category_name', $category);
+
+        if (!empty($selectedYear)) {
+            $categorySalesQuery->whereYear('items.created_at', $selectedYear);
+        }
+
+        $categorySales = $categorySalesQuery
+            ->select(DB::raw('SUM(items.product_quantity * products.product_sellingprice) as totalprice'))
+            ->first()->totalprice;
+
+        $pieChartData[] = $categorySales;
+    }
+
+    return view('sales.dashboard', [
+        'totalOrders' => $totalOrders,
+        'totalRevenue' => number_format($totalRevenue, 2),
+        'totalProfit' => number_format($totalProfit, 2),
+        'profitPercentage' => number_format($profitPercentage, 2),
+        'chartLabels' => $chartLabels,
+        'chartData' => $chartData,
+        'pieChartLabels' => $pieChartLabels,
+        'pieChartData' => $pieChartData,
+        'selectedYear' => $selectedYear, // Pass the selected year to the view
+        'yearList' => $yearList,
+    ]);
+}
+
+    /**
+     * Generate an array of months within a specified range.
+     *
+     * @param string $startDate
+     * @param string $endDate
+     * @param string $format
+     * @return array
+     */
+    private function generateMonthRange($startDate, $endDate, $format = 'Y-m')
+    {
+        $startMonth = new DateTime($startDate);
+        $endMonth = new DateTime($endDate);
+        $interval = DateInterval::createFromDateString('1 month');
+        $period = new DatePeriod($startMonth, $interval, $endMonth);
+        $months = [];
+
+        foreach ($period as $dt) {
+            $months[] = $dt->format($format);
+        }
+
+        return $months;
+    }
+
+
     public function viewOrderDetail()
     {
         $orders = Order::orderBy('id', 'ASC')->get();
