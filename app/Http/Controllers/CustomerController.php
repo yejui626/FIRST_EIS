@@ -148,6 +148,13 @@ class CustomerController extends Controller
         $carts = Cart::where('user_id', $id)->get();
 
         foreach ($carts as $cart) {
+
+            $product = Product::find($cart->product_id);
+            if ($product) {
+                $product->product_quantity -= $cart->product_quantity; // Update the product quantity
+                $product->save();
+            }
+
             $item = new Items();
             $item->order_id = $order->id;
             $item->product_id = $cart->product_id;

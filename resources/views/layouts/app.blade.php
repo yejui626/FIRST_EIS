@@ -55,7 +55,9 @@ The above copyright notice and this permission notice shall be included in all c
     @endguest
 
     <!--   Core JS Files   -->
+    @unless(request()->is('purchase-order/create/*','purchase-order/*/edit'))
     <script src="{{ asset('paper') }}/js/core/jquery.min.js"></script>
+    @endunless
     <script src="{{ asset('paper') }}/js/core/popper.min.js"></script>
     <script src="{{ asset('paper') }}/js/core/bootstrap.min.js"></script>
     <script src="{{ asset('paper') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>

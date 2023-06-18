@@ -10,6 +10,9 @@
             <div class="card ">
                 <div class="card-header ">
                     <h4>Add Product</h4>
+                    <div class="pull-right">
+                        <a class="btn btn-primary" href="{{ route('product.index') }}"> Back</a>
+                    </div>
                 </div>
 
                 <div class="card-body ">
@@ -27,14 +30,27 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label class="col-md-2 col-form-label">Product Code
+                            <label class="col-md-2 col-form-label">Product Category
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control" name="product_code" placeholder="Enter Product Code">
-                                @error('product_code')
+                                <select name="product_category" class="form-control">
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('product_category')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Product Code
+                                
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="product_code" placeholder="Enter Product Code">
+                                
                             </div>
                         </div>
 
@@ -62,13 +78,11 @@
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Image 1
-                                <span class="text-danger">*</span>
+                                
                             </label>
                             <div class="col-md-10">
                                 <input class="form-control" type="file" id="photo" name="product_img1">
-                                @error('product_img1')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
+                                
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -86,14 +100,12 @@
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Details
-                                <span class="text-danger">*</span>
+                                
                             </label>
                             <div class="col-md-10">
                                 <textarea cols="100" rows="10" placeholder="Enter Product Details" name="product_details"></textarea>
                             </div>
-                            @error('product_details')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            
                         </div>
 
 

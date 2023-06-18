@@ -9,13 +9,20 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function quantity()
-    {
+    public function quantity(){
         return $this->hasMany(Quantity::class, 'quantity_productid');
     }
+    
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category');
+    }
+
+    
 
     protected $fillable = [
         'product_name',
+        'product_category',
         'product_code',
         'product_details',
         'product_sellingprice',
@@ -25,9 +32,4 @@ class Product extends Model
         'product_img3',
         'product_quantity'
     ];
-
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
-    }
 }

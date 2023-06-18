@@ -18,4 +18,12 @@ class Order extends Model
     {
         return $this->hasMany(Items::class, 'order_id');
     }
+    public function logistic()
+    {
+        return $this->hasMany(Logistic::class, 'order_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

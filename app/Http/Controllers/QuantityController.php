@@ -77,6 +77,11 @@ class QuantityController extends Controller
         return redirect()->route ('quantity.index')->with('success', 'Quantity updated successfully');
     }
 
+    public function show($id)
+    {
+        $product = Product::with('productCategory')->findOrFail($id);
+        return view ('quantity.show', compact('product'));
+    }
     
     
 }

@@ -10,6 +10,9 @@
                 <div class="card ">
                     <div class="card-header ">
                         <h4>Edit Product</h4>
+                        <div class="pull-right">
+                            <a class="btn btn-primary" href="{{ route('product.index') }}"> Back</a>
+                        </div>
                     </div>
                     <div class="card-body ">
                     <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
@@ -22,19 +25,32 @@
                             <div class="col-md-10">
                                 <input type="text" class="form-control" name="product_name" placeholder="Enter Product Name" value="{{$product->product_name}}">
                                 @error('product_name')
-                              <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Product Category
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <select name="product_category" class="form-control">
+    @foreach($categories as $category)
+        <option value="{{ $category->category_id }}" @if($category->category_id == $product->product_category) selected @endif>{{ $category->category_name }}</option>
+    @endforeach
+</select>
+                                @error('product_category')
+                            <span class="text-danger">{{$message}}</span>
                             @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Code
-                            <span class="text-danger">*</span>
+                            
                             </label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control" name="product_code" placeholder="Enter Product Code" value="{{$product->product_code}}" >
-                                @error('product_code')
-                              <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                
                             </div>
                         </div>
                         
@@ -45,24 +61,22 @@
                             <div class="col-md-10">
                                 <input type="number" class="form-control" name="product_sellingprice" placeholder="Enter Product Selling Price (RM)" value="{{$product->product_sellingprice}}" >
                                 @error('product_sellingprice')
-                              <span class="text-danger">{{$message}}</span>
+                            <span class="text-danger">{{$message}}</span>
                             @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Supplier Price
-                            <span class="text-danger">*</span>
+                            
                             </label>
                             <div class="col-md-10">
                                 <input type="number" class="form-control" name="product_supplierprice" placeholder="Enter Product Supplier Price (RM)" value="{{$product->product_supplierprice}}">
-                                @error('product_supplierprice')
-                              <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Image 1
-                            <span class="text-danger">*</span>
+                            
                             </label>
                             <div class="col-md-10">
                                 <input class="form-control" type="file" id="photo" name="product_img1" placeholder="Product Image 1" value="{{$product->product_img1}}">
@@ -89,21 +103,16 @@
                         </div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Details
-                            <span class="text-danger">*</span>
+                            
                             </label>
                             <div class="col-md-10">
-                               <textarea cols="100" rows="10" placeholder="Enter Product Details" name="product_details">{{$product->product_details}}</textarea>
-</div>
-                               @error('product_details')
-                              <span class="text-danger">{{$message}}</span>
-                            @enderror
-                            </div>          
-                        
-
-                                    
-                                <br>
-                                <button class="btn btn-primary btn-lg btn-block">Edit Product</button>
-                     </form>
+                            <textarea cols="100" rows="10" placeholder="Enter Product Details" name="product_details">{{$product->product_details}}</textarea>
+                            </div>
+                            
+                        </div>  
+                            <br>
+                            <button class="btn btn-primary btn-lg btn-block">Edit Product</button>
+                    </form>
                     </div>
                 </div>
             </div>

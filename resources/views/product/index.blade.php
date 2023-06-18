@@ -27,14 +27,17 @@
                 <div class="card-body">
 
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="product" class="table table-striped">
 
                             <thead class=" text-primary">
                                 <th>
                                     ID
                                 </th>
                                 <th>
-
+                                    Category
+                                </th>
+                                <th>
+                                    Image
                                 </th>
                                 <th>
                                     Product Name
@@ -46,12 +49,9 @@
                                 <th>
                                     Price
                                 </th>
+                                    <th>
 
-
-
-
-
-
+                                    </th>
                             </thead>
                             <tbody>
                                 @foreach($product as $pr)
@@ -60,10 +60,13 @@
                                         {{$pr->id}}
                                     </td>
                                     <td>
+                                        {{$pr->productCategory->category_name}}
+                                    </td>
+                                    <td>
                                         <img src="{{asset($pr->product_img1)}}" width="120" height="100" class="img img-responsive"></img>
                                     </td>
                                     <td>
-                                        {{substr(($pr->product_name),0, 50)}}..
+                                        {{substr(($pr->product_name),0, 50)}}
                                     </td>
                                     <td>
                                         {{substr(($pr->product_code),0,20)}}
@@ -95,8 +98,15 @@
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
 @endsection
+@push('scripts')
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#product').DataTable({
+            responsive: true
+        });
+    });
+</script>
+@endpush

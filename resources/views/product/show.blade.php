@@ -21,6 +21,12 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Product Category</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="product_category" placeholder="Enter Category Name" value="{{$product->productCategory->category_name}}" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Code</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control" name="product_code" placeholder="Enter Product Code" value="{{$product->product_code}}" readonly>
@@ -67,15 +73,12 @@
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Details</label>
                             <div class="col-md-10">
-                               <textarea cols="100" rows="10" placeholder="Enter Product Details" name="product_details"readonly>{{$product->product_details}}</textarea>
-</div>
-                            </div>          
-                        
-
-                                    
-                                <br>
-                                <a role="button" href="{{ route('product.index') }}" class="btn btn-primary btn-lg btn-block">Return to Product List</a>
-                     </form>
+                                <textarea cols="100" rows="10" placeholder="Enter Product Details" name="product_details"readonly>{{$product->product_details}}</textarea>
+                            </div>
+                        </div> 
+                            <br>
+                            <a role="button" href="{{ route('product.index') }}" class="btn btn-primary btn-lg btn-block">Return to Product List</a>
+                    </form>
                     </div>
                 </div>
             </div>

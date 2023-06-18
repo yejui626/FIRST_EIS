@@ -68,8 +68,10 @@
                         
 
                                     
-                                <br>
-                                <button class="btn btn-primary btn-lg btn-block">Update Quantity</button>
+                        <br>
+                                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back to List</a>
+                                <button class="btn btn-primary" style="margin-left: 835px;">Save Changes</button>
+                     </form>
                      </form>
                     </div>
                 </div>

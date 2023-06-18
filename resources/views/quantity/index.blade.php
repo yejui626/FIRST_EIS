@@ -75,7 +75,7 @@
 
 
                                     <td class="text-right">
-                                        <a href="{{route('product.show', $pr->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
+                                        <a href="{{route('quantity.show', $pr->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
                                         <a href="{{route('quantity.edit', $pr->id)}}" class="btn btn-default mr-1" type="button">Edit</a>
                                     
                                             

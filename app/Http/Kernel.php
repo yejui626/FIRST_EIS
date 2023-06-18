@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'Logistic' => \App\Http\Middleware\Logistic::class,
         'Customer' => \App\Http\Middleware\Customer::class,
         'Admin' => \App\Http\Middleware\Admin::class,
+        'role' => \App\Http\Middleware\RoleCheckMiddleware::class,
 
 
 

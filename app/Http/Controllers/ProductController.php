@@ -6,12 +6,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductCategory;
 
 class ProductController extends Controller
 {
-    
-    
-    
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('id', 'ASC') ->get();
-        return view ('product.index', compact('product'));
+        $categories = ProductCategory::all();
+        $product = Product::with('productCategory')->orderBy('id', 'ASC') ->get();
+        return view ('product.index', compact('product','categories'));
     }
 
     public function quantity()
@@ -36,7 +35,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view ('product.create');
+        $categories = ProductCategory::all();
+        return view ('product.create', compact('categories'));
     }
 
     /**
@@ -51,23 +51,23 @@ class ProductController extends Controller
 
         $validate = Validator::make($request->all(), [
             'product_name' => 'required|min:5',
-            'product_code' => 'required',
-            'product_details' => 'required',
+            'product_category' => 'required',
+            
             'product_sellingprice' => 'required',
             'product_supplierprice' => 'required',
-            'product_img1' => 'required',
-            'product_details' => 'required'
+            
+            
         ],[
             'product_name.required' => 'Please enter a product name!',
-            'product_code.required' => 'Please enter a product code!',
-            'product_details.required' => 'Please enter product description!',
+            
+           
             'product_sellingprice.required' => 'Please enter selling price!',
             'product_supplierprice.required' => 'Please enter supplier price!',
-            'product_img1.required' => 'Please upload at least first image!',
+            
             'product_name.min' => 'Product name must be at least 5 letters long!',
         ]);
 if($validate->fails()){
-  return back()->withErrors($validate->errors())->withInput();
+    return back()->withErrors($validate->errors())->withInput();
 }
         
         $requestData = $request->all();
@@ -103,8 +103,7 @@ if($validate->fails()){
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-
+        $product = Product::with('productCategory')->findOrFail($id);
         return view ('product.show', compact('product'));
     }
 
@@ -116,9 +115,10 @@ if($validate->fails()){
      */
     public function edit($id)
     {
+        $categories = ProductCategory::all();
         $product = Product::findOrFail($id);
 
-        return view ('product.edit', compact('product'));
+        return view ('product.edit', compact('product','categories'));
     }
 
     /**
@@ -135,16 +135,18 @@ if($validate->fails()){
         $product = Product::findOrFail($id);
         $validate = Validator::make($request->all(), [
             'product_name' => 'required|min:5',
-            'product_code' => 'required',
-            'product_details' => 'required',
+            'product_category' => 'required',
+            
+            
             'product_sellingprice' => 'required',
             'product_supplierprice' => 'required',
             
             'product_details' => 'required'
         ],[
             'product_name.required' => 'Please enter a product name!',
-            'product_code.required' => 'Please enter a product code!',
-            'product_details.required' => 'Please enter product description!',
+            'product_category.required' => 'Please choose product category!',
+            
+            
             'product_sellingprice.required' => 'Please enter selling price!',
             'product_supplierprice.required' => 'Please enter supplier price!',
             
@@ -153,7 +155,7 @@ if($validate->fails()){
 
         if($validate->fails()){
             return back()->withErrors($validate->errors())->withInput();
-          }
+        }
         $requestData = $request->all();
         
         if ($request->hasFile('product_img1')) {

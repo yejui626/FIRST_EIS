@@ -28,7 +28,7 @@
                     <div class="card-body">
                         
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="supplier" class="table table-striped">
                                 
                                 <thead class=" text-primary">
                                     <th>
@@ -41,7 +41,9 @@
                                         Phone No.
                                     </th>
                                     
-                                    
+                                    <th>
+
+                                    </th>
                                     
                                 </thead>
                                 <tbody>
@@ -83,3 +85,15 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#supplier').DataTable({
+            responsive: true
+        });
+    });
+</script>
+@endpush
