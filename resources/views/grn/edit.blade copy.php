@@ -75,7 +75,7 @@
                                     </div>
                                     <label for="product_received[]" class="col-md-3 col-form-label">Product Received</label>
                                     <div class="col-md-3">
-                                        <input type="text" name="product_received[]" class="form-control" value="{{ $item->product->product_name }}">
+                                        <input type="text" name="product_received[]" class="form-control" value="{{ $item->product_received }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">

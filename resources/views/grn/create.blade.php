@@ -4,227 +4,260 @@
 ])
 
 @section('content')
-    <div class="content d-flex justify-content-center align-items-center">
-        <div class="card bg-white p-4 col-md-8">
-            <div class="card-header">
-                <h4 class="card-title">Add New GRN</h4>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('grn.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="grn_number">GRN Number</label>
-                        <input type="text" name="grn_number" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="purchase_order_no">Purchase Order Number</label>
-                        <input type="text" name="purchase_order_no" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="supplier_id">Supplier</label>
-                        <select name="supplier_id" class="form-control" required>
-                            <option value="">Select Supplier</option>
-                            @foreach ($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="received_date">Received Date</label>
-                                <input type="date" name="received_date" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="custdelivery_date">Customer Delivery Date</label>
-                                <input type="date" name="custdelivery_date" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="to_grn">To</label>
-                                <input type="text" name="to_grn" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="recipient_grn">Recipient</label>
-                                <input type="text" name="recipient_grn" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="grn-rows-container">
-                        <div class="grn-row">
-                            <div class="form-row align-items-center">
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label for="item[]">Item</label>
-                                        <input type="text" name="item[]" class="form-control item-number" value="1" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="product_received[]">Product Name</label>
-                                        <input type="text" name="product_received[]" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label for="qty[]">Quantity</label>
-                                        <input type="number" name="qty[]" class="form-control quantity-input" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label for="product_uom[]">Product UOM</label>
-                                        <input type="text" name="product_uom[]" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="description[]">Description</label>
-                                        <textarea name="description[]" class="form-control form-control-height"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group d-flex justify-content-center">
-                                        <button type="button" class="btn btn-danger remove-row-btn" title="Remove Row">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
+<body>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                    <div class="card-header ">
+                        <h4>Create GRN</h4>
+                    </div>
+                    <div class="card-body ">
+                        <form method="POST" action="{{ route('grn.store') }}">
+                            @csrf  
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label" for="grn_number">GRN Number</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="grn_number">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-center mt-4">
-                        <button type="button" class="btn btn-primary add-row-btn">Add Row</button>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-row">
-                        <div class="col-md-8"></div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="total_quantity">Total Quantity</label>
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label" for="purchase_order_no">Purchase Order Number</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="purchase_order_no" value="{{$purchaseorder->po_no}}"readonly> 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <input type="text" name="total_quantity" class="form-control total-quantity" readonly>
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label"for="to_grn">To</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="to_grn" id="to_grn">
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label" for="recipient_grn">Recipient</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="recipient_grn" id="recipient_grn">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-md-2 col-form-label" for="supplier_id">Supplier</label>
+                                <div class="col-md-5">
+                                    <select name="supplier_id" id="supplier_id" class="custom-select custom-select-sm rounded-0 select2" aria-label="Default select example">
+                                        <option selected disabled>Choose Supplier</option>
+                                        @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}">{{$supplier->supplier_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="form-group text-center mt-4">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="row">           
+                                <div class="col-md-12">
+                                    <button type="button" class="add-item float-end btn btn-primary" name="add" id="add" style="float: right;">Add Item</button>
+                                    <table class="table table-striped table-bordered" id="table">
+                                        <colgroup>
+                                            <col width="4%">
+                                            <col width="2%">
+                                            <col width="30%">
+                                            <col width="10%">
+                                            <col width="7%">
+                                            <col width="10%">
+                                            <col width="17%">
+                                            <col width="20%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr class="bg-navy disabled">
+                                                <th class="px-1 py-1 text-center"></th>
+                                                <th class="px-1 py-1 text-center">#</th>
+                                                <th class="px-1 py-1 text-center">Item Name</th>
+                                                <th class="px-1 py-1 text-center">Received Date</th>
+                                                <th class="px-1 py-1 text-center">Cust Delivery Date</th>
+                                                <th class="px-1 py-1 text-center">Qty</th>
+                                                <th class="px-1 py-1 text-center">UOM</th>
+                                                <th class="px-1 py-1 text-center">Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="pr-item" data-id="">   
+                                                <td class="align-middle p-1 text-center"></td>
+                                                <td class="align-middle p-0 text-center">
+                                                    1
+                                                </td>
+                                                
+                                                <td class="align-middle p-1">
+                                                    <select name="product_id[]" class="custom-select custom-select-sm rounded-0 select2 product-select" aria-label="Default select example">
+                                                        <option selected disabled>Choose Product</option>
+                                                        @foreach($product as $row)
+                                                            <option value="{{$row->id}}">{{$row->product_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                            
+                                                <td class="align-middle p-1">
+                                                    <input type="date" class="form-control form-control-sm rounded-0" name="received_date">
+                                                </td>
+                                                <td class="align-middle p-1">
+                                                    <input type="date" class="form-control form-control-sm rounded-0" name="custdelivery_date">
+                                                </td>
+                                                <td class="align-middle p-1">
+                                                    <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="qty[]" min="1">
+                                                </td>
+                                                <td class="align-middle p-1">
+                                                    <select name="product_uom[]" class="custom-select custom-select-sm rounded-0 select2">
+                                                    <option selected="" disabled="">Choose UOM</option>
+                                                    <option value="unit">unit</option>
+                                                    <option value="EA">EA</option>
+                                                    <option value="bag">bag</option>
+                                                    <option value="BKT">BKT</option>
+                                                    <option value="BND">BND</option>
+                                                    <option value="BX">BX</option>
+                                                    <option value="CM">CM</option>
+                                                    <option value="CTN">CTN</option>
+                                                    </select>
+                                                </td>                                                
+                                                <td class="align-middle p-1">
+                                                    <input type="text" class="form-control form-control-sm rounded-0 total" name="description[]">
+                                                </td>
+                                                <td class="align-middle p-1">
+                                                    <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr class="bg-lightblue">
+                                            <tr>
+                                                <th class="p-1 text-right" colspan="7"><span></span>
+                                                Total Quantity</th>
+                                                <th class="p-1 text-right" id="total_quantity" name="total_quantity">0</th>
+                                            </tr>
+                                            
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                </div>
+                            
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a class="btn btn-flat btn-default" href="{{ route('grn.index') }}">Cancel</a>
+
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var addRowButton = document.querySelector('.add-row-btn');
-            var grnRowsContainer = document.querySelector('.grn-rows-container');
-            var totalQuantityInput = document.querySelector('.total-quantity');
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Counter for row numbers
+        var rowCounter = 1;
 
-            addRowButton.addEventListener('click', function() {
-                var grnRow = document.createElement('div');
-                grnRow.className = 'grn-row';
+        // Add item to the table
+        function addItem() {
+            var newRow = `
+                <tr class="pr-item" data-id="${rowCounter}">
+                    <td class="align-middle p-1 text-center"></td>
+                    <td class="align-middle p-0 text-center">${rowCounter}</td>
+                    <td class="align-middle p-1">
+                        <select name="product_id[]" class="custom-select custom-select-sm rounded-0 select2 product-select" aria-label="Default select example">
+                            <option selected disabled>Choose Product</option>
+                            @foreach($product as $row)
+                                <option value="{{$row->id}}">{{$row->product_name}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td class="align-middle p-1">
+                        <input type="date" class="form-control form-control-sm rounded-0" name="received_date">
+                    </td>
+                    <td class="align-middle p-1">
+                        <input type="date" class="form-control form-control-sm rounded-0" name="custdelivery_date">
+                    </td>
+                    <td class="align-middle p-1">
+                    <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="qty[]" min="1">
+                    </td>
+                    <td class="align-middle p-1">
+                        <select name="product_uom[]" class="custom-select custom-select-sm rounded-0 select2">
+                        <option selected="" disabled="">Choose UOM</option>
+                        <option value="unit">unit</option>
+                        <option value="EA">EA</option>
+                        <option value="bag">bag</option>
+                        <option value="BKT">BKT</option>
+                        <option value="BND">BND</option>
+                        <option value="BX">BX</option>
+                        <option value="CM">CM</option>
+                        <option value="CTN">CTN</option>
+                        </select>
+                    </td>                    
+                    <td class="align-middle p-1">
+                        <input type="text" class="form-control form-control-sm rounded-0 total" name="description[]">
+                    </td>
+                    <td class="align-middle p-1">
+                        <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
+                    </td>
+                </tr>
+            `;
+            $('#table tbody').append(newRow);
+            rowCounter++;
 
-                var rowHtml = `
-                    <div class="form-row align-items-center">
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="item[]">Item</label>
-                                <input type="text" name="item[]" class="form-control item-number" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="product_received[]">Product Name</label>
-                                <input type="text" name="product_received[]" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="qty[]">Quantity</label>
-                                <input type="number" name="qty[]" class="form-control quantity-input" required>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <label for="product_uom[]">Product UOM</label>
-                                <input type="text" name="product_uom[]" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="description[]">Description</label>
-                                <textarea name="description[]" class="form-control form-control-height"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group d-flex justify-content-center">
-                                <button type="button" class="btn btn-danger remove-row-btn" title="Remove Row">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            // Update row numbers
+            updateRowNumbers();
+        }
 
-                grnRow.innerHTML = rowHtml;
-                grnRowsContainer.appendChild(grnRow);
-
-                // Update item numbers
-                var itemNumbers = document.querySelectorAll('.item-number');
-                itemNumbers.forEach(function(itemNumber, index) {
-                    itemNumber.value = index + 1;
-                });
-
-                // Update total quantity
-                var quantityInputs = document.querySelectorAll('.quantity-input');
-                var totalQuantity = 0;
-                quantityInputs.forEach(function(quantityInput) {
-                    totalQuantity += parseFloat(quantityInput.value);
-                });
-                totalQuantityInput.value = totalQuantity;
+        // Update row numbers
+        function updateRowNumbers() {
+            $('.pr-item').each(function(index) {
+                $(this).find('td:eq(1)').text(index + 1);
             });
+        }
 
-            grnRowsContainer.addEventListener('click', function(event) {
-                if (event.target.classList.contains('remove-row-btn')) {
-                    var grnRow = event.target.closest('.grn-row');
-                    grnRowsContainer.removeChild(grnRow);
+        // // Calculate total for a row
+        // function calculateRowTotal(row) {
+        //     var quantity = parseInt(row.find('.product_quantity').val()) || 0;
+        //     var unitPrice = parseFloat(row.find('.product_unitprice').val()) || 0;
+        //     var total = quantity * unitPrice;
+        //     row.find('.total').val(total.toFixed(2));
+        // }
+        
 
-                    // Update item numbers
-                    var itemNumbers = document.querySelectorAll('.item-number');
-                    itemNumbers.forEach(function(itemNumber, index) {
-                        itemNumber.value = index + 1;
-                    });
+        // Remove a row from the table
+        function removeRow(row) {
+            row.remove();
+            updateRowNumbers();
+            calculateTotalAmount();
+        }
 
-                    // Update total quantity
-                    var quantityInputs = document.querySelectorAll('.quantity-input');
-                    var totalQuantity = 0;
-                    quantityInputs.forEach(function(quantityInput) {
-                        totalQuantity += parseFloat(quantityInput.value);
-                    });
-                    totalQuantityInput.value = totalQuantity;
-                }
-            });
+        // Event listener for adding an item
+        $('.add-item').click(function() {
+            addItem();
         });
-    </script>
+
+        // Event listener for removing a row
+        $('#table').on('click', '.remove-table-row', function() {
+            var row = $(this).closest('tr');
+            removeRow(row);
+        });
+
+        // Event listener for quantity change
+        $('#table').on('change', '.product_quantity', function() {
+            var row = $(this).closest('tr');
+            calculateRowTotal(row);
+            calculateTotalAmount();
+        });
+
+        // Event listener for unit price change
+        $('#table').on('change', '.product_unitprice', function() {
+            var row = $(this).closest('tr');
+            calculateRowTotal(row);
+            calculateTotalAmount();
+        });
+    });
+</script>
+
 @endsection

@@ -65,10 +65,10 @@ table {
                                     <p class="m-0"><b>TSK SYNERGY SDN BHD</b></p>
                                     <p class="m-0">NO. 19, JALAN MEGA 1/8, TAMAN PERINDUSTRIAN NUSA CEMERLANG</p>
                                     <p class="m-0">79200 ISKANDAR PUTERI, JOHOR</p>
-                                </div>
+                                </div> 
                             </div>
                             <div class="col-6">
-                                <center><img src="{{ url('storage/images/TSK.png') }}" alt="" width="500px" height="200px"></center>
+                                <center><img src="{{ url('storage/images/logo.png') }}" alt="" width="500px" height="200px"></center>
                                 <h2 class="text-center"><b>Goods Received Note</b></h2>
                             </div>
                         </div>
@@ -114,7 +114,7 @@ table {
                                         @foreach($grnItems as $index => $grn_item)
                                             <tr class="po-item" data-id="">
                                                 <td class="align-middle p-0 text-center">{{$index + 1}}</td>
-                                                <td class="align-middle p-1 text-center">{{$grn_item->product_received}}</td>
+                                                <td class="align-middle p-1 text-center">{{$grn_item->product->product_name}}</td>
                                                 <td class="align-middle p-1">{{$grn_item->description}}</td>
                                                 <td class="align-middle p-1 text-right">{{$grn_item->product_uom}}</td>
                                                 <td class="align-middle p-1 text-right total-price">{{$grn_item->qty}}</td>

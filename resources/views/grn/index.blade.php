@@ -17,12 +17,7 @@
                         {{ Session::get('success') }}
                     </div>
                     @endif
-                    <?php $role = Auth::user()->role; ?>
-                    @if($role == 3)
-                    <a href="{{ route('grn.create') }}" class="btn btn-primary" role="button" style="float: right;">
-                        <i class="fa fa-plus"></i> Add
-                    </a>
-                    @endif
+                    
                     <h4 class="card-title">Goods Receipt Note (GRN) List</h4>
                 </div>
                 <div class="card-body">
@@ -46,7 +41,7 @@
                                     <td>{{ $grnItem->id }}</td>
                                     <td>{{ $grnItem->grn_number }}</td>
                                     <td>{{ $grnItem->purchase_order_no }}</td>
-                                    <td>{{ $grnItem->supplier_id}}</td>
+                                    <td>{{ $grnItem->supplier->supplier_name}}</td>
                                     <td>{{ $grnItem->to_grn }}</td>
                                     <td>{{ $grnItem->recipient_grn }}</td>
                                     <td>{{ $grnItem->received_date }}</td>
