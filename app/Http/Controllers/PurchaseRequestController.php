@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\PurchaseRequest;
 use App\Models\PurchaseRequest_Items;
+use App\Models\PurchaseOrder;
 use App\Models\Supplier;
 use App\Models\Product;
 use App\Models\ProductCategory;
+
 use Illuminate\Support\Facades\Auth;
 class PurchaseRequestController extends Controller
 {
@@ -22,15 +24,6 @@ class PurchaseRequestController extends Controller
         $purchaserequest = PurchaseRequest::all();
         $request_items = PurchaseRequest_Items::all();
         return view('purchaserequest.index', compact('purchaserequest', 'request_items'));
-        
-    }
-
-
-    public function purchaserequestpurchase()
-    {
-        $purchaserequest = PurchaseRequest::all();
-        $request_items = PurchaseRequest_Items::all();
-        return view('purchase-request-purchase.index', compact('purchaserequest', 'request_items'));
         
     }
 
@@ -119,7 +112,7 @@ class PurchaseRequestController extends Controller
      */
     public function edit($id)
 {
-    $purchaserequest = PurchaseRequest::with('supplier')->findOrFail($id);
+    $purchaserequest = PurchaseRequest::find($id);
     $suppliers = Supplier::all();
     $purchaserequest_items = $purchaserequest->items;
     $products = Product::all(); // Retrieve all available products
@@ -141,32 +134,74 @@ class PurchaseRequestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        dd($request->all());
-        $purchaserequest = PurchaseRequest::findOrFail($id);
 
+    
+    public function update(Request $request, $id)
+{
+    $purchaserequest = PurchaseRequest::find($id);
+
+    $purchaserequest->id = $request->input('pr_id');
+    $purchaserequest->requestor = $request->input('requestor');
+    $purchaserequest->supplier_id = $request->input('supplier_id');
+    $purchaserequest->status = $request->input('status');
+    $purchaserequest->discount_percentage = $request->input('discount_percentage');
+    $purchaserequest->tax_percentage = $request->input('tax_percentage');
+    $purchaserequest->notes = $request->input('notes');
+    $purchaserequest->save();
+
+    // Delete existing order items related to the purchase order
+    PurchaseRequest_Items::where('pr_id', $id)->delete();
+
+    $productIds = $request->input('product_id') ?? [];
+    $productQuantities = $request->input('product_quantity') ?? [];
+    $productUnitPrices = $request->input('product_unitprice') ?? [];
+    $deliveryDates = $request->input('delivery_date') ?? [];
+    $uoms = $request->input('uom') ?? [];
+
+    for ($i = 0; $i < count($productIds); $i++) {
+        $item = new PurchaseRequest_Items();
+        $item->pr_id = $request->input('pr_id');
+        $item->product_id = $productIds[$i];
+        $item->delivery_date = $deliveryDates[$i];
+        $item->product_quantity = $productQuantities[$i] ?? 0;
+        $item->uom = $uoms[$i];
+        $item->product_unitprice = $productUnitPrices[$i] ?? 0;
+        $item->save();
+    }
+
+    // Calculate the total_amount based on product quantity and unit price
+    $totalAmount = 0;
+    for ($i = 0; $i < count($productIds); $i++) {
+        $quantity = $productQuantities[$i] ?? 0;
+        $unitPrice = $productUnitPrices[$i] ?? 0;
+        $totalAmount += $quantity * $unitPrice;
+    }
+    $purchaserequest->total_amount = $totalAmount;
+    $purchaserequest->save();
+
+    // Redirect back to the index page with a success message
+    return redirect()->route('purchaserequest.index')->with('success', 'Purchase request updated successfully');
+}
+
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        
+        $purchaserequest = PurchaseRequest::findOrFail($id);
+        
         $validatedData = $request->validate([
             'status' => 'required|in:Pending,Approved,Rejected',
         ]);
 
-        $purchaserequest->requestor = $request->input('requestor');
-        $purchaserequest->supplier_id = $request->input('supplier_id');
-        $purchaserequest->notes = $request->input('notes');
-        $purchaserequest->discount_percentage = $request->input('discount_percentage');
-        $purchaserequest->tax_percentage = $request->input('tax_percentage');
+        $requestData = $request->all();
+        $requestData['status'] = $validatedData['status'];
+        $purchaserequest->update($requestData);
         
-        // Update the purchase request's status
-        $purchaserequest->status = $validatedData['status'];
 
-        // Save the changes to the purchase request
-        $purchaserequest->save();
+        return redirect()->route('purchaserequest.index')->with('success', 'Status updated successfully');
 
-        // Redirect back to the index page with a success message
-        return redirect()->route('purchaserequest.index')->with('success', 'Purchase request updated successfully');
     }
-
-
 
 
     /**

@@ -107,7 +107,8 @@ Route::group(['middleware' => 'role:3'], function () {
     Route::post('/purchaserequest/create', [PurchaseRequestController::class, 'store'])->name('purchaseRequest.store');
     Route::resource('/quantity', QuantityController::class);
     Route::put('/purchase-order/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('po.updateStatus');
-
+	Route::get('/grn/create/{id}', [GRNController::class, 'create'])->name('grn.create');
+	Route::put('/purchase-order/{id}', [PurchaseRequestController::class, 'update'])->name('po.update');
 });
 
 Route::group(['middleware' => 'role:2'], function () {
@@ -116,8 +117,9 @@ Route::resource('/supplier', SupplierController::class);
 Route::resource('/product', ProductController::class);
 Route::resource('/productcategory', ProductCategoryController::class);
 Route::get('/purchase-order/create/{id}', [PurchaseOrderController::class, 'create'])->name('po.createOrder');
-Route::put('/purchaserequest/{id}', [PurchaseRequestController::class, 'update'])->name('purchaseRequest.update');
+Route::put('/purchaserequest/{id}/update-status', [PurchaseRequestController::class, 'updateStatus'])->name('purchaseRequest.updateStatus');
 });
+
 
 Route::resource('/purchase-order', PurchaseOrderController::class, ['names' => 'po']);
 Route::resource('/grn', GRNController::class);

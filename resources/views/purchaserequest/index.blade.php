@@ -80,15 +80,14 @@
                                         <button class="btn btn-secondary mr-1" type="button" data-toggle="modal" data-target="#popup-{{ $pr->id }}">
                                             Update Status
                                         </button>
-                                        @endif
+                                        
                                         <!-- Pop-up Content -->
                                         <div class="modal fade" id="popup-{{$pr->id}}" tabindex="-1" role="dialog" aria-labelledby="popup-{{$pr->id}}-label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('purchaserequest.update', $pr->id) }}" method="POST">
+                                                    <form action="{{ route('purchaseRequest.updateStatus', $pr->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
-                                                        
                                                         <div class="modal-body">
                                                             <div class="form-group">
                                                                 <label for="status">Status:</label>
@@ -107,7 +106,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        @endif
                                         
                                         <a href="{{ route('purchaserequest.show', $pr->id) }}" class="btn btn-primary mr-1" type="button">Detail</a>
                                        <?php $role = Auth::user()->role; ?>

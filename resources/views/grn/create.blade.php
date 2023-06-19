@@ -22,12 +22,14 @@
                                     <input type="text" class="form-control" name="grn_number">
                                 </div>
                             </div>
+                            
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label" for="purchase_order_no">Purchase Order Number</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control" name="purchase_order_no" value="{{$purchaseorder->po_no}}"readonly> 
                                 </div>
                             </div>
+                            <input type="hidden" name="po_id" value="{{ request('id') }}">
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label"for="to_grn">To</label>
                                 <div class="col-md-5">

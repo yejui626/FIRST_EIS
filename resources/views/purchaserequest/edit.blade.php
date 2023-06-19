@@ -13,9 +13,10 @@
                         <h4>Edit Purchase Request</h4>
                     </div>
                     <div class="card-body ">
-                        <form method="POST" id="pr-form" action="{{ route('purchaseRequest.update', $purchaserequest->id) }}">
+                        <form method="POST" id="pr-form" action="{{ route('purchaserequest.update', $purchaserequest->id) }}">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="status" value="{{ $purchaserequest->status }}" />
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Purchase Request ID</label>
                                 <div class="col-md-5">
@@ -69,7 +70,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($purchaserequest_items as $index => $item)
+                                        @foreach($purchaserequest_items as $index => $item)
                                             <tr class="pr-item" data-id="{{ $index }}">
                                                 <td class="align-middle p-1 text-center"></td>
                                                 <td class="align-middle p-0 text-center">
@@ -102,7 +103,7 @@
                                                     <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr class="bg-lightblue">

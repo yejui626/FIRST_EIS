@@ -100,6 +100,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="po-table2" class="table table-striped">
+                                <h4 class="card-title"> Closed Purchase Order</h4>
                                     <thead class="text-primary">
                                         <th>Purchase Order ID</th>
                                         <th>Purchase Order No.</th>
@@ -120,32 +121,19 @@
                                             <td>{{$po->created_at}}</td>
                                             <td>{{$po->status}}</td>
                                             <td class="text-right">
-                                                <!-- Pop-up Content -->
-                                                <div class="modal fade" id="popup-{{$po->po_id}}" tabindex="-1" role="dialog" aria-labelledby="popup-{{$po->po_id}}-label" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <form action="{{ route('po.updateStatus', $po->po_id) }}" method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                
-                                                                <div class="modal-body">
-                                                                    <div class="form-group">
-                                                                        <label for="status">Status:</label>
-                                                                        <select name="status" class="form-control">
-                                                                            <option value="Processing">Processing</option>
-                                                                            <option value="Closed">Closed</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a href="{{route('po.show', $po->po_id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
+                                            <td class="text-right mr-1">
+
+                                                <?php $role = Auth::user()->role; ?>
+                                                @if($role == 3)
+                                                    <a href="{{ url('grn/create', ['id' => $po->po_id]) }}" class="btn btn-success mr-1" type="button">Create GRN</a>
+                                                    <a href="{{ route('po.show', $po->po_id) }}" class="btn btn-primary mr-1" type="button">Generate PDF</a>
+                                                @endif
+                                            
+                                                <?php $role = Auth::user()->role; ?>
+                                                @if($role == 2)
+                                                <a href="{{ route('po.show', $po->po_id)}} " class="btn btn-primary mr-1" type="button">Detail</a>
+                                                @endif
+
                                             </td>
                                         </tr>
                                         @endif

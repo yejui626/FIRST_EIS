@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2023 at 02:16 PM
+-- Generation Time: Jun 19, 2023 at 07:16 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -74,7 +74,7 @@ INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_quantity`, `created
 CREATE TABLE `grn` (
   `id` int(11) NOT NULL,
   `grn_number` varchar(255) NOT NULL,
-  `purchase_order_no` varchar(100) NOT NULL,
+  `po_id` bigint(20) UNSIGNED NOT NULL,
   `supplier_id` bigint(20) UNSIGNED NOT NULL,
   `received_date` date NOT NULL,
   `custdelivery_date` date NOT NULL,
@@ -89,8 +89,10 @@ CREATE TABLE `grn` (
 -- Dumping data for table `grn`
 --
 
-INSERT INTO `grn` (`id`, `grn_number`, `purchase_order_no`, `supplier_id`, `received_date`, `custdelivery_date`, `to_grn`, `recipient_grn`, `total_qty`, `created_at`, `updated_at`) VALUES
-(20, 'GRN9292992', 'PO-20230610LN2KAO20Z3', 4, '2023-07-05', '2023-07-08', 'StellarTech Solutions', 'TSK. WANIE', 12, '2023-06-11 08:37:20', '2023-06-11 08:37:20');
+INSERT INTO `grn` (`id`, `grn_number`, `po_id`, `supplier_id`, `received_date`, `custdelivery_date`, `to_grn`, `recipient_grn`, `total_qty`, `created_at`, `updated_at`) VALUES
+(30, 'grn1', 1, 3, '2023-06-19', '2023-06-19', 'miaw', 'tsk', 5, '2023-06-19 15:04:16', '2023-06-19 15:04:16'),
+(31, 'GRN-20230619FIWDHCA2TB', 1, 3, '2023-06-19', '2023-06-20', 'tsk miaw', 'tsk moon', 6, '2023-06-19 15:11:10', '2023-06-19 15:11:10'),
+(32, 'GRN-20230619ASPCDDYNHI', 2, 3, '2023-06-20', '2023-06-20', 'TSK WANIE', 'keke', 4, '2023-06-19 16:10:48', '2023-06-19 16:10:48');
 
 -- --------------------------------------------------------
 
@@ -101,7 +103,7 @@ INSERT INTO `grn` (`id`, `grn_number`, `purchase_order_no`, `supplier_id`, `rece
 CREATE TABLE `grn_items` (
   `id` int(11) NOT NULL,
   `grn_id` int(11) NOT NULL,
-  `product_received` varchar(255) NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `product_uom` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
@@ -113,9 +115,10 @@ CREATE TABLE `grn_items` (
 -- Dumping data for table `grn_items`
 --
 
-INSERT INTO `grn_items` (`id`, `grn_id`, `product_received`, `qty`, `product_uom`, `description`, `created_at`, `updated_at`) VALUES
-(3, 20, 'Gold Plated Data Cable', 8, 'EA', NULL, '2023-06-11 08:37:20', '2023-06-11 08:37:20'),
-(4, 20, 'Indium Gallium Alloy Transistor', 4, 'EA', NULL, '2023-06-11 08:37:20', '2023-06-11 08:37:20');
+INSERT INTO `grn_items` (`id`, `grn_id`, `product_id`, `qty`, `product_uom`, `description`, `created_at`, `updated_at`) VALUES
+(15, 30, 3, 5, 'unit', 'i do', '2023-06-19 15:04:16', '2023-06-19 15:04:16'),
+(16, 31, 4, 6, 'EA', 'Shipping express', '2023-06-19 15:11:10', '2023-06-19 15:11:10'),
+(17, 32, 3, 4, 'BX', '...', '2023-06-19 16:10:48', '2023-06-19 16:10:48');
 
 -- --------------------------------------------------------
 
@@ -192,7 +195,8 @@ CREATE TABLE `logistic` (
 --
 
 INSERT INTO `logistic` (`id`, `parcel_number`, `courier`, `tracking_url`, `awb_id_link`, `tracking_number`, `order_id`, `sender_name`, `recipient_name`, `recipient_address`, `recipient_address_state`, `recipient_address_city`, `recipient_address_postcode`, `recipient_phone`, `shipment_date`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(4, 'EP-ABVG66', 'Pgeon', 'https://app.easyparcel.com/my/en/track/details/?courier=Pgeon-Delivery&awb=GUP6UG', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDI2ODc1MA%3D%3D', 'GUP6UG', 27, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-06-19 00:00:00', 'Shipment Arranged', 'Asus Vivobook Pro 14', '2023-06-16 12:33:14', '2023-06-16 14:29:09');
+(4, 'EP-ABVG66', 'Pgeon', 'https://app.easyparcel.com/my/en/track/details/?courier=Pgeon-Delivery&awb=GUP6UG', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDI2ODc1MA%3D%3D', 'GUP6UG', 27, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-06-19 00:00:00', 'Shipment Arranged', 'Asus Vivobook Pro 14', '2023-06-16 12:33:14', '2023-06-16 14:29:09'),
+(5, NULL, NULL, NULL, NULL, NULL, 17, 'Min', 'CIMB', 'Kampung Parit Medan', NULL, NULL, NULL, '0194703276', NULL, 'pending', 'Microsoft Surface', '2023-06-18 22:56:43', '2023-06-18 22:56:43');
 
 -- --------------------------------------------------------
 
@@ -244,7 +248,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `payment_id`, `totalprice`, `delivery_status`, `created_at`, `updated_at`) VALUES
-(17, 2, 18, 3174.00, 'Unpack', '2023-05-26 05:26:37', '2023-06-08 07:13:48'),
+(17, 2, 18, 3174.00, 'Transfer to logistic', '2023-05-26 05:26:37', '2023-06-18 22:56:43'),
 (18, 2, 19, 3045.00, 'Transfer to logistic', '2023-05-26 05:27:39', '2023-06-16 10:21:54'),
 (19, 2, 20, 129.00, 'pending', '2023-05-26 05:29:20', '2023-05-26 05:29:20'),
 (20, 2, 21, 3045.00, 'pending', '2023-05-26 05:30:11', '2023-05-26 05:30:11'),
@@ -297,7 +301,8 @@ INSERT INTO `order_items` (`order_po_id`, `order_item_id`, `order_unit`, `order_
 (8, 6, 'unit', 1400, 4, '2023-06-10'),
 (8, 7, 'pcs', 5, 1, NULL),
 (8, 5, 'pcs', 55, 2, '2023-06-19'),
-(9, 3, 'unit', 1200, 3, '2023-06-10');
+(9, 3, 'unit', 1200, 3, '2023-06-10'),
+(10, 4, 'unit', 4, 3, '2023-06-16');
 
 -- --------------------------------------------------------
 
@@ -410,7 +415,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`, `product_details`, `product_sellingprice`, `product_supplierprice`, `product_quantity`, `product_img1`, `product_img2`, `product_img3`, `created_at`, `updated_at`) VALUES
-(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 4, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-05-23 03:35:21'),
+(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-06-18 22:44:30'),
 (4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42'),
 (5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58'),
 (6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50'),
@@ -467,9 +472,13 @@ INSERT INTO `purchaserequest` (`id`, `status`, `requestor`, `supplier_id`, `disc
 ('PR-20230609Q189X', 'Approved', 'TSK Rose', 3, 3, 1.26, 4, 1.68, 42.00, 'letak warning tag', '2023-06-09 01:47:03', '2023-06-09 22:35:59'),
 ('PR-20230609QXA9Q', 'Approved', 'TSK Wanie', 3, 5, 0.6, 6, 0.72, 12.00, NULL, '2023-06-08 19:54:42', '2023-06-08 20:24:25'),
 ('PR-20230609XRIEP', 'Approved', 'TSK Wanie', 3, 3, 2.16, 2, 1.44, 72.00, 'hantar ke plant 3', '2023-06-08 19:01:19', '2023-06-09 23:46:39'),
-('PR-20230609Y2IKR', 'Pending', 'TSK Wanie', 3, 5, 0.6, 6, 0.72, 12.00, 'pppp', '2023-06-09 05:05:11', '2023-06-18 03:24:47'),
-('PR-20230610D8UMX', 'Pending', 'Ahmad', 4, 33, 6819.12, NULL, 0, 20664.00, NULL, '2023-06-09 23:25:34', '2023-06-09 23:25:34'),
-('PR-20230610YIX0I', 'Approved', 'TSK Aiman', 4, 2, 184, NULL, 0, 9200.00, NULL, '2023-06-10 00:11:36', '2023-06-10 00:12:29');
+('PR-20230609Y2IKR', 'Approved', 'TSK Wanie', 3, 5, 0.6, 6, 0.72, 12.00, 'pppp', '2023-06-09 05:05:11', '2023-06-19 00:51:44'),
+('PR-20230610D8UMX', 'Approved', 'Ahmad', 4, 33, 6819.12, NULL, 0, 20664.00, NULL, '2023-06-09 23:25:34', '2023-06-19 05:19:43'),
+('PR-20230610YIX0I', 'Approved', 'TSK Aiman', 4, 2, 184, NULL, 0, 9200.00, NULL, '2023-06-10 00:11:36', '2023-06-10 00:12:29'),
+('PR-20230619FCM3C', 'Pending', 'TSK Rose', 3, 70, 0, 3, 0, 0.00, NULL, '2023-06-19 08:32:34', '2023-06-19 08:45:06'),
+('PR-20230619O21VF', 'Pending', 'TSK Leo', 3, 50, 42.12, 10, 28.08, 453.96, NULL, '2023-06-18 22:39:15', '2023-06-19 08:29:58'),
+('PR-20230619PYZYY', 'Pending', 'TSK JJ', 3, 15, 3.6, 3, 0.9, 0.00, NULL, '2023-06-19 09:13:56', '2023-06-19 09:14:17'),
+('PR-20230619ZAZIB', 'Pending', 'TSK Shah', 3, 6, 24.96, 9, 37.44, 0.00, NULL, '2023-06-19 08:56:01', '2023-06-19 08:56:17');
 
 -- --------------------------------------------------------
 
@@ -501,13 +510,14 @@ CREATE TABLE `purchase_order` (
 
 INSERT INTO `purchase_order` (`po_id`, `po_no`, `po_prno`, `requestor`, `buyer`, `supplier_id`, `discount_percentage`, `discount_amount`, `tax_percentage`, `tax_amount`, `total_amount`, `notes`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'PO-20230610LN2KAO20Z3', 'PR-20230608BHUM5', NULL, 'Ahmad', 3, 5, 22.6, 6, 27.12, NULL, NULL, 'Closed', '2023-06-10 06:22:18.000000', '2023-06-18 10:58:35.000000'),
-(2, 'PO-202306108OKOUECCF0', 'PR-20230608BHUM5', NULL, 'RONALDO SUI', 3, 5, 705.65, 6, 846.78, NULL, NULL, 'Ordered', '2023-06-10 07:57:35.000000', '2023-06-18 12:13:30.000000'),
+(2, 'PO-202306108OKOUECCF0', 'PR-20230608BHUM5', NULL, 'RONALDO SUI', 3, 5, 705.65, 6, 846.78, NULL, NULL, 'Closed', '2023-06-10 07:57:35.000000', '2023-06-18 13:11:28.000000'),
 (3, 'PO-202306109TVAY0QYFX', 'PR-20230608BHUM5', 'TSK Wanie', 'Sam', 3, 5, 509.05, 6, 610.86, NULL, NULL, 'Ordered', '2023-06-10 08:01:51.000000', '2023-06-18 12:11:02.000000'),
 (4, 'PO-20230610XM0YFBE5XV', 'PR-20230608BHUM5', 'TSK Wanie', NULL, 3, 5, 500.55, 6, 600.66, NULL, NULL, 'Ordered', '2023-06-10 08:07:09.000000', '2023-06-10 08:07:09.000000'),
 (5, 'PO-20230610JHUYKUOEN9', 'PR-20230610YIX0I', 'TSK Aiman', 'Ronaldo', 4, 2, 187.3, 0, 0, NULL, 'Please', 'Ordered', '2023-06-10 08:13:18.000000', '2023-06-10 08:18:36.000000'),
 (7, 'PO-20230618YIYNKO8OJ2', 'PR-20230610YIX0I', 'TSK Aiman', 'Cristiano', 4, 2, 184, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 11:02:58.000000', '2023-06-18 11:02:58.000000'),
 (8, 'PO-20230618N1QD2DFR6M', 'PR-20230610YIX0I', 'TSK Aiman', 'Ronaldo Nazario', 4, 2, 186.4, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 12:11:56.000000', '2023-06-18 12:13:39.000000'),
-(9, 'PO-20230618X7NCHYPSPT', 'PR-20230610YIX0I', 'TSK Aiman', NULL, 4, 2, 184, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 12:15:43.000000', '2023-06-18 12:15:43.000000');
+(9, 'PO-20230618X7NCHYPSPT', 'PR-20230610YIX0I', 'TSK Aiman', NULL, 4, 2, 184, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 12:15:43.000000', '2023-06-18 12:15:43.000000'),
+(10, 'PO-20230618JS4TXW25XD', 'PR-20230608BHUM5', 'TSK Wanie', 'mEOW', 3, 5, 0.6, 6, 0.72, NULL, NULL, 'Closed', '2023-06-18 15:05:12.000000', '2023-06-19 14:23:52.000000');
 
 -- --------------------------------------------------------
 
@@ -542,7 +552,10 @@ INSERT INTO `request_items` (`id`, `pr_id`, `product_id`, `delivery_date`, `prod
 (12, 'PR-20230610D8UMX', 3, '2023-06-10', 3, 'unit', 3555, '2023-06-09 23:25:34', '2023-06-09 23:25:34'),
 (13, 'PR-20230610D8UMX', 4, '2023-06-10', 3, 'EA', 3333, '2023-06-09 23:25:34', '2023-06-09 23:25:34'),
 (14, 'PR-20230610YIX0I', 3, '2023-06-10', 3, 'unit', 1200, '2023-06-10 00:11:36', '2023-06-10 00:11:36'),
-(15, 'PR-20230610YIX0I', 6, '2023-06-10', 4, 'unit', 1400, '2023-06-10 00:11:36', '2023-06-10 00:11:36');
+(15, 'PR-20230610YIX0I', 6, '2023-06-10', 4, 'unit', 1400, '2023-06-10 00:11:36', '2023-06-10 00:11:36'),
+(23, 'PR-20230619O21VF', 3, '2023-06-19', 0, 'pcs', 0, '2023-06-19 08:29:58', '2023-06-19 08:29:58'),
+(25, 'PR-20230619FCM3C', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 08:45:06', '2023-06-19 08:45:06'),
+(31, 'PR-20230619PYZYY', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 09:14:17', '2023-06-19 09:14:17');
 
 -- --------------------------------------------------------
 
@@ -619,15 +632,15 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `grn`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_grn_suppliers` (`supplier_id`),
-  ADD KEY `purchase_order_no` (`purchase_order_no`);
+  ADD KEY `po_id` (`po_id`);
 
 --
 -- Indexes for table `grn_items`
 --
 ALTER TABLE `grn_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `grn_id` (`grn_id`);
+  ADD KEY `grn_id` (`grn_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `items`
@@ -691,7 +704,8 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_category` (`product_category`);
+  ADD KEY `product_category` (`product_category`),
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `product_category`
@@ -757,13 +771,13 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `grn`
 --
 ALTER TABLE `grn`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `grn_items`
 --
 ALTER TABLE `grn_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -775,7 +789,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `logistic`
 --
 ALTER TABLE `logistic`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -817,13 +831,13 @@ ALTER TABLE `product_category`
 -- AUTO_INCREMENT for table `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `request_items`
 --
 ALTER TABLE `request_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -852,14 +866,14 @@ ALTER TABLE `carts`
 -- Constraints for table `grn`
 --
 ALTER TABLE `grn`
-  ADD CONSTRAINT `FK_grn_po_no` FOREIGN KEY (`purchase_order_no`) REFERENCES `purchase_order` (`po_no`),
-  ADD CONSTRAINT `FK_grn_suppliers` FOREIGN KEY (`supplier_id`) REFERENCES `purchase_order` (`supplier_id`);
+  ADD CONSTRAINT `grn_ibfk_1` FOREIGN KEY (`po_id`) REFERENCES `purchase_order` (`po_id`);
 
 --
 -- Constraints for table `grn_items`
 --
 ALTER TABLE `grn_items`
-  ADD CONSTRAINT `grn_items_ibfk_1` FOREIGN KEY (`grn_id`) REFERENCES `grn` (`id`);
+  ADD CONSTRAINT `grn_items_ibfk_1` FOREIGN KEY (`grn_id`) REFERENCES `grn` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `grn_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `items`
@@ -911,8 +925,8 @@ ALTER TABLE `purchase_order`
 -- Constraints for table `request_items`
 --
 ALTER TABLE `request_items`
-  ADD CONSTRAINT `request_items_ibfk_1` FOREIGN KEY (`pr_id`) REFERENCES `purchaserequest` (`id`),
-  ADD CONSTRAINT `request_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `request_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `request_items_ibfk_3` FOREIGN KEY (`pr_id`) REFERENCES `purchaserequest` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

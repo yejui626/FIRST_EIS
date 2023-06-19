@@ -10,7 +10,7 @@ class GRN extends Model
     protected $table = 'grn';
     protected $fillable = [
         'grn_number',
-        'purchase_order_no',
+        'po_id',
         'supplier_id',
         'received_date',
         'custdelivery_date',
@@ -23,6 +23,16 @@ class GRN extends Model
     {
         return $this->hasMany(GRNItem::class, 'grn_id');
     }
+
+    public function supplier() 
+    { 
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id'); 
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }
 
 class GRNItem extends Model
@@ -30,7 +40,7 @@ class GRNItem extends Model
     protected $table = 'grn_items';
     protected $fillable = [
         'grn_id',
-        'product_received',
+        'product_id',
         'qty',
         'product_uom',
         'description',
@@ -40,4 +50,12 @@ class GRNItem extends Model
     {
         return $this->belongsTo(GRN::class, 'grn_id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+    
+
+
 }

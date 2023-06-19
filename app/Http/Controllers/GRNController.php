@@ -52,7 +52,7 @@ class GRNController extends Controller
     {
         // Validate the form inputs
         $validatedData = $request->validate([
-            'purchase_order_no' => 'required',
+            'po_id' => 'required',
             'supplier_id' => 'required',
             'received_date' => 'required|date',
             'custdelivery_date' => 'required|date',
@@ -64,18 +64,13 @@ class GRNController extends Controller
             'description' => 'required|array',
         ]);
 
-       
-        // Generate random string for po_no if it is blank
-        $grnNo = $request->input('grn_number');
-        if (empty($poNo)) {
-            
-            $currentDate = date('Ymd'); // Get current date in YYYYMMDD format
-            $randomString = strtoupper(Str::random(10));
-            $grnNo = "GRN-$currentDate$randomString"; // Combine the elements to form the purchase order number
-        }
+        $currentDate = date('Ymd'); // Get current date in YYYYMMDD format
+        $randomString = strtoupper(Str::random(10));
+        $grnNo = "GRN-$currentDate$randomString"; // Combine the elements to form the purchase order number
+        
         $grn = new GRN;
         $grn->grn_number = $grnNo;
-        $grn->purchase_order_no = $validatedData['purchase_order_no'];
+        $grn->po_id = $validatedData['po_id'];
         $grn->supplier_id = $validatedData['supplier_id'];
         $grn->received_date = $validatedData['received_date'];
         $grn->custdelivery_date = $validatedData['custdelivery_date'];
@@ -118,7 +113,7 @@ class GRNController extends Controller
         // Validate the form inputs
         $validatedData = $request->validate([
             'grn_number' => 'required',
-            'purchase_order_no' => 'required',
+            'po_id' => 'required',
             'supplier_id' => 'required',
             'received_date' => 'required|date',
             'custdelivery_date' => 'required|date',
@@ -135,7 +130,7 @@ class GRNController extends Controller
     
         // Update the GRN attributes
         $grn->grn_number = $validatedData['grn_number'];
-        $grn->purchase_order_no = $validatedData['purchase_order_no'];
+        $grn->po_id = $validatedData['po_id'];
         $grn->supplier_id = $validatedData['supplier_id'];
         $grn->received_date = $validatedData['received_date'];
         $grn->custdelivery_date = $validatedData['custdelivery_date'];
