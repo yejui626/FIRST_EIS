@@ -34,7 +34,7 @@
                     <div class="card-body">
                         
                         <div class="table-responsive">
-                            <table class="table" id="pr-table1" class="table table-striped">
+                            <table id="pr-table1" class="table table-striped">
                                 
                                 <thead class=" text-primary">
                                     <th>
@@ -109,7 +109,7 @@
                                         </div>
                                         
                                         
-                                        <a href="{{ route('purchaserequest.show', $pr->id) }}" class="btn btn-primary mr-1" type="button">Generate PDF</a>
+                                        <a href="{{ route('purchaserequest.show', $pr->id) }}" class="btn btn-primary mr-1" type="button">Detail</a>
                                        <?php $role = Auth::user()->role; ?>
                                         @if($role == 3)
                                         <a href="{{ route('purchaserequest.edit', $pr->id) }}" class="btn btn-warning mr-1" role="button">Edit</a>
@@ -134,7 +134,7 @@
                         <div class="card-body">
                             
                             <div class="table-responsive">
-                                <table class="table" id="pr-table2" class="table table-striped">
+                                <table id="pr-table2" class="table table-striped">
                                 <h4 class="card-title"> Approved Purchase Request</h4>
                                     <thead class=" text-primary">
                                         <th>

@@ -86,18 +86,8 @@
                                                 <td class="align-middle p-1">
                                                     <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="product_quantity[]" min="1">
                                                 </td>
-                                                <td class="align-middle p-1">
-                                                    <select name="uom[]" class="custom-select custom-select-sm rounded-0 select2">
-                                                    <option selected="" disabled="">Choose UOM</option>
-                                                    <option value="unit">unit</option>
-                                                    <option value="EA">EA</option>
-                                                    <option value="bag">bag</option>
-                                                    <option value="BKT">BKT</option>
-                                                    <option value="BND">BND</option>
-                                                    <option value="BX">BX</option>
-                                                    <option value="CM">CM</option>
-                                                    <option value="CTN">CTN</option>
-                                                    </select>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-sm rounded-0" name="uom[]">
                                                 </td>
                                                 <td class="align-middle p-1">
                                                     <input type="number" class="form-control form-control-sm rounded-0 product_unitprice" name="product_unitprice[]" min="0">
@@ -107,7 +97,6 @@
                                                     <input type="text" class="form-control form-control-sm rounded-0 total" name="total[]" readonly>
                                                 </td>
                                                 <td class="align-middle p-1">
-                                                    <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -142,7 +131,7 @@
                                     </table>
                                 </div>
                             </div>
-                                                            <div class="row">
+                                    <div class="row">
                                     <div class="col-md-6">
                                         <label for="notes" class="control-label">Notes</label>
                                         <textarea name="notes" id="notes" cols="10" rows="4"
@@ -192,18 +181,8 @@
                     <td class="align-middle p-1">
                         <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="product_quantity[]" min="1">
                     </td>
-                    <td class="align-middle p-1">
-                        <select name="uom[]" class="custom-select custom-select-sm rounded-0 select2">
-                        <option selected="" disabled="">Choose UOM</option>
-                        <option value="unit">unit</option>
-                        <option value="EA">EA</option>
-                        <option value="bag">bag</option>
-                        <option value="BKT">BKT</option>
-                        <option value="BND">BND</option>
-                        <option value="BX">BX</option>
-                        <option value="CM">CM</option>
-                        <option value="CTN">CTN</option>
-                        </select>
+                    <td>
+                        <input type="text" class="form-control form-control-sm rounded-0" name="uom[]">
                     </td>
                     <td class="align-middle p-1">
                         <input type="number" class="form-control form-control-sm rounded-0 product_unitprice" name="product_unitprice[]" min="0">

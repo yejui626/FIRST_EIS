@@ -8,6 +8,7 @@ use App\Models\PurchaseRequest;
 use App\Models\PurchaseRequest_Items;
 use App\Models\Supplier;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 class PurchaseRequestController extends Controller
 {
@@ -142,23 +143,29 @@ class PurchaseRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $purchaserequest = PurchaseRequest::findOrFail($id);
-        
 
         $validatedData = $request->validate([
             'status' => 'required|in:Pending,Approved,Rejected',
         ]);
 
-        $requestData = $request->all();
-        $requestData['status'] = $validatedData['status'];
-        $purchaserequest->update($requestData);
+        $purchaserequest->requestor = $request->input('requestor');
+        $purchaserequest->supplier_id = $request->input('supplier_id');
+        $purchaserequest->notes = $request->input('notes');
+        $purchaserequest->discount_percentage = $request->input('discount_percentage');
+        $purchaserequest->tax_percentage = $request->input('tax_percentage');
         
-     
-       
+        // Update the purchase request's status
+        $purchaserequest->status = $validatedData['status'];
 
-    return redirect()->route('purchaserequest.index')->with('success', 'Status updated successfully');
+        // Save the changes to the purchase request
+        $purchaserequest->save();
 
+        // Redirect back to the index page with a success message
+        return redirect()->route('purchaserequest.index')->with('success', 'Purchase request updated successfully');
     }
+
 
 
 

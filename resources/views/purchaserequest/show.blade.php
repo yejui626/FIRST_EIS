@@ -122,7 +122,7 @@ span.select2-selection.select2-selection--single {
                                             <td class="align-middle p-0 text-center">{{$pr_items->product_quantity}}</td>
                                             <td class="align-middle p-1 text-center">{{$pr_items->uom}}</td>
                                             <td class="align-middle p-1">{{$pr_items->product->product_name}}</td>
-                                            <td class="align-middle p-1 item-description">{{$pr_items->product->product_category}}</td>
+                                            <td class="align-middle p-1 item-description">{{$pr_items->product->productCategory->category_name}}</td>
                                             <td class="align-middle p-1 text-right">{{number_format($pr_items->product_unitprice, 2)}}</td>
                                             <td class="align-middle p-1 text-right total-price">{{number_format(($pr_items->product_quantity) * ($pr_items->product_unitprice), 2)}}</td>
                                         </tr>
