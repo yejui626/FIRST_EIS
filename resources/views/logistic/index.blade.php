@@ -5,7 +5,6 @@
 
 @section('content')
 
-
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -20,7 +19,7 @@
                         </div>
                     @endif
 
-                    <h4 class="card-title">Logistic Details</h4>
+                    <h4 class="card-title">Logistic Details (Pending)</h4>
                 </div>
 
                 <div class="card-body">
@@ -39,93 +38,175 @@
                             </thead>
                             <tbody>
                                 @foreach($logistics as $log)
-                                <tr>
-                                    <td>{{ $log->sender_name}}</td>
-                                    <td>{{ $log->recipient_name }}</td>
-                                    <td>{{ $log->courier }}</td>
-                                    <td><a href="{{ $log->tracking_url }}">{{ $log->tracking_number }}</a></td>
-                                    <td><a href="{{ $log->awb_id_link }}">Print</a></td>
-                                    <td>{{ $log->shipment_date }}</td>
-                                    <td>{{ $log->status}}</td>
-                                    <td>
-                                        <!-- Pop-up Button -->
-                                        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#popup-{{$log->order_id}}">
-                                            View
-                                        </button>
+                                    @if($log->status === 'pending')
+                                        <tr>
+                                            <td>{{ $log->sender_name }}</td>
+                                            <td>{{ $log->recipient_name }}</td>
+                                            <td>{{ $log->courier }}</td>
+                                            <td><a href="{{ $log->tracking_url }}">{{ $log->tracking_number }}</a></td>
+                                            <td><a href="{{ $log->awb_id_link }}">Print</a></td>
+                                            <td>{{ $log->shipment_date }}</td>
+                                            <td>{{ $log->status }}</td>
+                                            <td>
+                                                <!-- Pop-up Button -->
+                                                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#popup-{{ $log->order_id }}">
+                                                    View
+                                                </button>
 
-                                     <!-- Pop-up Content -->
-                                        <div class="modal fade" id="popup-{{$log->order_id}}" tabindex="-1" role="dialog" aria-labelledby="popup-{{$log->order_id}}-label" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="popup-{{$log->order_id}}-label">View Order</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h6>Order {{ $log->order_id}}:</h6>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered" id="order-{{$log->order_id}}"> <!-- Added id attribute -->
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Order ID</th>
-                                                                        <th>Customer ID</th>
-                                                                        <th>Price</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>{{ $log->order->id }}</td>
-                                                                        <td>{{ $log->order->user_id ?? '' }}</td>
-                                                                        <td>{{ $log->order->totalprice ?? '' }}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
+                                                <!-- Pop-up Content -->
+                                                <div class="modal fade" id="popup-{{ $log->order_id }}" tabindex="-1" role="dialog" aria-labelledby="popup-{{ $log->order_id }}-label" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="popup-{{ $log->order_id }}-label">View Order</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h6>Order {{ $log->order_id }}:</h6>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="order-{{ $log->order_id }}">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Order ID</th>
+                                                                                <th>Customer ID</th>
+                                                                                <th>Price</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>{{ $log->order->id }}</td>
+                                                                                <td>{{ $log->order->user_id ?? '' }}</td>
+                                                                                <td>{{ $log->order->totalprice ?? '' }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <!-- Pop-up Button -->
-                                        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#ppopup-{{$log->id}}">
-                                            <i class="nc-icon nc-delivery-fast"></i> EasyParcel
-                                        </button>
-                                        <!-- Pop-up Content -->
-                                        <div class="modal fade" id="ppopup-{{$log->id}}" tabindex="-1" role="dialog" aria-labelledby="ppopup-{{$log->id}}-label" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('logistic.update', $log->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="ppopup-{{$log->id}}-label">Make EasyParcel Order</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
+                                            </td>
+                                            <td>
+                                                <!-- Pop-up Button -->
+                                                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#ppopup-{{ $log->id }}">
+                                                    <i class="nc-icon nc-delivery-fast"></i> EasyParcel
+                                                </button>
+                                                <!-- Pop-up Content -->
+                                                <div class="modal fade" id="ppopup-{{ $log->id }}" tabindex="-1" role="dialog" aria-labelledby="ppopup-{{ $log->id }}-label" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <form action="{{ route('logistic.update', $log->id) }}" method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="ppopup-{{ $log->id }}-label">Make EasyParcel Order</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label for="status">Courier:</label>
+                                                                        <select class="form-control" id="courier" name="courier" required>
+                                                                            <option value="Pgeon Delivery">Pgeon Delivery</option>
+                                                                            <option value="Skynet">Skynet</option>
+                                                                            <option value="DHL eCommerce">DHL eCommerce</option>
+                                                                            <option value="Poslaju">Poslaju (No airway bill/ tracking)</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="status">Weight:</label>
+                                                                        <input type="number" class="form-control" id="weight" name="weight" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="collect_date">Collect Date:</label>
+                                                                        <input type="text" class="form-control datepicker" id="collect_date" name="collect_date" placeholder="Only Weekdays!" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-group">
-                                                                <label for="status">Weight:</label>
-                                                                <input type="number" class="form-control" id="weight" name="weight" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="collect_date">Collect Date:</label>
-                                                                <input type="text" class="form-control datepicker" id="collect_date" name="collect_date" placeholder="Only Weekdays!"required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <h4 class="card-title">Logistic Details (Other Status)</h4>
+
+                        <table class="table" id="order-table-other-status">
+                            <thead class="text-primary">
+                                <th>Sender Name</th>
+                                <th>Recipient Name</th>
+                                <th>Courier</th>
+                                <th>Tracking Number</th>
+                                <th>AWB</th>
+                                <th>Shipment Date</th>
+                                <th>Status</th>
+                                <th>View Order</th>
+                            </thead>
+                            <tbody>
+                                @foreach($logistics as $log)
+                                    @if($log->status !== 'pending')
+                                        <tr>
+                                            <td>{{ $log->sender_name }}</td>
+                                            <td>{{ $log->recipient_name }}</td>
+                                            <td>{{ $log->courier }}</td>
+                                            <td><a href="{{ $log->tracking_url }}">{{ $log->tracking_number }}</a></td>
+                                            <td><a href="{{ $log->awb_id_link }}">Print</a></td>
+                                            <td>{{ $log->shipment_date }}</td>
+                                            <td>{{ $log->status }}</td>
+                                            <td>
+                                                <!-- Pop-up Button -->
+                                                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#popup-{{ $log->order_id }}">
+                                                    View
+                                                </button>
+
+                                                <!-- Pop-up Content -->
+                                                <div class="modal fade" id="popup-{{ $log->order_id }}" tabindex="-1" role="dialog" aria-labelledby="popup-{{ $log->order_id }}-label" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="popup-{{ $log->order_id }}-label">View Order</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h6>Order {{ $log->order_id }}:</h6>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="order-{{ $log->order_id }}">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Order ID</th>
+                                                                                <th>Customer ID</th>
+                                                                                <th>Price</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>{{ $log->order->id }}</td>
+                                                                                <td>{{ $log->order->user_id ?? '' }}</td>
+                                                                                <td>{{ $log->order->totalprice ?? '' }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -135,6 +216,8 @@
         </div>
     </div>
 </div>
+
+
 
 @push('scripts')
 <!-- CSS -->

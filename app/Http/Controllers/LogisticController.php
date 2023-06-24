@@ -16,6 +16,37 @@ class LogisticController extends Controller
     public function viewLogisticDetail()
     {
         $logistics = Logistic::orderBy('id', 'ASC')->get();
+        foreach ($logistics as $logistic) {
+            if ($logistic->status != 'pending' && $logistic->parcel_number != null)
+            {
+                $orderNumber = $logistic->parcel_number;
+                
+                $apiUrl = "https://connect.easyparcel.my/?ac=";
+                $apiKey = 'EP-euMXnumbB';
+                $action = "EPParcelStatusBulk";
+
+                $postparam = [
+                    'api'   => $apiKey,
+                    'bulk'  => [
+                        ['order_no' => $orderNumber],
+                    ],
+                ];
+                
+                $url = $apiUrl . $action;
+                $response = Http::post($url, $postparam);
+                
+                if ($response->successful()) {
+                    $status = $response->json();
+                    // Store the parcel status information in the $logistic object
+                    $logistic->status = $status['result'][0]['parcel'][0]['ship_status'];
+                    $logistic->save();
+                } else {
+                    // Handle the case where the API request fails
+                    $logistic->status = null;
+                }
+            }
+        }
+
         return view('logistic.index', compact('logistics'));
     }
     /**
@@ -86,6 +117,9 @@ class LogisticController extends Controller
         ]);
         $weight = $validatedData['weight'];
         $collect_date = $validatedData['collect_date'];
+        $courier = [$request['courier']];
+        
+
 
         $apiUrl = "https://connect.easyparcel.my/?ac=";
         $apiKey = 'EP-euMXnumbB';
@@ -93,9 +127,7 @@ class LogisticController extends Controller
         $action = "EPSubmitOrderBulkV3";
         $postData = [
             'api' => $apiKey,
-            'courier' => ['Pgeon Prime', 'Pgeon
-            Delivery', 'Poslaju', 'Skynet', 'Nationwide',
-            'ABX', 'DHL eCommerce'],
+            'courier' => $courier,
             'dropoff' => '0',
             'bulk' => [
                 [
@@ -138,17 +170,22 @@ class LogisticController extends Controller
         $response = Http::post($url, $postData);
 
         if ($response->successful()) {
-            $responseData = $response->json();
-            $logistic->status = 'Shipment Arranged';
-            $logistic->courier = $responseData['result']['success'][0]['courier'];
-            $logistic->tracking_number = $responseData['result']['success'][0]['awb'];
-            $logistic->awb_id_link = $responseData['result']['success'][0]['awb_id_link'];
-            $logistic->tracking_url = $responseData['result']['success'][0]['tracking_url'];
-            $logistic->parcel_number = $responseData['result']['success'][0]['parcel_number'];
-            $logistic->shipment_date = $collect_date;
-            $logistic->save();
-            // Redirect or return response as needed
-            return redirect()->route ('logistic.detail')->with('success', 'Status updated successfully');
+            print_r($responseData);
+            if(isset($responseData['result']['success'][0]['courier'])){
+                $logistic->status = 'Shipment Arranged';
+                $logistic->courier = $responseData['result']['success'][0]['courier'];
+                $logistic->tracking_number = $responseData['result']['success'][0]['awb'];
+                $logistic->awb_id_link = $responseData['result']['success'][0]['awb_id_link'];
+                $logistic->tracking_url = $responseData['result']['success'][0]['tracking_url'];
+                $logistic->parcel_number = $responseData['result']['success'][0]['order_number'];
+                $logistic->shipment_date = $collect_date;
+                $logistic->save();
+                // Redirect or return response as needed
+                return redirect()->route ('logistic.detail')->with('success', 'Status updated successfully');
+            }
+            else{
+                return redirect()->route ('logistic.detail')->with('success', 'Please select other dates (Courier Service Unavailable on Selected Date)');
+            }
         } else {
             // Handle the API request failure
             echo "API request failed";
