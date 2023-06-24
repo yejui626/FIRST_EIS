@@ -39,6 +39,8 @@ class LogisticController extends Controller
                     $status = $response->json();
                     // Store the parcel status information in the $logistic object
                     $logistic->status = $status['result'][0]['parcel'][0]['ship_status'];
+                    $logistic->order->delivery_status = $status['result'][0]['parcel'][0]['ship_status'];
+                    $logistic->order->save();
                     $logistic->save();
                 } else {
                     // Handle the case where the API request fails

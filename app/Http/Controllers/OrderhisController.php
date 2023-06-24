@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Items;
 use App\Models\Product;
+use App\Models\Logistic;
 
 class OrderhisController extends Controller
 {
