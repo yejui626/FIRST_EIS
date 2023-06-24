@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2023 at 07:16 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 24, 2023 at 09:37 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `cardtdetails` (
   `phone` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updates_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -48,12 +48,12 @@ CREATE TABLE `carts` (
   `product_quantity` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `product_name` varchar(255) DEFAULT NULL,
-  `product_images` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_images` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(8,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -83,7 +83,7 @@ CREATE TABLE `grn` (
   `total_qty` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `grn`
@@ -109,7 +109,7 @@ CREATE TABLE `grn_items` (
   `description` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `grn_items`
@@ -170,22 +170,22 @@ INSERT INTO `items` (`id`, `order_id`, `product_id`, `product_quantity`, `create
 
 CREATE TABLE `logistic` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `parcel_number` varchar(255) DEFAULT NULL,
-  `courier` varchar(255) DEFAULT NULL,
-  `tracking_url` varchar(255) DEFAULT NULL,
-  `awb_id_link` varchar(255) DEFAULT NULL,
-  `tracking_number` varchar(255) DEFAULT NULL,
+  `parcel_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `courier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tracking_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `awb_id_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tracking_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order_id` bigint(20) UNSIGNED NOT NULL,
-  `sender_name` varchar(255) NOT NULL,
-  `recipient_name` varchar(255) NOT NULL,
-  `recipient_address` varchar(255) DEFAULT NULL,
-  `recipient_address_state` varchar(255) DEFAULT NULL,
-  `recipient_address_city` varchar(255) DEFAULT NULL,
+  `sender_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipient_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recipient_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recipient_address_state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `recipient_address_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `recipient_address_postcode` int(11) DEFAULT NULL,
-  `recipient_phone` varchar(255) DEFAULT NULL,
+  `recipient_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipment_date` datetime DEFAULT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'pending',
-  `description` text DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -195,8 +195,9 @@ CREATE TABLE `logistic` (
 --
 
 INSERT INTO `logistic` (`id`, `parcel_number`, `courier`, `tracking_url`, `awb_id_link`, `tracking_number`, `order_id`, `sender_name`, `recipient_name`, `recipient_address`, `recipient_address_state`, `recipient_address_city`, `recipient_address_postcode`, `recipient_phone`, `shipment_date`, `status`, `description`, `created_at`, `updated_at`) VALUES
-(4, 'EP-ABVG66', 'Pgeon', 'https://app.easyparcel.com/my/en/track/details/?courier=Pgeon-Delivery&awb=GUP6UG', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDI2ODc1MA%3D%3D', 'GUP6UG', 27, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-06-19 00:00:00', 'Shipment Arranged', 'Asus Vivobook Pro 14', '2023-06-16 12:33:14', '2023-06-16 14:29:09'),
-(5, NULL, NULL, NULL, NULL, NULL, 17, 'Min', 'CIMB', 'Kampung Parit Medan', NULL, NULL, NULL, '0194703276', NULL, 'pending', 'Microsoft Surface', '2023-06-18 22:56:43', '2023-06-18 22:56:43');
+(7, 'EI-O94Q6', 'DHL eCommerce', 'https://app.easyparcel.com/my/en/track/details/?courier=DHLECOMMERCE&awb=MYAIAEPAB2TWS', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDQzNTQzMA%3D%3D', 'MYAIAEPAB2TWS', 26, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-07-04 00:00:00', 'Cancel', 'UGREEN USB-C', '2023-06-24 06:48:03', '2023-06-24 11:35:20'),
+(8, 'EI-O94RO', 'Pgeon', 'https://app.easyparcel.com/my/en/track/details/?courier=Pgeon-Delivery&awb=JW7WRV', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDQzNTAwMA%3D%3D', 'JW7WRV', 26, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-06-26 00:00:00', 'Cancel', 'UGREEN USB-C', '2023-06-24 08:03:50', '2023-06-24 08:21:48'),
+(9, 'EI-O94R7', 'Pgeon', 'https://app.easyparcel.com/my/en/track/details/?courier=Pgeon-Delivery&awb=NXNGWW', 'https://connect.easyparcel.my/?ac=AWBLabel&id=RVAtZXVNWG51bWJCIzI1MDQzNTA1NQ%3D%3D', 'NXNGWW', 27, 'Min', 'CIMB', 'Kampung Parit Medan', 'Pulau Pinang', 'Bukit Mertajam', 14000, '0194703276', '2023-06-26 00:00:00', 'Cancel', 'Asus Vivobook Pro 14', '2023-06-24 08:03:53', '2023-06-24 11:02:50');
 
 -- --------------------------------------------------------
 
@@ -206,7 +207,7 @@ INSERT INTO `logistic` (`id`, `parcel_number`, `courier`, `tracking_url`, `awb_i
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -238,7 +239,7 @@ CREATE TABLE `orders` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `payment_id` bigint(20) UNSIGNED NOT NULL,
   `totalprice` decimal(8,2) NOT NULL,
-  `delivery_status` varchar(255) NOT NULL DEFAULT 'pending',
+  `delivery_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -248,17 +249,17 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `payment_id`, `totalprice`, `delivery_status`, `created_at`, `updated_at`) VALUES
-(17, 2, 18, 3174.00, 'Transfer to logistic', '2023-05-26 05:26:37', '2023-06-18 22:56:43'),
-(18, 2, 19, 3045.00, 'Transfer to logistic', '2023-05-26 05:27:39', '2023-06-16 10:21:54'),
-(19, 2, 20, 129.00, 'pending', '2023-05-26 05:29:20', '2023-05-26 05:29:20'),
-(20, 2, 21, 3045.00, 'pending', '2023-05-26 05:30:11', '2023-05-26 05:30:11'),
-(21, 2, 22, 129.00, 'pending', '2023-05-26 05:32:06', '2023-05-26 05:32:06'),
-(22, 2, 23, 3174.00, 'pending', '2023-05-26 05:35:37', '2023-05-26 05:35:37'),
-(23, 2, 24, 45704.00, 'pending', '2023-05-26 11:29:02', '2023-05-26 11:29:02'),
-(24, 2, 25, 6923.00, 'pending', '2023-05-26 15:45:30', '2023-05-26 15:45:30'),
-(25, 2, 26, 6794.00, 'pending', '2023-05-26 15:52:39', '2023-05-26 15:52:39'),
-(26, 2, 27, 129.00, 'pending', '2023-05-26 19:50:08', '2023-05-26 19:50:08'),
-(27, 2, 28, 13468.00, 'Transfer to logistic', '2023-05-26 20:04:29', '2023-06-16 12:33:14');
+(17, 2, 18, '3174.00', 'Transfer to logistic', '2023-05-26 05:26:37', '2023-06-18 22:56:43'),
+(18, 2, 19, '3045.00', 'Transfer to logistic', '2023-05-26 05:27:39', '2023-06-16 10:21:54'),
+(19, 2, 20, '129.00', 'pending', '2023-05-26 05:29:20', '2023-05-26 05:29:20'),
+(20, 2, 21, '3045.00', 'pending', '2023-05-26 05:30:11', '2023-05-26 05:30:11'),
+(21, 2, 22, '129.00', 'pending', '2023-05-26 05:32:06', '2023-05-26 05:32:06'),
+(22, 2, 23, '3174.00', 'pending', '2023-05-26 05:35:37', '2023-05-26 05:35:37'),
+(23, 2, 24, '45704.00', 'pending', '2023-05-26 11:29:02', '2023-05-26 11:29:02'),
+(24, 2, 25, '6923.00', 'pending', '2023-05-26 15:45:30', '2023-05-26 15:45:30'),
+(25, 2, 26, '6794.00', 'pending', '2023-05-26 15:52:39', '2023-05-26 15:52:39'),
+(26, 4, 27, '129.00', 'Cancel', '2023-05-26 19:50:08', '2023-06-24 11:35:58'),
+(27, 4, 28, '13468.00', 'Cancel', '2023-05-26 20:04:29', '2023-06-24 11:36:00');
 
 -- --------------------------------------------------------
 
@@ -273,7 +274,7 @@ CREATE TABLE `order_items` (
   `order_unitprice` float NOT NULL,
   `order_quantity` float NOT NULL,
   `delivery_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order_items`
@@ -311,8 +312,8 @@ INSERT INTO `order_items` (`order_po_id`, `order_item_id`, `order_unit`, `order_
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -324,15 +325,15 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `payments` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cardname` varchar(255) DEFAULT NULL,
-  `cardnumber` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
+  `cardname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cardnumber` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `address_state` varchar(255) DEFAULT NULL,
-  `address_city` varchar(255) DEFAULT NULL,
-  `address_postcode` varchar(255) DEFAULT NULL
+  `address_state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_postcode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -366,7 +367,7 @@ INSERT INTO `payments` (`id`, `cardname`, `cardnumber`, `address`, `phone`, `cre
 (24, 'Test', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 11:29:02', '2023-05-26 11:29:02', NULL, NULL, NULL),
 (25, 'CIMB', '4242 4242 4242 4242', 'Kulim', '0194703276', '2023-05-26 15:45:30', '2023-05-26 15:45:30', NULL, NULL, NULL),
 (26, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 15:52:39', '2023-05-26 15:52:39', NULL, NULL, NULL),
-(27, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 19:50:08', '2023-05-26 19:50:08', NULL, NULL, NULL),
+(27, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 19:50:08', '2023-05-26 19:50:08', 'Pulau Pinang', 'Bukit Mertajam', '14000'),
 (28, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 20:04:29', '2023-05-26 20:04:29', 'Pulau Pinang', 'Bukit Mertajam', '14000');
 
 -- --------------------------------------------------------
@@ -377,11 +378,11 @@ INSERT INTO `payments` (`id`, `cardname`, `cardnumber`, `address`, `phone`, `cre
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -396,16 +397,16 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `product_name` varchar(255) NOT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_category` int(20) NOT NULL,
-  `product_code` varchar(255) DEFAULT NULL,
-  `product_details` text DEFAULT NULL,
+  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_sellingprice` decimal(8,2) NOT NULL,
   `product_supplierprice` decimal(8,2) NOT NULL,
   `product_quantity` int(11) DEFAULT NULL,
-  `product_img1` varchar(255) DEFAULT NULL,
-  `product_img2` varchar(255) DEFAULT NULL,
-  `product_img3` varchar(255) DEFAULT NULL,
+  `product_img1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_img2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_img3` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -415,11 +416,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`, `product_details`, `product_sellingprice`, `product_supplierprice`, `product_quantity`, `product_img1`, `product_img2`, `product_img3`, `created_at`, `updated_at`) VALUES
-(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-06-18 22:44:30'),
-(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42'),
-(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58'),
-(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50'),
-(7, 'Shipping', 1, NULL, NULL, 0.00, 0.00, NULL, NULL, NULL, NULL, '2023-06-09 22:00:40', '2023-06-09 22:00:40');
+(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', '3749.00', '3600.00', 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-06-18 22:44:30'),
+(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', '3045.00', '2899.00', 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42'),
+(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', '129.00', '100.00', 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58'),
+(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', '3500.00', '3000.00', NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50'),
+(7, 'Shipping', 1, NULL, NULL, '0.00', '0.00', NULL, NULL, NULL, NULL, '2023-06-09 22:00:40', '2023-06-09 22:00:40');
 
 -- --------------------------------------------------------
 
@@ -430,7 +431,7 @@ INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`
 CREATE TABLE `product_category` (
   `category_id` int(20) NOT NULL,
   `category_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product_category`
@@ -460,7 +461,7 @@ CREATE TABLE `purchaserequest` (
   `notes` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `purchaserequest`
@@ -502,7 +503,7 @@ CREATE TABLE `purchase_order` (
   `status` varchar(50) DEFAULT NULL,
   `created_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `purchase_order`
@@ -535,7 +536,7 @@ CREATE TABLE `request_items` (
   `product_unitprice` float NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `request_items`
@@ -565,10 +566,10 @@ INSERT INTO `request_items` (`id`, `pr_id`, `product_id`, `delivery_date`, `prod
 
 CREATE TABLE `suppliers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `supplier_name` varchar(255) NOT NULL,
-  `supplier_phone` varchar(20) NOT NULL,
-  `supplier_address` text NOT NULL,
-  `supplier_details` text DEFAULT NULL,
+  `supplier_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier_phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier_address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplier_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -589,12 +590,12 @@ INSERT INTO `suppliers` (`id`, `supplier_name`, `supplier_phone`, `supplier_addr
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `role` int(11) NOT NULL DEFAULT 5,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -789,7 +790,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `logistic`
 --
 ALTER TABLE `logistic`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `migrations`
