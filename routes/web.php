@@ -105,6 +105,8 @@ Route::group(['middleware' => 'role:3'], function () {
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::post('/purchaserequest/create', [PurchaseRequestController::class, 'store'])->name('purchaseRequest.store');
+	 Route::get('purchaserequest/createwithproduct/{product_id}', [PurchaseRequestController::class, 'createwithproduct'])->name('purchaseRequest.createwithproduct');
+	 
     Route::resource('/quantity', QuantityController::class);
     Route::put('/purchase-order/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('po.updateStatus');
 	Route::get('/grn/create/{id}', [GRNController::class, 'create'])->name('grn.create');

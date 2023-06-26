@@ -42,6 +42,26 @@ class PurchaseRequestController extends Controller
         return view('purchaserequest.create', ['supplier' => $supplier, 'id' => $id, 'product' => $product]);
     }
 
+    public function createwithproduct($product_id)
+{
+    $lowproduct = Product::find($product_id);
+    
+    $product = Product::all();
+    $supplier = Supplier::all();
+    $randomString =  strtoupper(Str::random(5)); 
+    $currentDate = date('Ymd');
+    $id = "PR-$currentDate$randomString";
+    
+    // Pass the product to the createWithProduct view
+    return view('purchaserequest.createwithproduct', [
+        'supplier' => $supplier,
+        'id' => $id,
+        'product' => $product,
+        'lowproduct' => $lowproduct // Add this line
+    ]);
+}
+
+
     /**
      * Store a newly created resource in storage.
      *

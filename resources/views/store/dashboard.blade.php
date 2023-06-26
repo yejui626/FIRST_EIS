@@ -147,6 +147,7 @@
                                     <td class="text-right">
                                         <a href="{{route('quantity.show', $product->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
                                         <a href="{{route('quantity.edit', $product->id)}}" class="btn btn-default mr-1" type="button">Edit</a>
+                                        <a href="{{ route('purchaseRequest.createwithproduct', ['product_id' => $product->id]) }}" class="btn btn-success mr-1" type="button">Purchase</a>
                                         <!-- Additional actions or buttons -->
                                     </td>
                                 </tr>
