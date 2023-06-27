@@ -23,8 +23,10 @@ class GRNController extends Controller
      */
     public function index()
     {
-        $grn = GRN::orderBy('created_at', 'ASC')->get();
+        
+        $grn = GRN::with('purchaseorder')->orderBy('created_at', 'ASC')->get();
         $suppliers = Supplier::all();
+     
         return view('grn.index', compact('grn','suppliers'));
         
     }
@@ -119,7 +121,7 @@ class GRNController extends Controller
             'custdelivery_date' => 'required|date',
             'to_grn' => 'required',
             'recipient_grn' => 'required',
-            'product_received' => 'required|array',
+            'product_id' => 'required|array',
             'qty' => 'required|array',
             'product_uom' => 'required|array',
             'description' => 'required|array',
@@ -142,13 +144,13 @@ class GRNController extends Controller
    
 
         // Update existing GRNItem records
-        $product_received = $validatedData['product_received'];
+        $product_id = $validatedData['product_id'];
         $qty = $validatedData['qty'];
         $product_uom = $validatedData['product_uom'];
         $description = $validatedData['description'];
     
         foreach ($grn->grnItems as $index => $grnItem) {
-            $grnItem->product_received = $product_received[$index];
+            $grnItem->product_id = $product_id[$index];
             $grnItem->qty = $qty[$index];
             $grnItem->product_uom = $product_uom[$index];
             $grnItem->description = $description[$index];
@@ -156,14 +158,14 @@ class GRNController extends Controller
         }
     
         // Create new GRNItem records for added rows
-        $newProductReceived = $validatedData['product_received'];
+        $newProductReceived = $validatedData['product_id'];
         $newQty = $validatedData['qty'];
         $newProductUom = $validatedData['product_uom'];
         $newDescription = $validatedData['description'];
     
         for ($i = count($grn->grnItems); $i < count($newProductReceived); $i++) {
             $grnItem = new GRNItem;
-            $grnItem->product_received = $newProductReceived[$i];
+            $grnItem->product_id = $newProductReceived[$i];
             $grnItem->qty = $newQty[$i];
             $grnItem->product_uom = $newProductUom[$i];
             $grnItem->description = $newDescription[$i];
@@ -171,15 +173,15 @@ class GRNController extends Controller
             $grnItem->save();
         }
 
-        foreach ($validatedData['product_received'] as $index => $productReceived) {
+        foreach ($validatedData['product_id'] as $index => $product_id) {
             $qty = $validatedData['qty'][$index];
-            $product = Product::where('product_name', $productReceived)->first();
+            $product = Product::where('product_name', $product_id)->first();
         
             if ($product) {
                 $product->product_quantity += $qty;
                 $product->save();
             }
-    
+      
         // Redirect with success message
         return redirect()->route('grn.index')->with('success', 'GRN updated successfully.');
         }
@@ -197,8 +199,9 @@ class GRNController extends Controller
         $grn = GRN::findOrFail($id);
         $supplier = $grn->supplier;
         $grnItems = $grn->grnItems;
+        $purchaseorder = PurchaseOrder::find($grn->po_id);
 
-        return view('grn.show', compact('grn', 'supplier', 'grnItems'));
+        return view('grn.show', compact('grn', 'supplier', 'grnItems', 'purchaseorder'));
     }
 
     
@@ -213,6 +216,9 @@ class GRNController extends Controller
     {
 
         $grn = GRN::with('grnItems')->find($id);
+        $product = Product::all();
+        // Retrieve the related PurchaseOrder model
+        $purchaseorder = PurchaseOrder::find($grn->po_id);
 
         if (!$grn) {
             return redirect()->back()->with('error', 'GRN not found.');
@@ -222,7 +228,7 @@ class GRNController extends Controller
 
         // Retrieve all the suppliers for the dropdown list
         $suppliers = Supplier::all();
-        return view('grn.edit', compact('grn','supplier', 'suppliers'));
+        return view('grn.edit', compact('grn','supplier', 'suppliers', 'product', 'purchaseorder'));
     }
 
     /**
@@ -243,8 +249,12 @@ class GRNController extends Controller
     {
         $grn = GRN::findOrFail($id);
 
+        // Delete the associated grn_items records
+        $grn->grnItems()->delete();
+    
+        // Delete the GRN record
         $grn->delete();
-
-        return redirect()->route('grn.index')->with('success', 'GRN deleted successfully');
+    
+        return redirect()->route('grn.index')->with('success', 'GRN and associated records deleted successfully');
     }
 }

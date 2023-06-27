@@ -18,13 +18,13 @@
                     <div class="form-group row">
                         <label for="grn_number" class="col-md-3 col-form-label">GRN Number</label>
                         <div class="col-md-9">
-                            <input type="text" name="grn_number" class="form-control" value="{{ $grn->grn_number }}" required>
+                            <input type="text" name="grn_number" class="form-control" value="{{ $grn->grn_number }}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="purchase_order_no" class="col-md-3 col-form-label">Purchase Order Number</label>
                         <div class="col-md-9">
-                            <input type="text" name="purchase_order_no" class="form-control" value="{{ $grn->purchase_order_no }}" required>
+                            <input type="text" name="purchase_order_no" class="form-control" value="{{$purchaseorder->po_no}}" readonly>
                         </div>
                     </div>
                     <div class="form-group row">

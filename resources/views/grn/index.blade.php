@@ -40,7 +40,7 @@
                                 <tr>
                                     <td>{{ $grnItem->id }}</td>
                                     <td>{{ $grnItem->grn_number }}</td>
-                                    <td>{{ $grnItem->purchase_order_no }}</td>
+                                    <td>{{ $grnItem->purchaseorder->po_no }}</td>
                                     <td>{{ $grnItem->supplier->supplier_name}}</td>
                                     <td>{{ $grnItem->to_grn }}</td>
                                     <td>{{ $grnItem->recipient_grn }}</td>

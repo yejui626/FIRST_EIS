@@ -33,6 +33,11 @@ class GRN extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
+    public function purchaseorder()
+{
+    return $this->belongsTo(PurchaseOrder::class, 'po_id', 'po_id');
+}
 }
 
 class GRNItem extends Model
@@ -55,7 +60,6 @@ class GRNItem extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
-    
 
 
 }

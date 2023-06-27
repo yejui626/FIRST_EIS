@@ -82,7 +82,7 @@ table {
                             <div class="col-6 row">
                                 <div class="col-6">
                                     <p class="m-0"><b>P.O. #:</b></p>
-                                    <p><b>{{$grn->purchase_order_no}}</b></p>
+                                    <p><b>{{$purchaseorder->po_no}}</b></p>
                                 </div>
                                 <div class="col-6">
                                     <p class="m-0"><b>Date Created</b></p>
