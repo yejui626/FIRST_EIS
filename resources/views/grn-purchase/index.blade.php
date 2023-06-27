@@ -17,7 +17,7 @@
                         {{ Session::get('success') }}
                     </div>
                     @endif
-                    <a href="{{ route('grn.create') }}" class="btn btn-primary" role="button" style="float: right;">
+                    <a href="{{ route('grn.Create') }}" class="btn btn-primary" role="button" style="float: right;">
                         <i class="fa fa-plus"></i> Add
                     </a>
                     <h4 class="card-title">Goods Receipt Note (GRN) List</h4>

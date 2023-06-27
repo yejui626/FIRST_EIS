@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
@@ -127,11 +127,21 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+{
+    try {
         $supplier = Supplier::findOrFail($id);
-
         $supplier->delete();
+    } catch (QueryException $exception) {
+        if ($exception->getCode() == 23000) {
+            // Handle the foreign key constraint violation error
+            return redirect()->route('supplier.index')->with('error', 'Cannot delete the supplier because it is referenced by some products.');
+        }
 
-        return redirect()->route ('supplier.index')->with('success', 'Supplier deleted successfully');
+        // Handle other types of database exceptions if needed
+
+        throw $exception;
     }
+
+    return redirect()->route('supplier.index')->with('success', 'Supplier deleted successfully!');
+}
 }

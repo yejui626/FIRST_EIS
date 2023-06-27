@@ -17,6 +17,13 @@
                         </button>
                         {{ Session::get('success') }}
                     </div>
+                    @elseif (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="role">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="nc-icon nc-simple-remove"></i>
+                        </button>
+                        {{ Session:: get('error' )}}
+                    </div>
                     @endif
 
                     <h4 class="card-title">Purchase Order List</h4>
@@ -82,7 +89,7 @@
                                         <?php $role = Auth::user()->role; ?>
                                         @if($role == 2)
                                         <a href="{{route('po.edit', $po->po_id)}}" class="btn btn-default mr-1" type="button">Edit</a>
-                                        <form action="{{route('po.destroy', $po->po_id)}}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting order?')">
+                                        <form action="{{route('po.destroy', $po->po_id)}}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting purchase order?')">
                                             <button class="btn btn-danger">Delete</button>
                                             @csrf
                                             @method('DELETE')

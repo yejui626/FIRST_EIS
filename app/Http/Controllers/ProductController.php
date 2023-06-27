@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Illuminate\Database\QueryException;
 
 class ProductController extends Controller
 {
@@ -188,11 +189,21 @@ if($validate->fails()){
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+{
+    try {
         $product = Product::findOrFail($id);
-
         $product->delete();
+    } catch (QueryException $exception) {
+        if ($exception->getCode() == 23000) {
+            // Handle the foreign key constraint violation error
+            return redirect()->route('product.index')->with('error', 'Cannot delete the product because it is referenced by some orders or categories.');
+        }
 
-        return redirect()->route ('product.index')->with('success', 'Product deleted successfully');
+        // Handle other types of database exceptions if needed
+
+        throw $exception;
     }
+
+    return redirect()->route('product.index')->with('success', 'Product deleted successfully!');
+}
 }

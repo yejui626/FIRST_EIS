@@ -24,12 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer ">
-                        <hr>
-                        <div class="stats">
-                            <i class="fa fa-refresh"></i> Update Now
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -49,12 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer ">
-                        <hr>
-                        <div class="stats">
-                            <i class="fa fa-calendar-o"></i> Last day
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -75,12 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer ">
-                        <hr>
-                        <div class="stats">
-                            <i class="fa fa-clock-o"></i> In the last hour
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -101,12 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer ">
-                        <hr>
-                        <div class="stats">
-                            <i class="fa fa-refresh"></i> Update now
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -175,7 +155,7 @@
                                         <div class="modal fade" id="popup-{{$pr->id}}" tabindex="-1" role="dialog" aria-labelledby="popup-{{$pr->id}}-label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('purchaserequest.update', $pr->id) }}" method="POST">
+                                                    <form action="{{ route('purchaseRequest.updateStatus', $pr->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
                                                         

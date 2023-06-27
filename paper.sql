@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2023 at 08:13 AM
+-- Generation Time: Jun 27, 2023 at 01:18 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -91,7 +91,8 @@ CREATE TABLE `grn` (
 
 INSERT INTO `grn` (`id`, `grn_number`, `po_id`, `supplier_id`, `received_date`, `custdelivery_date`, `to_grn`, `recipient_grn`, `total_qty`, `created_at`, `updated_at`) VALUES
 (28, 'GRN-20230619QRMSPAV803', 2, 3, '2023-06-08', '2023-06-15', 'TOY SHOP', 'DAFINA DOT COM', 5, '2023-06-19 16:38:18', '2023-06-19 16:38:18'),
-(29, 'GRN-20230627I0DRCJWVRB', 1, 3, '2023-06-29', '2023-07-07', 'MEOW', 'DAFINA DOT COM', 4, '2023-06-27 05:40:20', '2023-06-27 05:40:20');
+(29, 'GRN-20230627I0DRCJWVRB', 1, 3, '2023-06-29', '2023-07-07', 'MEOW', 'DAFINA DOT COM', 4, '2023-06-27 05:40:20', '2023-06-27 05:40:20'),
+(30, 'GRN-20230627HQHUSVRJL0', 11, 3, '2023-06-27', '2023-06-28', 'Anyone', 'Someone', 3, '2023-06-27 10:58:41', '2023-06-27 10:58:41');
 
 -- --------------------------------------------------------
 
@@ -116,7 +117,8 @@ CREATE TABLE `grn_items` (
 
 INSERT INTO `grn_items` (`id`, `grn_id`, `product_id`, `qty`, `product_uom`, `description`, `created_at`, `updated_at`) VALUES
 (13, 28, 3, 5, 'BND', NULL, '2023-06-19 16:38:18', '2023-06-19 16:38:18'),
-(14, 29, 4, 4, 'bag', 'aaaaaaa', '2023-06-27 05:40:20', '2023-06-27 05:40:20');
+(14, 29, 4, 4, 'bag', 'aaaaaaa', '2023-06-27 05:40:20', '2023-06-27 05:40:20'),
+(15, 30, 4, 3, 'unit', NULL, '2023-06-27 10:58:41', '2023-06-27 10:58:41');
 
 -- --------------------------------------------------------
 
@@ -279,8 +281,6 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`order_po_id`, `order_item_id`, `order_unit`, `order_unitprice`, `order_quantity`, `delivery_date`) VALUES
-(4, 4, 'unit', 4, 3, '2023-06-16'),
-(4, 5, 'pcs', 3333, 3, '2023-06-10'),
 (5, 3, 'unit', 1200, 3, '2023-06-10'),
 (5, 6, 'unit', 1400, 4, '2023-06-10'),
 (5, 5, 'pcs', 55, 3, '2023-06-10'),
@@ -289,19 +289,18 @@ INSERT INTO `order_items` (`order_po_id`, `order_item_id`, `order_unit`, `order_
 (1, 5, 'pcs', 55, 4, '2023-06-10'),
 (7, 3, 'unit', 1200, 3, '2023-06-10'),
 (7, 6, 'unit', 1400, 4, '2023-06-10'),
-(3, 4, 'unit', 4, 3, '2023-06-16'),
-(3, 3, 'unit', 3333, 3, '2023-06-10'),
-(3, 7, 'pcs', 5, 1, NULL),
-(3, 5, 'pcs', 55, 3, '2023-06-19'),
 (2, 4, 'unit', 4666, 3, '2023-06-16'),
 (2, 7, 'pcs', 5, 1, NULL),
 (2, 5, 'pcs', 55, 2, '2023-06-19'),
-(8, 3, 'unit', 1200, 3, '2023-06-10'),
-(8, 6, 'unit', 1400, 4, '2023-06-10'),
-(8, 7, 'pcs', 5, 1, NULL),
-(8, 5, 'pcs', 55, 2, '2023-06-19'),
-(9, 3, 'unit', 1200, 3, '2023-06-10'),
-(10, 4, 'unit', 4, 3, '2023-06-16');
+(10, 4, 'unit', 4, 3, '2023-06-16'),
+(11, 4, 'unit', 4333, 3, '2023-06-16'),
+(11, 3, 'unit', 500, 3, '2023-06-28'),
+(11, 7, 'pcs', 5, 1, '2023-06-27'),
+(11, 6, 'unit', 5000, 2, '2023-06-27'),
+(3, 4, 'unit', 4, 3, '2023-06-16'),
+(3, 3, 'unit', 3333, 3, '2023-06-10'),
+(3, 7, 'pcs', 5, 1, '2023-06-27'),
+(3, 5, 'pcs', 55, 3, '2023-06-19');
 
 -- --------------------------------------------------------
 
@@ -474,10 +473,11 @@ INSERT INTO `purchaserequest` (`id`, `status`, `requestor`, `supplier_id`, `disc
 ('PR-20230609Y2IKR', 'Approved', 'TSK Wanie', 3, 5, 0.6, 6, 0.72, 12.00, 'pppp', '2023-06-09 05:05:11', '2023-06-19 00:51:44'),
 ('PR-20230610D8UMX', 'Approved', 'Ahmad', 4, 33, 6819.12, NULL, 0, 20664.00, NULL, '2023-06-09 23:25:34', '2023-06-19 05:19:43'),
 ('PR-20230610YIX0I', 'Approved', 'TSK Aiman', 4, 2, 184, NULL, 0, 9200.00, NULL, '2023-06-10 00:11:36', '2023-06-10 00:12:29'),
-('PR-20230619FCM3C', 'Pending', 'TSK Rose', 3, 70, 0, 3, 0, 0.00, NULL, '2023-06-19 08:32:34', '2023-06-19 08:45:06'),
+('PR-20230619FCM3C', 'Approved', 'TSK Rose', 3, 70, 0, 3, 0, 0.00, NULL, '2023-06-19 08:32:34', '2023-06-27 03:17:14'),
 ('PR-20230619O21VF', 'Pending', 'TSK Leo', 3, 50, 42.12, 10, 28.08, 453.96, NULL, '2023-06-18 22:39:15', '2023-06-19 08:29:58'),
 ('PR-20230619PYZYY', 'Pending', 'TSK JJ', 3, 15, 3.6, 3, 0.9, 0.00, NULL, '2023-06-19 09:13:56', '2023-06-19 09:14:17'),
-('PR-20230619ZAZIB', 'Pending', 'TSK Shah', 3, 6, 24.96, 9, 37.44, 0.00, NULL, '2023-06-19 08:56:01', '2023-06-19 08:56:17');
+('PR-20230619ZAZIB', 'Pending', 'TSK Shah', 3, 6, 24.96, 9, 37.44, 0.00, NULL, '2023-06-19 08:56:01', '2023-06-19 08:56:17'),
+('PR-20230627TAPMT', 'Approved', 'Ahmad', 3, 2, 104, 3, 156, 5200.00, NULL, '2023-06-27 03:13:54', '2023-06-27 03:14:16');
 
 -- --------------------------------------------------------
 
@@ -510,13 +510,11 @@ CREATE TABLE `purchase_order` (
 INSERT INTO `purchase_order` (`po_id`, `po_no`, `po_prno`, `requestor`, `buyer`, `supplier_id`, `discount_percentage`, `discount_amount`, `tax_percentage`, `tax_amount`, `total_amount`, `notes`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'PO-20230610LN2KAO20Z3', 'PR-20230608BHUM5', NULL, 'Ahmad', 3, 5, 22.6, 6, 27.12, NULL, NULL, 'Closed', '2023-06-10 06:22:18.000000', '2023-06-18 10:58:35.000000'),
 (2, 'PO-202306108OKOUECCF0', 'PR-20230608BHUM5', NULL, 'RONALDO SUI', 3, 5, 705.65, 6, 846.78, NULL, NULL, 'Closed', '2023-06-10 07:57:35.000000', '2023-06-18 13:11:28.000000'),
-(3, 'PO-202306109TVAY0QYFX', 'PR-20230608BHUM5', 'TSK Wanie', 'Sam', 3, 5, 509.05, 6, 610.86, NULL, NULL, 'Ordered', '2023-06-10 08:01:51.000000', '2023-06-18 12:11:02.000000'),
-(4, 'PO-20230610XM0YFBE5XV', 'PR-20230608BHUM5', 'TSK Wanie', NULL, 3, 5, 500.55, 6, 600.66, NULL, NULL, 'Ordered', '2023-06-10 08:07:09.000000', '2023-06-10 08:07:09.000000'),
+(3, 'PO-202306109TVAY0QYFX', 'PR-20230608BHUM5', 'TSK Wanie', 'Sam', 3, 5, 509.05, 6, 610.86, NULL, NULL, 'Ordered', '2023-06-10 08:01:51.000000', '2023-06-27 11:01:51.000000'),
 (5, 'PO-20230610JHUYKUOEN9', 'PR-20230610YIX0I', 'TSK Aiman', 'Ronaldo', 4, 2, 187.3, 0, 0, NULL, 'Please', 'Ordered', '2023-06-10 08:13:18.000000', '2023-06-10 08:18:36.000000'),
-(7, 'PO-20230618YIYNKO8OJ2', 'PR-20230610YIX0I', 'TSK Aiman', 'Cristiano', 4, 2, 184, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 11:02:58.000000', '2023-06-18 11:02:58.000000'),
-(8, 'PO-20230618N1QD2DFR6M', 'PR-20230610YIX0I', 'TSK Aiman', 'Ronaldo Nazario', 4, 2, 186.4, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 12:11:56.000000', '2023-06-18 12:13:39.000000'),
-(9, 'PO-20230618X7NCHYPSPT', 'PR-20230610YIX0I', 'TSK Aiman', NULL, 4, 2, 184, 0, 0, NULL, NULL, 'Ordered', '2023-06-18 12:15:43.000000', '2023-06-18 12:15:43.000000'),
-(10, 'PO-20230618JS4TXW25XD', 'PR-20230608BHUM5', 'TSK Wanie', 'mEOW', 3, 5, 0.6, 6, 0.72, NULL, NULL, 'Closed', '2023-06-18 15:05:12.000000', '2023-06-19 14:23:52.000000');
+(7, 'PO-20230618YIYNKO8OJ2', 'PR-20230610YIX0I', 'TSK Aiman', 'Cristiano', 4, 2, 184, 0, 0, NULL, NULL, 'Closed', '2023-06-18 11:02:58.000000', '2023-06-27 11:04:19.000000'),
+(10, 'PO-20230618JS4TXW25XD', 'PR-20230608BHUM5', 'TSK Wanie', 'mEOW', 3, 5, 0.6, 6, 0.72, NULL, NULL, 'Closed', '2023-06-18 15:05:12.000000', '2023-06-19 14:23:52.000000'),
+(11, 'PO-20230627OIF49S1O2T', 'PR-20230608BHUM5', 'TSK Wanie', 'Bukhary', 3, 5, 1225.2, 6, 1470.24, NULL, NULL, 'Closed', '2023-06-27 10:39:33.000000', '2023-06-27 10:57:47.000000');
 
 -- --------------------------------------------------------
 
@@ -554,7 +552,9 @@ INSERT INTO `request_items` (`id`, `pr_id`, `product_id`, `delivery_date`, `prod
 (15, 'PR-20230610YIX0I', 6, '2023-06-10', 4, 'unit', 1400, '2023-06-10 00:11:36', '2023-06-10 00:11:36'),
 (23, 'PR-20230619O21VF', 3, '2023-06-19', 0, 'pcs', 0, '2023-06-19 08:29:58', '2023-06-19 08:29:58'),
 (25, 'PR-20230619FCM3C', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 08:45:06', '2023-06-19 08:45:06'),
-(31, 'PR-20230619PYZYY', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 09:14:17', '2023-06-19 09:14:17');
+(31, 'PR-20230619PYZYY', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 09:14:17', '2023-06-19 09:14:17'),
+(32, 'PR-20230627TAPMT', 4, '2023-06-28', 1, 'unit', 1200, '2023-06-27 03:13:54', '2023-06-27 03:13:54'),
+(33, 'PR-20230627TAPMT', 6, '2023-06-27', 2, 'unite', 2000, '2023-06-27 03:13:54', '2023-06-27 03:13:54');
 
 -- --------------------------------------------------------
 
@@ -603,7 +603,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `role`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Imran Hakimi', 'imranhakimi24@gmail.com', NULL, 2, '$2y$10$.3zX8jSLX8d57WmVsN5douJ9KNAYubMgzdt6BmjuQRke13vgUXPaq', NULL, '2023-05-21 01:21:31', '2023-05-21 01:21:31'),
+(1, 'Imran Hakimi', 'imranhakimi24@gmail.com', NULL, 2, '$2y$10$hPE0xzcPKATufTFOru4Y7egLvUjCsa/ZKrS05/XDOiET8MHwDBcpS', NULL, '2023-05-21 01:21:31', '2023-06-27 03:03:35'),
 (2, 'Min', 'ahmadmuhaimin135@gmail.com', NULL, 5, '$2y$10$qPU5IkSoDo8rRBbkzl6WneBxwN7D.YfNEn.HajioiFkKq9mfTdhWe', NULL, '2023-05-26 01:16:49', '2023-05-26 21:32:25'),
 (3, 'kuki', 'kuki@gmail.com', NULL, 3, '$2y$10$VKFvuyZwDtI4VpIobrSDG.PeV6ahl7NVVPz.nj5e3IdipLPFKeKF2', NULL, '2023-06-08 07:12:24', '2023-06-08 07:12:24'),
 (4, 'GOO', 'yjyejui626@gmail.com', NULL, 4, '$2y$10$NT857/qGCA9vQwSSyIJWpulVdWo0etNL2GkzF.2jvIegCUFv3b4bK', NULL, '2023-06-15 06:09:58', '2023-06-15 06:09:58');
@@ -771,13 +771,13 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `grn`
 --
 ALTER TABLE `grn`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `grn_items`
 --
 ALTER TABLE `grn_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -831,13 +831,13 @@ ALTER TABLE `product_category`
 -- AUTO_INCREMENT for table `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `request_items`
 --
 ALTER TABLE `request_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `suppliers`

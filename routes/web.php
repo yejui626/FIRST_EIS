@@ -109,8 +109,7 @@ Route::group(['middleware' => 'role:3'], function () {
 	 
     Route::resource('/quantity', QuantityController::class);
     Route::put('/purchase-order/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('po.updateStatus');
-	Route::get('/grn/create/{id}', [GRNController::class, 'create'])->name('grn.create');
-	Route::put('/purchase-order/{id}', [PurchaseRequestController::class, 'update'])->name('po.update');
+	Route::get('/grn/create/{id}', [GRNController::class, 'create'])->name('grn.Create');
 });
 
 Route::group(['middleware' => 'role:2'], function () {
@@ -122,7 +121,7 @@ Route::get('/purchase-order/create/{id}', [PurchaseOrderController::class, 'crea
 Route::put('/purchaserequest/{id}/update-status', [PurchaseRequestController::class, 'updateStatus'])->name('purchaseRequest.updateStatus');
 });
 
-
+Route::put('/purchase-order/{id}', [PurchaseOrderController::class, 'update'])->name('po.Update');
 Route::resource('/purchase-order', PurchaseOrderController::class, ['names' => 'po']);
 Route::resource('/grn', GRNController::class);
 Route::resource('/purchaserequest', PurchaseRequestController::class);

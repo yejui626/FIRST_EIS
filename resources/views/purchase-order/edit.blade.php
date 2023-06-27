@@ -38,7 +38,7 @@
                         <h3 class="card-title">Edit Purchase Order</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('po.update', $purchaseOrder->po_id) }}" method="POST" id="po-form">
+                        <form action="{{ route('po.Update', $purchaseOrder->po_id) }}" method="POST" id="po-form">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -106,11 +106,11 @@
                                             </td>
                                             <td class="align-middle p-0 text-center">
                                                 <input type="number" class="text-center w-100 border-0"
-                                                    step="any" name="order_quantity[]" value="{{$orderItem->order_quantity}}"/>
+                                                    step="any" name="order_quantity[]" value="{{$orderItem->order_quantity}}" required/>
                                             </td>
                                             <td class="align-middle p-1">
                                             <input type="text" class="text-center w-100 border-0"
-                                                    step="any" name="order_unit[]" value="{{$orderItem->order_unit}}"/>
+                                                    step="any" name="order_unit[]" value="{{$orderItem->order_unit}}" required/>
 
                                             </td>
 
@@ -123,14 +123,14 @@
                                             
                                             <td class="align-middle p-1">
                                             <input type="date" class="text-center w-100 border-0"
-                                                    value="{{$orderItem->delivery_date}}" name =delivery_date[]/>
+                                                    value="{{$orderItem->delivery_date}}" name =delivery_date[] required/>
         
                                             </td>
                                            
                                           
                                             <td class="align-middle p-1">
                                                 <input type="text" step="any"
-                                                    class="text-right w-100 border-0" name="order_unitprice[]" value="{{$orderItem->order_unitprice}}"  />
+                                                    class="text-right w-100 border-0" name="order_unitprice[]" value="{{$orderItem->order_unitprice}}" required />
                                             </td>
 
                                             <td class="align-middle p-1 text-right total-price">0</td>
@@ -193,28 +193,27 @@
                             onclick="rem_item($(this))"><i class="fa fa-times"></i></button>
                     </td>
                     <td class="align-middle p-0 text-center">
-                        <input type="number" class="text-center w-100 border-0" step="any" name="order_quantity[]" />
+                        <input type="number" class="text-center w-100 border-0" step="any" name="order_quantity[]" required/>
                     </td>
                     <td class="align-middle p-1">
                     <input type="text" class="text-center w-100 border-0"
-                     step="any" name="order_unit[]" />
+                     step="any" name="order_unit[]" required/>
                     </td>
                     <td class="align-middle p-1">
+    <select name="order_item_id[]" class="text-center w-100 border-0" required>
+        <option value="" selected disabled hidden>Select a Product</option>
+        @foreach($product as $p)
+            <option value="{{ $p->id }}">{{ $p->product_name }}</option>
+        @endforeach
+    </select>
+</td>
 
-                        <select name="order_item_id[]" class="text-center w-100 border-0"
-                            placeholder="Select a Product">
-                            <option value="none" selected disabled hidden>Select a Product</option>
-                            @foreach($product as $p)
-                            <option value="{{ $p->id }}">{{ $p->product_name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
                     <td class="align-middle p-1">
                         <input type="date" class="text-center w-100 border-0"
-                         name = delivery_date[] />
+                         name = delivery_date[] required/>
                     <td class="align-middle p-1">
                         <input type="number" step="any" class="text-right w-100 border-0" name="order_unitprice[]"
-                            value="" />
+                            value="" required/>
                     </td>
                     <td class="align-middle p-1 text-right total-price">0</td>
                 </tr>
@@ -230,6 +229,7 @@
 
 	function rem_item(_this){
 		_this.closest('tr').remove()
+        calculate()
 	}
 	function calculate(){
 		var _total = 0

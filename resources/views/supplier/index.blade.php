@@ -18,6 +18,13 @@
 </button>
     {{ Session:: get('success' )}}
 </div>
+@elseif (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="role">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="nc-icon nc-simple-remove"></i>
+                        </button>
+                        {{ Session:: get('error' )}}
+                    </div>
 @endif
                     <a href="{{route ('supplier.create')}}" class="btn btn-primary" role="button" style="float: right;"><i class="fa fa-plus"></i> Add</a>
                         <h4 class="card-title"> Our Suppliers</h4>

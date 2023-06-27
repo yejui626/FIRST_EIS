@@ -17,6 +17,13 @@
                         </button>
                         {{ Session:: get('success' )}}
                     </div>
+                    @elseif (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="role">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="nc-icon nc-simple-remove"></i>
+                        </button>
+                        {{ Session:: get('error' )}}
+                    </div>
                     @endif
                     <a href="{{route ('product.create')}}" class="btn btn-primary" role="button" style="float: right;"><i class="fa fa-plus"></i> Add</a>
                     <h4 class="card-title"> Product List</h4>
@@ -80,7 +87,7 @@
                                     <td class="text-right">
                                         <a href="{{route('product.show', $pr->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
                                         <a href="{{route('product.edit', $pr->id)}}" class="btn btn-default mr-1" type="button">Edit</a>
-                                        <form action="{{route('product.destroy', $pr->id)}}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting product? Any existing product in Inventory List will also be deleted!')">
+                                        <form action="{{route('product.destroy', $pr->id)}}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting product?')">
                                             <button class="btn btn-danger">Delete</button>
                                             @csrf
                                             @method('DELETE')

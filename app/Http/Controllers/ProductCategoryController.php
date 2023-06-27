@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class ProductCategoryController extends Controller
 {
@@ -85,9 +86,20 @@ class ProductCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(ProductCategory $productcategory)
-    {
+{
+    try {
         $productcategory->delete();
+    } catch (QueryException $exception) {
+        if ($exception->getCode() == 23000) {
+            // Handle the foreign key constraint violation error
+            return redirect()->route('productcategory.index')->with('error', 'Cannot delete the category because it is referenced by some products.');
+        }
 
-        return redirect()->route('productcategory.index')->with('success','Product Category deleted successfully!');
+        // Handle other types of database exceptions if needed
+
+        throw $exception;
     }
+
+    return redirect()->route('productcategory.index')->with('success', 'Product Category deleted successfully!');
+}
 }

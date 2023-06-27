@@ -15,6 +15,12 @@
                             <i class="nc-icon nc-simple-remove"></i>
                         </button>
                         {{ Session:: get('success' )}}
+                    @elseif (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="role">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="nc-icon nc-simple-remove"></i>
+                        </button>
+                        {{ Session:: get('error' )}}
                     </div>
                     @endif
                     <a href="{{ route('productcategory.create') }}" class="btn btn-primary" role="button" style="float: right;"><i class="fa fa-plus"></i> Add</a>
@@ -51,7 +57,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" href="{{ route('productcategory.edit', $productcategory->category_id) }}">Edit</a>
-                                        <form action="{{ route('productcategory.destroy', $productcategory->category_id) }}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting product? Any existing product in Inventory List will also be deleted!')">
+                                        <form action="{{ route('productcategory.destroy', $productcategory->category_id) }}" method="POST" class="btn btn-danger p-0" onsubmit="return confirm('Confirm deleting product category?')">
                                             <button class="btn btn-danger">Delete</button>
                                             @csrf
                                             @method('DELETE')

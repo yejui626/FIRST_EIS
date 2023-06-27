@@ -9,6 +9,7 @@ use App\Models\OrderItems;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
 
 class PurchaseOrderController extends Controller
 {
@@ -206,11 +207,21 @@ public function updateStatus(Request $request, $id)
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+{
+    try {
         $purchaseorder = PurchaseOrder::findOrFail($id);
-
         $purchaseorder->delete();
+    } catch (QueryException $exception) {
+        if ($exception->getCode() == 23000) {
+            // Handle the foreign key constraint violation error
+            return redirect()->route('po.index')->with('error', 'Cannot delete the purchase order because it is referenced by some other records.');
+        }
 
-        return redirect()->route ('po.index')->with('success', 'Product deleted successfully');
+        // Handle other types of database exceptions if needed
+
+        throw $exception;
     }
+
+    return redirect()->route('po.index')->with('success', 'Purchase Order deleted successfully!');
+}
 }
