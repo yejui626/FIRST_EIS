@@ -20,7 +20,7 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Purchase Request ID</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="pr_id" id="pr_id" placeholder="pr_id" value="{{ $purchaserequest->id }}" readonly>
+                                    <input type="text" class="form-control" name="id" id="id" placeholder="id" value="{{ $purchaserequest->id }}" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -32,7 +32,7 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Supplier</label>
                                 <div class="col-md-5">
-                                    <select name="supplier_id" id="supplier" class="custom-select custom-select-sm rounded-0 select2" aria-label="Default select example">
+                                    <select name="supplier" id="supplier" class="custom-select custom-select-sm rounded-0 select2" aria-label="Default select example">
                                     <option selected disabled>Choose Supplier</option>
                                     @foreach($suppliers as $row)
                                         <option value="{{ $row->id }}" @if($row->id == $purchaserequest->supplier_id) selected @endif>{{$row->supplier_name}}</option>
@@ -88,13 +88,13 @@
                                                     <input type="date" class="form-control form-control-sm rounded-0" name="delivery_date[]" value="{{ $item->delivery_date }}">
                                                 </td>
                                                 <td class="align-middle p-1">
-                                                    <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="quantity[]" min="1" value="{{ $item->product_quantity }}">
+                                                    <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="product_quantity[]" min="1" value="{{ $item->product_quantity }}">
                                                 </td>
                                                 <td class="align-middle p-1">
                                                     <input type="text" name="uom[]" class="form-control form-control-sm rounded-0" value="{{ $item->uom }}">
                                                 </td>
                                                 <td class="align-middle p-1">
-                                                    <input type="number" class="form-control form-control-sm rounded-0 text-right product_unitprice" name="price[]" min="0" value="{{ $item->product_unitprice }}">
+                                                    <input type="number" class="form-control form-control-sm rounded-0 text-right product_unitprice" name="product_unitprice[]" min="0" value="{{ $item->product_unitprice }}">
                                                 </td>
                                                 <td class="align-middle p-1">
                                                     <input type="text" class="form-control form-control-sm rounded-0 text-right total" name="total[]" readonly>
@@ -118,7 +118,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="p-1 text-right" colspan="7">Tax Inclusive (%)
-                                                    <input type="number" name="tax_percentage" class="text-right" value="{{ $purchaserequest->tax_percentage }}">
+                                                    <input type="number" step="any" name="tax_percentage" class="text-right" value="{{ $purchaserequest->tax_percentage }}">
                                                 </th>
                                                 <th class="p-1">
                                                     <input type="text" class="form-control form-control-sm rounded-0 text-right tax_amount" name="tax_amount" readonly>
@@ -164,35 +164,36 @@
         function addItem() {
             var newRow = `
                 <tr class="pr-item" data-id="${rowCounter}">
-            <td class="align-middle p-1 text-center"></td>
-            <td class="align-middle p-0 text-center">${rowCounter}</td>
-            <td class="align-middle p-1">
-                <select name="product_id[]" class="custom-select custom-select-sm rounded-0 select2 product-select" aria-label="Default select example">
-                    <option disabled selected>Choose Product</option>
-                    @foreach($products as $row)
-                        <option value="{{$row->id}}">{{$row->product_name}}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td class="align-middle p-1">
-                <input type="date" class="form-control form-control-sm rounded-0" name="delivery_date[]">
-            </td>
-            <td class="align-middle p-1">
-                <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="quantity[]" min="1">
-            </td>
-            <td class="align-middle p-1">
-                <input type="text" name="uom[]" class="form-control">
-            </td>
-            <td class="align-middle p-1">
-                <input type="number" class="form-control form-control-sm rounded-0 product_unitprice" name="price[]" min="0">
-            </td>
-            <td class="align-middle p-1">
-                <input type="text" class="form-control form-control-sm rounded-0 total_price" name="total[]" readonly>
-            </td>
-            <td class="align-middle p-1">
+                    <td class="align-middle p-1 text-center"></td>
+                    <td class="align-middle p-0 text-center">${rowCounter}</td>
+                    <td class="align-middle p-1">
+                        <select name="product_id[]" class="custom-select custom-select-sm rounded-0 select2 product-select" aria-label="Default select example">
+                            <option selected disabled>Choose Product</option>
+                            @foreach($products as $row)
+                                <option value="{{$row->id}}">{{$row->product_name}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td class="align-middle p-1">
+                        <input type="date" class="form-control form-control-sm rounded-0" name="delivery_date[]">
+                    </td>
+                    <td class="align-middle p-1">
+                        <input type="number" class="form-control form-control-sm rounded-0 product_quantity" name="product_quantity[]" min="1">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm rounded-0" name="uom[]">
+                    </td>
+                    <td class="align-middle p-1">
+                        <input type="number" class="form-control form-control-sm rounded-0 product_unitprice" name="product_unitprice[]" min="0">
+                    </td>
+                    
+                    <td class="align-middle p-1">
+                        <input type="text" class="form-control form-control-sm rounded-0 total" name="total[]" readonly>
+                    </td>
+                    <td class="align-middle p-1">
                 <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
             </td>
-        </tr>
+            </tr>
             `;
             $('#table tbody').append(newRow);
             rowCounter++;

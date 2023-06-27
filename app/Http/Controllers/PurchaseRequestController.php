@@ -158,46 +158,42 @@ class PurchaseRequestController extends Controller
     
     public function update(Request $request, $id)
 {
+    // Validate the input data
+    $validatedData = $request->validate([
+        'id' => 'required',
+        'supplier' => 'required',
+        'requestor' => 'required',
+        'total_amount' => 'required',
+    ]);
+
     $purchaserequest = PurchaseRequest::find($id);
 
-    $purchaserequest->id = $request->input('pr_id');
+    $purchaserequest->id = $request->input('id');
     $purchaserequest->requestor = $request->input('requestor');
-    $purchaserequest->supplier_id = $request->input('supplier_id');
+    $purchaserequest->supplier_id = $request->input('supplier');
     $purchaserequest->status = $request->input('status');
     $purchaserequest->discount_percentage = $request->input('discount_percentage');
     $purchaserequest->tax_percentage = $request->input('tax_percentage');
+    $purchaserequest->discount_amount = $request->input('discount_amount');
+    $purchaserequest->tax_amount = $request->input('tax_amount');
+    $purchaserequest->total_amount = $request->input('total_amount');
     $purchaserequest->notes = $request->input('notes');
     $purchaserequest->save();
 
     // Delete existing order items related to the purchase order
     PurchaseRequest_Items::where('pr_id', $id)->delete();
 
-    $productIds = $request->input('product_id') ?? [];
-    $productQuantities = $request->input('product_quantity') ?? [];
-    $productUnitPrices = $request->input('product_unitprice') ?? [];
-    $deliveryDates = $request->input('delivery_date') ?? [];
-    $uoms = $request->input('uom') ?? [];
-
-    for ($i = 0; $i < count($productIds); $i++) {
+    // Save the purchase request items
+    foreach ($request->input('product_id') as $index => $productId) {
         $item = new PurchaseRequest_Items();
-        $item->pr_id = $request->input('pr_id');
-        $item->product_id = $productIds[$i];
-        $item->delivery_date = $deliveryDates[$i];
-        $item->product_quantity = $productQuantities[$i] ?? 0;
-        $item->uom = $uoms[$i];
-        $item->product_unitprice = $productUnitPrices[$i] ?? 0;
+        $item->pr_id = $validatedData['id'];
+        $item->product_id = $productId;
+        $item->delivery_date = $request->input('delivery_date')[$index];
+        $item->product_quantity = $request->input('product_quantity')[$index];
+        $item->uom = $request->input('uom')[$index];
+        $item->product_unitprice = $request->input('product_unitprice')[$index];
         $item->save();
     }
-
-    // Calculate the total_amount based on product quantity and unit price
-    $totalAmount = 0;
-    for ($i = 0; $i < count($productIds); $i++) {
-        $quantity = $productQuantities[$i] ?? 0;
-        $unitPrice = $productUnitPrices[$i] ?? 0;
-        $totalAmount += $quantity * $unitPrice;
-    }
-    $purchaserequest->total_amount = $totalAmount;
-    $purchaserequest->save();
 
     // Redirect back to the index page with a success message
     return redirect()->route('purchaserequest.index')->with('success', 'Purchase request updated successfully');

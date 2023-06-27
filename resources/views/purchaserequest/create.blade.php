@@ -25,13 +25,13 @@
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Requested By</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="requestor" id="requestor" placeholder="Requestor Name">
+                                    <input type="text" class="form-control" name="requestor" id="requestor" placeholder="Requestor Name" required>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-md-2 col-form-label">Supplier</label>
                                 <div class="col-md-5">
-                                    <select name="supplier" id="supplier" class="custom-select custom-select-sm rounded-0 select2" aria-label="Default select example">
+                                    <select name="supplier" id="supplier" class="custom-select custom-select-sm rounded-0 select2" aria-label="Default select example" required>
                                         <option selected disabled>Choose Supplier</option>
                                         @foreach($supplier as $row)
                                         <option value="{{ $row->id }}">{{$row->supplier_name}}</option>
@@ -192,9 +192,9 @@
                         <input type="text" class="form-control form-control-sm rounded-0 total" name="total[]" readonly>
                     </td>
                     <td class="align-middle p-1">
-                        <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
-                    </td>
-                </tr>
+                <button type="button" class="remove-table-row btn btn-sm btn-danger">X</button>
+            </td>
+            </tr>
             `;
             $('#table tbody').append(newRow);
             rowCounter++;
