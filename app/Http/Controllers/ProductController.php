@@ -142,7 +142,6 @@ if($validate->fails()){
             'product_sellingprice' => 'required',
             'product_supplierprice' => 'required',
             
-            'product_details' => 'required'
         ],[
             'product_name.required' => 'Please enter a product name!',
             'product_category.required' => 'Please choose product category!',
