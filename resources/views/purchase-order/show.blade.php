@@ -75,7 +75,7 @@ span.select2-selection.select2-selection--single {
                                     <p class="m-0"><b>TSK SYNERGY SDN BHD</b></p>
                                     <p class="m-0">NO. 19, JALAN MEGA 1/8, TAMAN PERINDUSTRIAN NUSA CEMERLANG</p>
                                     <p class="m-0">79200 ISKANDAR PUTERI, JOHOR</p>
-                                    <p class="m-0">Tel : 07-5950803</p>
+                                    <p class="m-0">TEL : 07-5950803</p>
                                     
                                 </div>
                                 <br>
@@ -90,9 +90,9 @@ span.select2-selection.select2-selection--single {
                             <div class="col-6 offset-7">  
                                     <p class="m-0"><b>P.R #:</b> {{$purchaseorder->po_prno}}</p>
                                     <p class="m-0"><b>P.O. #:</b> {{$purchaseorder->po_no}}</p>
-                                    <p class="m-0"><b>Date Created:</b> {{$purchaseorder->created_at}}</p>
-                                    <p class="m-0"><b>Requestor Name:</b> {{$purchaseorder->requestor}}</p>
-                                    <p class="m-0"><b>Buyer Name:</b> {{$purchaseorder->buyer}}</p>
+                                    <p class="m-0"><b>DATE CREATED:</b> {{$purchaseorder->created_at}}</p>
+                                    <p class="m-0"><b>REQUESTOR NAME:</b> {{$purchaseorder->requestor}}</p>
+                                    <p class="m-0"><b>BUYER NAME:</b> {{$purchaseorder->buyer}}</p>
                             </div>
                                 
                             </div>
@@ -141,26 +141,26 @@ span.select2-selection.select2-selection--single {
                                     </tbody>
                                     <tfoot>
                                         <tr class="bg-lightblue">
-                                            <th class="p-1 text-right" colspan="6">Sub Total</th>
+                                            <th class="p-1 text-right" colspan="6">SUB TOTAL</th>
                                             <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right" id="sub_total">{{number_format($subtotal, 2)}}</th>
                                         </tr>
                                         <tr>
-                                            <th class="p-1 text-right" colspan="6">Discount ({{$purchaseorder->discount_percentage ?? 0}}%)</th>
+                                            <th class="p-1 text-right" colspan="6">DISCOUNT ({{$purchaseorder->discount_percentage ?? 0}}%)</th>
                                             <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right">{{number_format($purchaseorder->discount_amount ?? 0, 2)}}</th>
                                         </tr>
                                         <tr>
-                                            <th class="p-1 text-right" colspan="6">Tax Inclusive ({{$purchaseorder->tax_percentage ?? 0}}%)</th>
+                                            <th class="p-1 text-right" colspan="6">TAX INCLUSIVE ({{$purchaseorder->tax_percentage ?? 0}}%)</th>
                                             <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right">{{number_format($purchaseorder->tax_amount ?? 0, 2)}}</th>
                                         </tr>
                                         <tr>
-                                            <th class="p-1 text-right" colspan="6">Total</th>
+                                            <th class="p-1 text-right" colspan="6">TOTAL</th>
                                             <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right" id="total">{{number_format(($subtotal - $purchaseorder->discount_amount), 2)}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label for="notes" class="control-label">Notes</label>
+                                        <label for="notes" class="control-label">NOTES</label>
                                         
                                         <p>{{$purchaseorder->notes ?? ''}}</p>
                                     </div>
