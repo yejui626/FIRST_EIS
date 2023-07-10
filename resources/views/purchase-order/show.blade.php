@@ -105,15 +105,15 @@ span.select2-selection.select2-selection--single {
                                         <col width="15%">
                                         <col width="15%">
                                     </colgroup>
-                                    <thead>
+                                    <thead style="border-style: solid; border-color: black; border-width: 2px;">
                                         <tr class="bg-navy disabled" style="">
-                                            <th class="bg-navy px-1 py-1 text-center">Qty</th>
-                                            <th class="bg-navy px-1 py-1 text-center">UOM</th>
-                                            <th class="bg-navy px-1 py-1 text-center">Item</th>
-                                            <th class="bg-navy px-1 py-1 text-center">Category</th>
-                                            <th class="bg-navy px-1 py-1 text-center">Delivery Date</th>
-                                            <th class="bg-navy px-1 py-1 text-center">Price</th>
-                                            <th class="bg-navy px-1 py-1 text-center">Total</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Qty</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">UOM</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Item</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Category</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Delivery Date</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Price</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="bg-navy px-1 py-1 text-center">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -121,36 +121,36 @@ span.select2-selection.select2-selection--single {
                                         $subtotal = 0;
                                         @endphp
                                         @foreach($orderItems as $orderItem)
-                                        <tr class="po-item" data-id="">
+                                        <tr style="border-style: solid; border-color: black; border-width: 2px;" class="po-item" data-id="">
                                             @php
                                             $subtotal += ($orderItem->order_quantity) * ($orderItem->order_unitprice)
                                             @endphp
-                                            <td class="align-middle p-0 text-center">{{$orderItem->order_quantity}}</td>
-                                            <td class="align-middle p-1 text-center">{{$orderItem->order_unit}}</td>
-                                            <td class="align-middle p-1">{{$orderItem->product->product_name}}</td>
-                                            <td class="align-middle p-1 text-center">{{$orderItem->product->productCategory->category_name}}</td>
-                                            <td class="align-middle p-1 text-center">{{$orderItem->delivery_date}}</td>
-                                            <td class="align-middle p-1 text-right">{{number_format($orderItem->order_unitprice, 2)}}</td>
-                                            <td class="align-middle p-1 text-right total-price">{{number_format(($orderItem->order_quantity) * ($orderItem->order_unitprice), 2)}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-0 text-center">{{$orderItem->order_quantity}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1 text-center">{{$orderItem->order_unit}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1">{{$orderItem->product->product_name}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1 text-center">{{$orderItem->product->productCategory->category_name}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1 text-center">{{$orderItem->delivery_date}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1 text-right">{{number_format($orderItem->order_unitprice, 2)}}</td>
+                                            <td style="border-style: solid; border-color: black; border-width: 2px;" class="align-middle p-1 text-right total-price">{{number_format(($orderItem->order_quantity) * ($orderItem->order_unitprice), 2)}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr class="bg-lightblue">
                                             <th class="p-1 text-right" colspan="6">Sub Total</th>
-                                            <th class="p-1 text-right" id="sub_total">{{number_format($subtotal, 2)}}</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right" id="sub_total">{{number_format($subtotal, 2)}}</th>
                                         </tr>
                                         <tr>
                                             <th class="p-1 text-right" colspan="6">Discount ({{$purchaseorder->discount_percentage ?? 0}}%)</th>
-                                            <th class="p-1 text-right">{{number_format($purchaseorder->discount_amount ?? 0, 2)}}</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right">{{number_format($purchaseorder->discount_amount ?? 0, 2)}}</th>
                                         </tr>
                                         <tr>
                                             <th class="p-1 text-right" colspan="6">Tax Inclusive ({{$purchaseorder->tax_percentage ?? 0}}%)</th>
-                                            <th class="p-1 text-right">{{number_format($purchaseorder->tax_amount ?? 0, 2)}}</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right">{{number_format($purchaseorder->tax_amount ?? 0, 2)}}</th>
                                         </tr>
                                         <tr>
                                             <th class="p-1 text-right" colspan="6">Total</th>
-                                            <th class="p-1 text-right" id="total">{{number_format(($subtotal - $purchaseorder->discount_amount), 2)}}</th>
+                                            <th style="border-style: solid; border-color: black; border-width: 2px;" class="p-1 text-right" id="total">{{number_format(($subtotal - $purchaseorder->discount_amount), 2)}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -225,46 +225,29 @@ function end_loader(){
       })
 }
     
- $(function(){
-    $('#print').click(function(e){
-        e.preventDefault();
-        start_loader();
-        var _h = $('head').clone();
-        var _p = $('#out_print').clone();
-        var _el = $('<div>');
-        _p.find('thead th').attr('style','color:black !important');
-
-        // Additional CSS styles for table elements
-        var cssStyles = '<style type="text/css">' +
-            'table { border-collapse: collapse; width: 100%; }' +
-            'th, td { border: 2px solid #000; padding: 0.5em; }' +
-            '#item-list th, #item-list td { border: 2px solid #000; padding: 0.5em; }' + // Add specific rule for item list table
-            '</style>';
-        
-        // Remove existing print styles
-        _p.find('link[media*=print]').remove();
-        _p.find('style').not('.table-print').remove();
-        
-        _el.append(_h);
-        _el.append(cssStyles); // Add the CSS styles to the cloned content
-        _el.append(_p.html()); // Append the HTML content of the cloned element
-        
-        var nw = window.open("","","width=1200,height=950");
-        nw.document.write(_el.html());
-        nw.document.close();
-        
-        setTimeout(() => {
-            nw.print();
-            setTimeout(() => {
-                end_loader();
-                nw.close();
-            }, 300);
-        }, 200);
-    });
-});
-
-
-
+  $(function(){
+        $('#print').click(function(e){
+            e.preventDefault();
+            start_loader();
+            var _h = $('head').clone()
+            var _p = $('#out_print').clone()
+            var _el = $('<div>')
+                _p.find('thead th')
+                _el.append(_h)
+                _el.append(_p)
+                
+            var nw = window.open("","","width=1200,height=950")
+                nw.document.write(_el.html())
+                nw.document.close()
+                setTimeout(() => {
+                    nw.print()
+                    setTimeout(() => {
+                        end_loader();
+                        nw.close()
+                    }, 300);
+                }, 200);
+        })
+    })
     
 </script>
 
