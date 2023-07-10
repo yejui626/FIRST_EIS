@@ -15,6 +15,7 @@
                             <i class="nc-icon nc-simple-remove"></i>
                         </button>
                         {{ Session:: get('success' )}}
+                    </div>
                     @elseif (Session::has('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="role">
                         <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
