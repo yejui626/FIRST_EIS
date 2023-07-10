@@ -42,14 +42,18 @@
                                 <th>
                                     Price
                                 </th>
-
                                 <th>
-                                    Quantity
+                                    Quantity Orders
                                 </th>
-
-
-
-
+                                <th>
+                                    Quantity In Stock
+                                </th>
+                                <th>
+                                    Quantity Required
+                                </th>
+                                <th>
+                                    Status
+                                </th>
 
 
                             </thead>
@@ -69,11 +73,30 @@
                                     {{$pr->product_sellingprice}}
                                     </td>
                                     <td>
+                                    {{ $totalOrderCount }}
+                                    </td>
+                                    <td>
                                     {{$pr->product_quantity}}
                                     </td>
+                                    <td>
+                                    {{ $totalOrderCount - $pr->product_quantity }}
+                                    </td>
+                                    <td>
+                                        @if ($totalOrderCount < $pr->product_quantity)
+                                            In Stock
+                                        @elseif ($pr->product_quantity = 0)
+                                            <span style="color: red;">Out of Stock</span>
+                                        @else
+                                            @if ($pr->product_quantity <= 10)
+                                                <span style="color: orange;">Low Stock</span>
+                                            @else
+                                                Stock Level Normal
+                                            @endif
+                                        @endif
+                                    </td>
 
-
-
+                            
+    
                                     <td class="text-right">
                                         <a href="{{route('quantity.show', $pr->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
                                         <a href="{{route('quantity.edit', $pr->id)}}" class="btn btn-default mr-1" type="button">Edit</a>

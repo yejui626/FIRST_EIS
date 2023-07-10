@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Quantity;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\GRN;
+use App\Models\PurchaseRequest_Items;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -19,7 +22,8 @@ class QuantityController extends Controller
     public function index()
     {
         $product = Product::orderBy('id', 'ASC') ->get();
-        return view ('quantity.index', compact('product'));
+        $totalOrderCount = Order::count();
+        return view ('quantity.index', compact('product', 'totalOrderCount'));
     }
 
     

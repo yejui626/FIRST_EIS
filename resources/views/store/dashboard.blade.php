@@ -131,28 +131,37 @@
                             <th></th>
                             <th>Product Name</th>
                             <th>Price</th>
-                            <th>Quantity</th>
+                            <th>
+                                    Quantity In Stock
+                                </th>
+                                <th>
+                                    Quantity Required
+                                </th>
                             
                         </thead>
                         <tbody>
-                            @foreach($products as $product)
-                                <tr>
-                                    <td>{{$product->id}}</td>
-                                    <td>
-                                        <img src="{{asset($product->product_img1)}}" width="120" height="100" class="img img-responsive">
-                                    </td>
-                                    <td>{{substr($product->product_name, 0, 50)}}..</td>
-                                    <td>{{$product->product_sellingprice}}</td>
-                                    <td>{{$product->product_quantity}}</td>
-                                    <td class="text-right">
-                                        <a href="{{route('quantity.show', $product->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
-                                        <a href="{{route('quantity.edit', $product->id)}}" class="btn btn-default mr-1" type="button">Edit</a>
-                                        <a href="{{ route('purchaseRequest.createwithproduct', ['product_id' => $product->id]) }}" class="btn btn-success mr-1" type="button">Purchase</a>
-                                        <!-- Additional actions or buttons -->
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+    @foreach($products as $product)
+        @if ($product->product_quantity <= 10)
+            <tr>
+                <td>{{$product->id}}</td>
+                <td>
+                    <img src="{{asset($product->product_img1)}}" width="120" height="100" class="img img-responsive">
+                </td>
+                <td>{{substr($product->product_name, 0, 50)}}..</td>
+                <td>{{$product->product_sellingprice}}</td>
+                <td>{{$product->product_quantity}}</td>
+                <td>{{ $totalOrderCount - $product->product_quantity }}</td>
+                
+                <td class="text-right">
+                    <a href="{{route('quantity.show', $product->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
+                    <a href="{{route('quantity.edit', $product->id)}}" class="btn btn-default mr-1" type="button">Edit</a>
+                    <a href="{{ route('purchaseRequest.createwithproduct', ['product_id' => $product->id]) }}" class="btn btn-success mr-1" type="button">Purchase</a>
+                    <!-- Additional actions or buttons -->
+                </td>
+            </tr>
+        @endif
+    @endforeach
+</tbody>
                     </table>
                 </div>
             </div>
