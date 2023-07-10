@@ -73,6 +73,11 @@ if($validate->fails()){
         
         $requestData = $request->all();
 
+$specs = $request->input('specs');
+$requestData['specs1'] = $specs[0] ?? null;
+$requestData['specs2'] = $specs[1] ?? null;
+$requestData['specs3'] = $specs[2] ?? null;
+
         if ($request->hasFile('product_img1')) {
             $fileName = time() . $request->file('product_img1')->getClientOriginalName();
             $path = $request->file('product_img1')->storeAs('images', $fileName, 'public');
@@ -104,8 +109,9 @@ if($validate->fails()){
      */
     public function show($id)
     {
+        $categories = ProductCategory::all();
         $product = Product::with('productCategory')->findOrFail($id);
-        return view ('product.show', compact('product'));
+        return view ('product.show', compact('product','categories'));
     }
 
     /**

@@ -26,7 +26,7 @@
                                         @if($role == 3)
                     <a href="{{route ('purchaserequest.create')}}" class="btn btn-primary" role="button" style="float: right;"><i class="fa fa-plus"></i> Create New</a>
                     @endif    
-                    <h4 class="card-title"> Purchase Request List</h4>
+                    <h4 class="card-title"> Pending Purchase Request</h4>
                         
  
                     </div>
@@ -50,6 +50,9 @@
                                         Requested By
                                     </th>
                                     <th>
+                                        Date Created
+                                    </th>
+                                    <th>
                                         
                                     </th>
                                     
@@ -58,19 +61,22 @@
                                 
                                 <tbody>
                                     @foreach($purchaserequest as $pr)
-                                    @if($pr->status == 'Pending' || $pr->status == 'Rejected')
+                                    @if($pr->status == 'Pending')
                                     <tr>
                                         <td>
                                         {{$pr->id}}  
                                         </td>
-                                        <td>
-                                        {{$pr->status}}
-                                        </td>
+                                        <td class="text-warning">
+    <b>{{$pr->status}}</b>
+</td>
                                         <td>
                                         {{$pr->supplier->supplier_name}}
                                         </td>
                                         <td>
                                         {{$pr->requestor}}
+                                        </td>
+                                        <td>
+                                        {{$pr->created_at}}
                                         </td>
 
                                         <td class="text-right mr-1 d-flex justify-content-end">
@@ -145,6 +151,12 @@
                                         <th>
                                             Supplier 
                                         </th>
+                                        <th>
+                                            Requested by 
+                                        </th>
+                                        <th>
+                                            Date Created 
+                                        </th>
 
                                         <th>
                                             
@@ -160,18 +172,97 @@
                                             <td>
                                             {{$pr->id}}  
                                             </td>
-                                            <td>
-                                            {{$pr->status}}
-                                            </td>
+                                            <td class="text-success">
+    <b>{{$pr->status}}</b>
+</td>
                                             <td>
                                             {{$pr->supplier->supplier_name}}
                                             </td>
+                                            <td>
+                                        {{$pr->requestor}}
+                                        </td>
+                                        <td>
+                                        {{$pr->created_at}}
+                                        </td>
+                                            
 
                                             <td class="text-right mr-1">
                                        <?php $role = Auth::user()->role; ?>
                                         @if($role == 2)
                                             <a href="{{ route('po.createOrder', $pr->id) }}" class="btn btn-success mr-1" type="button">Create Purchase Order</a>
                                         @endif
+                                            <a href="{{ route('purchaserequest.show', $pr->id) }}" class="btn btn-primary mr-1" type="button">Generate PDF</a>
+
+                                
+                                          <?php $role = Auth::user()->role; ?>
+                                        @if($role == 3)
+                                            <button class="btn btn-danger">Delete</button>
+                                            @csrf
+                                            @method('DELETE')
+                                            @endif
+                                        </form>
+                                            
+                                        </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table id="pr-table2" class="table table-striped">
+                                <h4 class="card-title"> Rejected Purchase Request</h4>
+                                    <thead class=" text-primary">
+                                        <th>
+                                            PR ID
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Supplier 
+                                        </th>
+                                        <th>
+                                            Requested by 
+                                        </th>
+                                        <th>
+                                            Date Created
+                                        </th>
+
+                                        <th>
+                                            
+                                        </th>
+                                        
+                                        
+                                    </thead>
+                                    
+                                    <tbody>
+                                        @foreach($purchaserequest as $pr)
+                                        @if($pr->status == 'Rejected')
+                                        <tr>
+                                            <td>
+                                            {{$pr->id}}  
+                                            </td>
+                                            <td class="text-danger">
+    <b>{{$pr->status}}</b>
+</td>
+                                            <td>
+                                            {{$pr->supplier->supplier_name}}
+                                            </td>
+                                            <td>
+                                        {{$pr->requestor}}
+                                        </td>
+                                        <td>
+                                        {{$pr->created_at}}
+                                        </td>
+
+                                            <td class="text-right mr-1">
+                                       
                                             <a href="{{ route('purchaserequest.show', $pr->id) }}" class="btn btn-primary mr-1" type="button">Generate PDF</a>
 
                                 

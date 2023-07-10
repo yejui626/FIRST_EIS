@@ -30,6 +30,9 @@ class Product extends Model
         'product_img1',
         'product_img2',
         'product_img3',
-        'product_quantity'
+        'product_quantity',
+        'specs1',
+        'specs2',
+        'specs3',
     ];
 }

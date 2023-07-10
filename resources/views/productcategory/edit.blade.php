@@ -41,6 +41,33 @@
                             @enderror
                             </div>
                         </div>  
+                         <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 1:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs1" class="form-control" value="{{ $productcategory->specs1 }}" placeholder="Specification 1">
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 2:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs2" class="form-control" value="{{ $productcategory->specs2 }}" placeholder="Specification 2">
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 3:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs3" class="form-control" value="{{ $productcategory->specs3 }}" placeholder="Specification 3" >
+                                
+                            </div>
+                        </div>
                             <br>
                             <button class="btn btn-primary btn-lg btn-block">Edit Product</button>
                     </form>

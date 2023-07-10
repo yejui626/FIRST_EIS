@@ -35,9 +35,36 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label  class="col-md-2 col-form-label">Supplier Address</label>
+                            <label class="col-md-2 col-form-label">Supplier Address
+                            </label>
                             <div class="col-md-10">
-                                <textarea class="form-control" name="supplier_address"  readonly>  {{ $supplier->supplier_address }}</textarea>
+                                <input type="text" class="form-control" value="{{ $supplier->supplier_address }}" name="supplier_address"  readonly>
+</div>
+                            </div>
+                            <div class="mb-3 row">
+    <label class="col-md-2 col-form-label">Supplier State
+        
+    </label>
+    <div class="col-md-10">
+        <input type="text" class="form-control" value="{{ $supplier->supplier_address_state }}" name="supplier_address_state"  readonly>
+
+    </div>
+</div>
+
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Supplier City
+                            </label>
+                            <div class="col-md-10">
+        <input type="text" class="form-control" value="{{ $supplier->supplier_address_city }}" name="supplier_address_city"  readonly>
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Supplier Postcode
+                            </label>
+                            <div class="col-md-10">
+        <input type="text" class="form-control" value="{{ $supplier->supplier_address_postcode }}" name="supplier_address_postcode"  readonly>
+                               
                             </div>
                         </div>
 

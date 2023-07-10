@@ -29,21 +29,38 @@
                             @enderror
                             </div>
                         </div>
+                        
+
                         <div class="mb-3 row">
-                            <label class="col-md-2 col-form-label">Product Category
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-md-10">
-                                <select name="product_category" class="form-control">
-    @foreach($categories as $category)
+    <label class="col-md-2 col-form-label">Product Category<span class="text-danger">*</span></label>
+    <div class="col-md-10">
+        <select name="product_category" class="form-control" onchange="showCategoryFields(this)">
+            @foreach($categories as $category)
         <option value="{{ $category->category_id }}" @if($category->category_id == $product->product_category) selected @endif>{{ $category->category_name }}</option>
-    @endforeach
-</select>
-                                @error('product_category')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                            </div>
+            @endforeach
+        </select>
+        @error('product_category')
+        <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+</div>
+                        
+                        <div id="specs-fields-container">
+    @foreach($categories as $category)
+        @if($category->category_id == $product->product_category)
+            @foreach(['specs1', 'specs2', 'specs3'] as $field)
+                @if(!empty($category->$field))
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">{{$category->$field}}</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="{{$field}}" placeholder="Enter {{$category->$field}}" value="{{$product->$field ?? ''}}" >
                         </div>
+                    </div>
+                @endif
+            @endforeach
+        @endif
+    @endforeach
+</div>
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Code
                             
@@ -119,3 +136,45 @@
         </div>
     </div>
 @endsection
+
+<script>
+function showCategoryFields(select) {
+    var category = select.value;
+    var specsFields = {!! json_encode($categories->mapWithKeys(function ($category) { return [$category->category_id => [$category->specs1, $category->specs2, $category->specs3]]; })->toArray()) !!};
+    var fieldsContainer = document.getElementById('specs-fields-container');
+
+    // Reset all fields
+    fieldsContainer.innerHTML = '';
+
+    // Generate fields based on the selected category
+    if (category in specsFields) {
+        var specsFieldNames = specsFields[category];
+        specsFieldNames.forEach(function (fieldName) {
+            if (fieldName) {
+                var label = document.createElement('label');
+                label.className = 'col-md-2 col-form-label';
+                label.innerText = fieldName;
+
+                var div = document.createElement('div');
+                div.className = 'col-md-10';
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.name = 'specs[]';
+                input.placeholder = 'Enter ' + fieldName;
+
+                div.appendChild(input);
+
+                var row = document.createElement('div');
+                row.className = 'mb-3 row';
+                row.appendChild(label);
+                row.appendChild(div);
+
+                fieldsContainer.appendChild(row);
+            }
+        });
+    }
+}
+
+</script>

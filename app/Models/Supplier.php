@@ -14,5 +14,8 @@ class Supplier extends Model
         'supplier_details',
         'supplier_phone',
         'supplier_address',
+        'supplier_address_state',
+        'supplier_address_city',
+        'supplier_address_postcode',
     ];
 }

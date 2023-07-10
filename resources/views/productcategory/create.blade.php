@@ -34,12 +34,41 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-md-10">
-                                <input type="text" name="category_name" class="form-control" placeholder="Category Name">
+                                <input type="text" name="category_name" class="form-control" placeholder="Category Name" required>
                                 @error('category_name')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
                             </div>
+                            </div>
+                            <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 1:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs1" class="form-control" placeholder="Specification 1" >
+                                
+                            </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 2:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs2" class="form-control" placeholder="Specification 2" >
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-2 col-form-label">Specification 3:
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-md-10">
+                                <input type="text" name="specs3" class="form-control" placeholder="Specification 3" >
+                                
+                            </div>
+                        </div>
+                       
+                        
                         <br>
                         <button class="btn btn-primary btn-lg btn-block">Submit</button>
                     </form>

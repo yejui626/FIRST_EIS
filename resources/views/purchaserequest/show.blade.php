@@ -71,6 +71,9 @@ span.select2-selection.select2-selection--single {
                                     <p class="m-0"><b>{{strtoupper($supplier->supplier_name)}}</b></p>
                                     <p class="m-0">{{$supplier->supplier_phone}}</p>
                                     <p class="m-0">{{strtoupper($supplier->supplier_address)}}</p>
+                                    <p class="m-0">{{strtoupper($supplier->supplier_address_city)}}</p>
+                                    <p class="m-0">{{strtoupper($supplier->supplier_address_postcode)}}</p>
+                                    <p class="m-0">{{strtoupper($supplier->supplier_address_state)}}</p>
                                 </div>
                             </div>
                             <div class="col-6 row">

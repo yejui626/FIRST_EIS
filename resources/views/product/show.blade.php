@@ -26,6 +26,26 @@
                                 <input type="text" class="form-control" name="product_category" placeholder="Enter Category Name" value="{{$product->productCategory->category_name}}" readonly>
                             </div>
                         </div>
+                        <div id="specs-fields-container">
+    @foreach($categories as $category)
+        @if($category->category_id == $product->product_category)
+            @foreach(['specs1', 'specs2', 'specs3'] as $field)
+                @if(!empty($category->$field))
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">{{$category->$field}}</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="{{$field}}" placeholder="Enter {{$category->$field}}" value="{{$product->$field ?? ''}}" readonly>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        @endif
+    @endforeach
+</div>
+
+
+
+
                         <div class="mb-3 row">
                             <label class="col-md-2 col-form-label">Product Code</label>
                             <div class="col-md-10">

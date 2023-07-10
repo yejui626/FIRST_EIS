@@ -51,7 +51,7 @@
                                     <td>{{$po->supplier->supplier_name}}</td>
                                     <td>{{$po->orderitems->count()}}</td>
                                     <td>{{$po->created_at}}</td>
-                                    <td>{{$po->status}}</td>
+                                    <td class="text-success"><b>{{$po->status}}</b></td>
                                     <td class="text-right">
                                         <?php $role = Auth::user()->role; ?>
                                         @if($role == 3)
@@ -126,7 +126,7 @@
                                             <td>{{$po->supplier->supplier_name}}</td>
                                             <td>{{$po->orderitems->count()}}</td>
                                             <td>{{$po->created_at}}</td>
-                                            <td>{{$po->status}}</td>
+                                            <td class="text-info"><b>{{$po->status}}</b></td>
                                             <td class="text-right">
                                             <td class="text-right mr-1">
 
@@ -149,6 +149,7 @@
                                 </table>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

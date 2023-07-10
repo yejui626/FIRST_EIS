@@ -130,9 +130,9 @@
                                         <td>
                                         {{$pr->id}}  
                                         </td>
-                                        <td>
-                                        {{$pr->status}}
-                                        </td>
+                                        <td class="text-warning">
+    <b>{{$pr->status}}</b>
+</td>
                                         <td>
                                         {{$pr->supplier->supplier_name}}
                                         </td>

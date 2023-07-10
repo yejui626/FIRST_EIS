@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2023 at 01:18 PM
+-- Generation Time: Jul 10, 2023 at 11:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -300,7 +300,11 @@ INSERT INTO `order_items` (`order_po_id`, `order_item_id`, `order_unit`, `order_
 (3, 4, 'unit', 4, 3, '2023-06-16'),
 (3, 3, 'unit', 3333, 3, '2023-06-10'),
 (3, 7, 'pcs', 5, 1, '2023-06-27'),
-(3, 5, 'pcs', 55, 3, '2023-06-19');
+(3, 5, 'pcs', 55, 3, '2023-06-19'),
+(14, 3, 'unit', 1200, 3, '2023-06-10'),
+(14, 6, 'unit', 1400, 4, '2023-06-10'),
+(15, 5, 'EA', 55, 3, '2023-06-16'),
+(15, 4, 'EA', 4200, 2, '2023-07-12');
 
 -- --------------------------------------------------------
 
@@ -405,19 +409,25 @@ CREATE TABLE `products` (
   `product_img2` varchar(255) DEFAULT NULL,
   `product_img3` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `specs1` varchar(255) DEFAULT NULL,
+  `specs2` varchar(255) DEFAULT NULL,
+  `specs3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`, `product_details`, `product_sellingprice`, `product_supplierprice`, `product_quantity`, `product_img1`, `product_img2`, `product_img3`, `created_at`, `updated_at`) VALUES
-(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-06-18 22:44:30'),
-(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42'),
-(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58'),
-(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50'),
-(7, 'Shipping', 1, NULL, NULL, 0.00, 0.00, NULL, NULL, NULL, NULL, '2023-06-09 22:00:40', '2023-06-09 22:00:40');
+INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`, `product_details`, `product_sellingprice`, `product_supplierprice`, `product_quantity`, `product_img1`, `product_img2`, `product_img3`, `created_at`, `updated_at`, `specs1`, `specs2`, `specs3`) VALUES
+(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-07-10 12:33:50', '8', '15', 'Ryzen'),
+(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42', NULL, NULL, NULL),
+(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58', NULL, NULL, NULL),
+(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50', NULL, NULL, NULL),
+(7, 'Shipping', 1, NULL, NULL, 0.00, 0.00, NULL, '/storage/images/168792242983w7nym3.png', NULL, NULL, '2023-06-09 22:00:40', '2023-06-27 19:20:30', NULL, NULL, NULL),
+(11, 'Laptop', 2, NULL, NULL, 123.00, 123.00, NULL, NULL, NULL, NULL, '2023-07-10 11:39:50', '2023-07-10 11:39:50', 'ram', 'size', 'cpu'),
+(12, 'Aksesori', 3, '1233213', NULL, 123.00, 123.00, NULL, NULL, NULL, NULL, '2023-07-10 11:44:09', '2023-07-10 12:37:07', '1000', 'Yes', 'Closed'),
+(13, 'Fon Telinga', 3, '1233', NULL, 123.00, 123.00, NULL, NULL, NULL, NULL, '2023-07-10 12:39:20', '2023-07-10 12:43:48', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -427,17 +437,22 @@ INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`
 
 CREATE TABLE `product_category` (
   `category_id` int(20) NOT NULL,
-  `category_name` varchar(100) NOT NULL
+  `category_name` varchar(100) NOT NULL,
+  `specs1` varchar(255) DEFAULT NULL,
+  `specs2` varchar(255) DEFAULT NULL,
+  `specs3` varchar(225) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_category`
 --
 
-INSERT INTO `product_category` (`category_id`, `category_name`) VALUES
-(1, 'Shipping'),
-(2, 'Laptop'),
-(3, 'Accessories');
+INSERT INTO `product_category` (`category_id`, `category_name`, `specs1`, `specs2`, `specs3`) VALUES
+(1, 'Shipping', NULL, NULL, NULL),
+(2, 'Laptop', 'RAM', 'Screen Size', 'CPU'),
+(3, 'Accessories', 'Battery', 'Wired/Wireless', NULL),
+(7, 'Headphone', 'Wired/Wireless', 'Battery', 'Closed/Open Back'),
+(8, 'Phone', 'Memory', 'Resolution', 'CPU');
 
 -- --------------------------------------------------------
 
@@ -474,10 +489,11 @@ INSERT INTO `purchaserequest` (`id`, `status`, `requestor`, `supplier_id`, `disc
 ('PR-20230610D8UMX', 'Approved', 'Ahmad', 4, 33, 6819.12, NULL, 0, 20664.00, NULL, '2023-06-09 23:25:34', '2023-06-19 05:19:43'),
 ('PR-20230610YIX0I', 'Approved', 'TSK Aiman', 4, 2, 184, NULL, 0, 9200.00, NULL, '2023-06-10 00:11:36', '2023-06-10 00:12:29'),
 ('PR-20230619FCM3C', 'Approved', 'TSK Rose', 3, 70, 0, 3, 0, 0.00, NULL, '2023-06-19 08:32:34', '2023-06-27 03:17:14'),
-('PR-20230619O21VF', 'Pending', 'TSK Leo', 3, 50, 42.12, 10, 28.08, 453.96, NULL, '2023-06-18 22:39:15', '2023-06-19 08:29:58'),
-('PR-20230619PYZYY', 'Pending', 'TSK JJ', 3, 15, 3.6, 3, 0.9, 0.00, NULL, '2023-06-19 09:13:56', '2023-06-19 09:14:17'),
-('PR-20230619ZAZIB', 'Pending', 'TSK Shah', 3, 6, 24.96, 9, 37.44, 0.00, NULL, '2023-06-19 08:56:01', '2023-06-19 08:56:17'),
-('PR-20230627TAPMT', 'Approved', 'Ahmad', 3, 2, 104, 3, 156, 5200.00, NULL, '2023-06-27 03:13:54', '2023-06-27 03:14:16');
+('PR-20230619O21VF', 'Approved', 'TSK Leo', 3, 50, 42.12, 10, 28.08, 453.96, NULL, '2023-06-18 22:39:15', '2023-06-27 19:45:48'),
+('PR-20230619PYZYY', 'Rejected', 'TSK JJ', 3, 15, 3.6, 3, 0.9, 0.00, NULL, '2023-06-19 09:13:56', '2023-07-10 12:54:33'),
+('PR-20230627TAPMT', 'Approved', 'Ahmad', 3, 2, 104, 3, 156, 5200.00, NULL, '2023-06-27 03:13:54', '2023-06-27 03:14:16'),
+('PR-20230710GKBBN', 'Pending', 'TSK Ammar', 5, 20, 2437.6, NULL, 0, 12188.00, NULL, '2023-07-10 13:37:43', '2023-07-10 13:37:43'),
+('PR-20230710NM1VV', 'Pending', 'TSK Aiman', 3, 2, 200, NULL, 0, 10000.00, NULL, '2023-07-10 13:38:39', '2023-07-10 13:38:39');
 
 -- --------------------------------------------------------
 
@@ -514,7 +530,9 @@ INSERT INTO `purchase_order` (`po_id`, `po_no`, `po_prno`, `requestor`, `buyer`,
 (5, 'PO-20230610JHUYKUOEN9', 'PR-20230610YIX0I', 'TSK Aiman', 'Ronaldo', 4, 2, 187.3, 0, 0, NULL, 'Please', 'Ordered', '2023-06-10 08:13:18.000000', '2023-06-10 08:18:36.000000'),
 (7, 'PO-20230618YIYNKO8OJ2', 'PR-20230610YIX0I', 'TSK Aiman', 'Cristiano', 4, 2, 184, 0, 0, NULL, NULL, 'Closed', '2023-06-18 11:02:58.000000', '2023-06-27 11:04:19.000000'),
 (10, 'PO-20230618JS4TXW25XD', 'PR-20230608BHUM5', 'TSK Wanie', 'mEOW', 3, 5, 0.6, 6, 0.72, NULL, NULL, 'Closed', '2023-06-18 15:05:12.000000', '2023-06-19 14:23:52.000000'),
-(11, 'PO-20230627OIF49S1O2T', 'PR-20230608BHUM5', 'TSK Wanie', 'Bukhary', 3, 5, 1225.2, 6, 1470.24, NULL, NULL, 'Closed', '2023-06-27 10:39:33.000000', '2023-06-27 10:57:47.000000');
+(11, 'PO-20230627OIF49S1O2T', 'PR-20230608BHUM5', 'TSK Wanie', 'Bukhary', 3, 5, 1225.2, 6, 1470.24, NULL, NULL, 'Closed', '2023-06-27 10:39:33.000000', '2023-06-27 10:57:47.000000'),
+(14, 'PO-202306289Y6XJQ6OC9', 'PR-20230610YIX0I', 'TSK Aiman', 'Bukhary', 4, 12, 1104, 0, 0, NULL, 'Test PO', 'Ordered', '2023-06-28 03:48:32.000000', '2023-06-28 03:49:18.000000'),
+(15, 'PO-20230710H5ZYL0SZRH', 'PR-20230609QXA9Q', 'TSK Wanie', 'TSK Karim', 3, 5, 428.25, 6, 513.9, NULL, NULL, 'Ordered', '2023-07-10 21:40:44.000000', '2023-07-10 21:40:44.000000');
 
 -- --------------------------------------------------------
 
@@ -554,7 +572,10 @@ INSERT INTO `request_items` (`id`, `pr_id`, `product_id`, `delivery_date`, `prod
 (25, 'PR-20230619FCM3C', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 08:45:06', '2023-06-19 08:45:06'),
 (31, 'PR-20230619PYZYY', 3, '2023-06-20', 0, 'pcs', 0, '2023-06-19 09:14:17', '2023-06-19 09:14:17'),
 (32, 'PR-20230627TAPMT', 4, '2023-06-28', 1, 'unit', 1200, '2023-06-27 03:13:54', '2023-06-27 03:13:54'),
-(33, 'PR-20230627TAPMT', 6, '2023-06-27', 2, 'unite', 2000, '2023-06-27 03:13:54', '2023-06-27 03:13:54');
+(33, 'PR-20230627TAPMT', 6, '2023-06-27', 2, 'unite', 2000, '2023-06-27 03:13:54', '2023-06-27 03:13:54'),
+(34, 'PR-20230710GKBBN', 4, '2023-07-12', 2, 'unit', 4200, '2023-07-10 13:37:43', '2023-07-10 13:37:43'),
+(35, 'PR-20230710GKBBN', 3, '2023-07-11', 1, 'unit', 3788, '2023-07-10 13:37:43', '2023-07-10 13:37:43'),
+(36, 'PR-20230710NM1VV', 4, '2023-07-13', 2, 'unit', 5000, '2023-07-10 13:38:39', '2023-07-10 13:38:39');
 
 -- --------------------------------------------------------
 
@@ -567,6 +588,9 @@ CREATE TABLE `suppliers` (
   `supplier_name` varchar(255) NOT NULL,
   `supplier_phone` varchar(20) NOT NULL,
   `supplier_address` text NOT NULL,
+  `supplier_address_state` varchar(255) DEFAULT NULL,
+  `supplier_address_city` varchar(255) DEFAULT NULL,
+  `supplier_address_postcode` int(11) DEFAULT NULL,
   `supplier_details` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -576,9 +600,11 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `supplier_name`, `supplier_phone`, `supplier_address`, `supplier_details`, `created_at`, `updated_at`) VALUES
-(3, 'Microsoft Malaysia', '03-5664356', 'Kuala Lumpur, Malaysia.', 'Authorized Dealer in Malaysia.', '2023-05-21 18:29:53', '2023-05-21 19:00:42'),
-(4, 'IT.CEO (Shopee)', '0198887777', 'qqq', 'eeee', '2023-06-09 05:06:44', '2023-06-09 05:06:44');
+INSERT INTO `suppliers` (`id`, `supplier_name`, `supplier_phone`, `supplier_address`, `supplier_address_state`, `supplier_address_city`, `supplier_address_postcode`, `supplier_details`, `created_at`, `updated_at`) VALUES
+(3, 'Microsoft Malaysia', '03-5664356', '211, Jalan Tun Sambanthan', 'Kuala Lumpur', 'Brickfields', 50470, 'Authorized Dealer in Malaysia.', '2023-05-21 18:29:53', '2023-07-10 13:32:27'),
+(4, 'IT.CEO (Shopee)', '0198887777', 'No.56, Jalan Aman', 'Kuala Lumpur', 'Brickfields', 50470, 'Shopee', '2023-06-09 05:06:44', '2023-07-10 13:36:16'),
+(5, 'Nvidia Malaysia', '0123456789', 'No.48, Jalan Kemuning', 'Pulau Pinang', 'Gelugor', 11700, 'GPU Supplier', '2023-07-10 13:21:42', '2023-07-10 13:21:42'),
+(6, '123', '1233', '1233', 'Johor', '123', 123, '123', '2023-07-10 13:23:11', '2023-07-10 13:30:54');
 
 -- --------------------------------------------------------
 
@@ -819,31 +845,31 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
-  MODIFY `category_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `purchase_order`
 --
 ALTER TABLE `purchase_order`
-  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `po_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `request_items`
 --
 ALTER TABLE `request_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
