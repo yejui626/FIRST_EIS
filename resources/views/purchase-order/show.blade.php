@@ -57,21 +57,24 @@ span.select2-selection.select2-selection--single {
                     </div>
                     <div class="card-body" id="out_print">
                         <div class="row">
-                            <div class="col-6 d-flex align-items-center">
-                                <div>
+                            <div class="col-6">
+                            <img src="{{ url('storage/images/logo.png') }}" alt="" width="450px" height="200px">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                        <div class="col-6">
+                                <h2 ><b>PURCHASE ORDER</b></h2>
+                            </div>
+                            </div>
+                        <div class="row mb-2">
+                            <div class="col-6"><div>
                                     <p class="m-0">DELIVERY TO:</p>
                                     <p class="m-0"><b>TSK SYNERGY SDN BHD</b></p>
                                     <p class="m-0">NO. 19, JALAN MEGA 1/8, TAMAN PERINDUSTRIAN NUSA CEMERLANG</p>
                                     <p class="m-0">79200 ISKANDAR PUTERI, JOHOR</p>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <center><img src="{{ url('storage/images/logo.png') }}" alt="" width="500px" height="200px"></center>
-                                <h2 class="col-7 offset-6"><b>PURCHASE ORDER</b></h2>
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-6">
+                                <br>
                                 <p class="m-0">TO:</p>
                                 <div>
                                     <p class="m-0"><b>{{strtoupper($supplier->supplier_name)}}</b></p>
@@ -158,6 +161,20 @@ span.select2-selection.select2-selection--single {
                                         <p>{{$purchaseorder->notes ?? ''}}</p>
                                     </div>
                                 </div>
+                                <style>
+    div.lower-spacing p {
+        margin-bottom: 0.5em; /* Adjust the value to decrease the spacing */
+    }
+</style>
+                                <div class="lower-spacing">
+    <b><p>REMARK (Terms & Conditions):</p>
+    <p>1. Kindly acknowledge receipt and acceptance of this PO</p>
+    <p>2. Please indicate our PO number on your Delivery Order and Invoice</p>
+    <p>3. Goods are strictly to be delivered to Receiving Store and delivery document must be acknowledged as proof of delivery.</p>
+    <p>4. Provide Certificate of Conformance "COC" or Material Millcert where applicable upon goods delivery.</p>
+    <p>5. Notify 365 days in advance of any obsolescence part or material.</p></b>
+</div>
+
                             </div>
                         </div>
                     </div>
@@ -208,29 +225,45 @@ function end_loader(){
       })
 }
     
-    $(function(){
-        $('#print').click(function(e){
-            e.preventDefault();
-            start_loader();
-            var _h = $('head').clone()
-            var _p = $('#out_print').clone()
-            var _el = $('<div>')
-                _p.find('thead th').attr('style','color:black !important')
-                _el.append(_h)
-                _el.append(_p)
-                
-            var nw = window.open("","","width=1200,height=950")
-                nw.document.write(_el.html())
-                nw.document.close()
-                setTimeout(() => {
-                    nw.print()
-                    setTimeout(() => {
-                        end_loader();
-                        nw.close()
-                    }, 300);
-                }, 200);
-        })
-    })
+ $(function(){
+    $('#print').click(function(e){
+        e.preventDefault();
+        start_loader();
+        var _h = $('head').clone();
+        var _p = $('#out_print').clone();
+        var _el = $('<div>');
+        _p.find('thead th').attr('style','color:black !important');
+
+        // Additional CSS styles for table elements
+        var cssStyles = '<style type="text/css">' +
+            'table { border-collapse: collapse; width: 100%; }' +
+            'th, td { border: 2px solid #000; padding: 0.5em; }' +
+            '#item-list th, #item-list td { border: 2px solid #000; padding: 0.5em; }' + // Add specific rule for item list table
+            '</style>';
+        
+        // Remove existing print styles
+        _p.find('link[media*=print]').remove();
+        _p.find('style').not('.table-print').remove();
+        
+        _el.append(_h);
+        _el.append(cssStyles); // Add the CSS styles to the cloned content
+        _el.append(_p.html()); // Append the HTML content of the cloned element
+        
+        var nw = window.open("","","width=1200,height=950");
+        nw.document.write(_el.html());
+        nw.document.close();
+        
+        setTimeout(() => {
+            nw.print();
+            setTimeout(() => {
+                end_loader();
+                nw.close();
+            }, 300);
+        }, 200);
+    });
+});
+
+
 
     
 </script>
