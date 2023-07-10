@@ -62,17 +62,21 @@ span.select2-selection.select2-selection--single {
                             </div>
                             
                         </div>
+                        <hr>
                         <div class="row">
                         <div class="col-6">
                                 <h2 ><b>PURCHASE ORDER</b></h2>
                             </div>
                             </div>
+                            
                         <div class="row mb-2">
                             <div class="col-6"><div>
                                     <p class="m-0">DELIVERY TO:</p>
                                     <p class="m-0"><b>TSK SYNERGY SDN BHD</b></p>
                                     <p class="m-0">NO. 19, JALAN MEGA 1/8, TAMAN PERINDUSTRIAN NUSA CEMERLANG</p>
                                     <p class="m-0">79200 ISKANDAR PUTERI, JOHOR</p>
+                                    <p class="m-0">Tel : 07-5950803</p>
+                                    
                                 </div>
                                 <br>
                                 <p class="m-0">TO:</p>
