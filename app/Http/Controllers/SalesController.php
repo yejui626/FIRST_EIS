@@ -21,32 +21,55 @@ class SalesController extends Controller
 {
     public function dashboard(Request $request)
 {
-    $selectedYear = $request->input('year') ?? ''; // Get the selected year from the request, default to empty string for "All Years"
+    $selectedYear = $request->input('year') ?? date('Y');
+    $selectedCategory = $request->input('category') ?? '';
+    $categoryname = '';
+
+    if (!empty($selectedCategory)) {
+        $categoryname = DB::table('product_category')
+            ->where('category_id', $selectedCategory)
+            ->value('category_name');
+    }
 
     $yearList = DB::table('orders')
         ->select(DB::raw('YEAR(created_at) as year'))
         ->distinct()
         ->orderBy('year', 'desc')
         ->pluck('year');
+        
+    $categoryList = DB::table('product_category')
+        ->pluck('category_name', 'category_id');
 
-    $totalOrdersQuery = DB::table('orders');
-    $totalRevenueQuery = DB::table('orders');
+
+    $totalOrdersQuery = DB::table('orders')
+        ->join('items', 'orders.id', '=', 'items.order_id')
+        ->join('products', 'items.product_id', '=', 'products.id')
+        ->join('product_category', 'products.product_category', '=', 'product_category.category_id')
+        ->whereYear('orders.created_at', $selectedYear);
+    $totalRevenueQuery = DB::table('orders')
+        ->join('items', 'orders.id', '=', 'items.order_id')
+        ->join('products', 'items.product_id', '=', 'products.id')
+        ->join('product_category', 'products.product_category', '=', 'product_category.category_id')
+        ->whereYear('orders.created_at', $selectedYear);
     $totalCostQuery = DB::table('orders')
         ->join('items', 'orders.id', '=', 'items.order_id')
-        ->join('products', 'items.product_id', '=', 'products.id');
+        ->join('products', 'items.product_id', '=', 'products.id')
+        ->join('product_category', 'products.product_category', '=', 'product_category.category_id')
+        ->whereYear('orders.created_at', $selectedYear);
     
-    if (!empty($selectedYear)) {
-        $totalOrdersQuery->whereYear('created_at', $selectedYear);
-        $totalRevenueQuery->whereYear('created_at', $selectedYear);
-        $totalCostQuery->whereYear('orders.created_at', $selectedYear);
+    if (!empty($selectedCategory)) {
+        $totalOrdersQuery->where('product_category.category_id', $selectedCategory);
+        $totalRevenueQuery->where('product_category.category_id', $selectedCategory);
+        $totalCostQuery->where('product_category.category_id', $selectedCategory);
+
     }
 
     $totalOrders = $totalOrdersQuery
-        ->select(DB::raw('COUNT(*) as total_orders'))
-        ->first()->total_orders;
+    ->select(DB::raw('COUNT(DISTINCT orders.id) as total_orders'))
+    ->first()->total_orders;
 
     $totalRevenue = $totalRevenueQuery
-        ->select(DB::raw('SUM(totalprice) as total_revenue'))
+        ->select(DB::raw('SUM(items.product_quantity * products.product_sellingprice) as total_revenue'))
         ->first()->total_revenue;
 
     $totalCost = $totalCostQuery
@@ -56,24 +79,31 @@ class SalesController extends Controller
     $totalProfit = $totalRevenue - $totalCost;
     $profitPercentage = ($totalRevenue != 0) ? ($totalProfit / $totalRevenue) * 100 : 0;
 
-    $salesDataQuery = Order::query();
-
+    $salesDataQuery = Order::query()
+        ->join('items', 'orders.id', '=', 'items.order_id')
+        ->join('products', 'items.product_id', '=', 'products.id')
+        ->join('product_category', 'products.product_category', '=', 'product_category.category_id');
+    
     if (!empty($selectedYear)) {
-        $salesDataQuery->whereYear('created_at', $selectedYear);
+        $salesDataQuery->whereYear('orders.created_at', $selectedYear);
     }
-
+    
+    if (!empty($selectedCategory)) {
+        $salesDataQuery->where('product_category.category_id', $selectedCategory);
+    }
+    
     $salesData = $salesDataQuery
-        ->select(DB::raw("DATE_FORMAT(created_at, '%M') as month"), DB::raw('IFNULL(SUM(totalprice), 0) as sales'))
+        ->select(DB::raw("DATE_FORMAT(orders.created_at, '%M') as month"), DB::raw('IFNULL(SUM(items.product_quantity * products.product_sellingprice), 0) as sales'))
         ->groupBy('month')
-        ->orderByRaw('MONTH(created_at)')
+        ->orderByRaw('MONTH(orders.created_at)')
         ->get();
-
+    
     $chartLabels = $this->generateMonthRange(date('Y-m-01', strtotime('-5 months')), date('Y-m-t'), 'F');
     $chartData = [];
-
+    
     foreach ($chartLabels as $label) {
         $monthSales = $salesData->firstWhere('month', $label);
-
+    
         if ($monthSales) {
             $chartData[] = $monthSales->sales;
         } else {
@@ -95,6 +125,9 @@ class SalesController extends Controller
         if (!empty($selectedYear)) {
             $categorySalesQuery->whereYear('items.created_at', $selectedYear);
         }
+        if (!empty($selectedCategory)) {
+            $categorySalesQuery->where('product_category.category_id', $selectedCategory);
+        }
 
         $categorySales = $categorySalesQuery
             ->select(DB::raw('SUM(items.product_quantity * products.product_sellingprice) as totalprice'))
@@ -112,8 +145,11 @@ class SalesController extends Controller
         'chartData' => $chartData,
         'pieChartLabels' => $pieChartLabels,
         'pieChartData' => $pieChartData,
-        'selectedYear' => $selectedYear, // Pass the selected year to the view
+        'selectedYear' => $selectedYear,
         'yearList' => $yearList,
+        'categoryList' => $categoryList,
+        'selectedCategory' => $selectedCategory,
+        'categoryname' => $categoryname,
     ]);
 }
 
