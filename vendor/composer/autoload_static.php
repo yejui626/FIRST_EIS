@@ -610,6 +610,7 @@ class ComposerStaticInit63741496e1fbecd04efba9ebb48b5125
         'App\\Http\\Controllers\\CustomerController' => __DIR__ . '/../..' . '/app/Http/Controllers/CustomerController.php',
         'App\\Http\\Controllers\\GRNController' => __DIR__ . '/../..' . '/app/Http/Controllers/GRNController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\LogisticController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogisticController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\OrderhisController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderhisController.php',
         'App\\Http\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Http/Controllers/PageController.php',
