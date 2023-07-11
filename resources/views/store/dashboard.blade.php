@@ -131,11 +131,12 @@
                             <th></th>
                             <th>Product Name</th>
                             <th>Price</th>
-                            <th>
-                                    Quantity In Stock
-                                </th>
+                            
                                 <th>
                                     Quantity Required
+                                </th>
+                                <th>
+                                    Status
                                 </th>
                             
                         </thead>
@@ -149,9 +150,21 @@
                 </td>
                 <td>{{substr($product->product_name, 0, 50)}}..</td>
                 <td>{{$product->product_sellingprice}}</td>
-                <td>{{$product->product_quantity}}</td>
+            
                 <td>{{ $totalOrderCount - $product->product_quantity }}</td>
-                
+                <td>
+                                        @if ($totalOrderCount < $product->product_quantity)
+                                            In Stock
+                                        @elseif ($product->product_quantity = 0)
+                                            <span style="color: red;">Out of Stock</span>
+                                        @else
+                                            @if ($product->product_quantity <= 10)
+                                                <span style="color: orange;">Low Stock</span>
+                                            @else
+                                                Stock Level Normal
+                                            @endif
+                                        @endif
+                                    </td>
                 <td class="text-right">
                     <a href="{{route('quantity.show', $product->id)}}" class="btn btn-primary mr-1" type="button">Detail</a>
                     <a href="{{route('quantity.edit', $product->id)}}" class="btn btn-default mr-1" type="button">Edit</a>

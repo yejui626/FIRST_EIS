@@ -4,6 +4,20 @@
 ])
 
 @section('content')
+<head>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css" />
+    <style>
+        .dataTables_wrapper .dataTables_filter {
+            text-align: right;
+        }
+
+        .dataTables_wrapper .sorting:before,
+        .dataTables_wrapper .sorting_asc:before,
+        .dataTables_wrapper .sorting_desc:before {
+            color: black !important;
+        }
+    </style>
+</head>
 
 <div class="content">
     <div class="row">
@@ -27,34 +41,18 @@
                 <div class="card-body">
 
                     <div class="table-responsive">
-                        <table class="table">
+                    <table class="table" id="inventory-table">
 
                             <thead class=" text-primary">
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-
-                                </th>
-                                <th>
-                                    Product Name
-                                </th>
-                                <th>
-                                    Price
-                                </th>
-                                <th>
-                                    Quantity Orders
-                                </th>
-                                <th>
-                                    Quantity In Stock
-                                </th>
-                                <th>
-                                    Quantity Required
-                                </th>
-                                <th>
-                                    Status
-                                </th>
-
+                                <th data-orderable="true">ID</th>
+                                <th></th>
+                                <th data-orderable="true">Product Name</th>
+                                <th data-orderable="true">Price</th>
+                                <th data-orderable="true">Quantity Orders</th>
+                                <th data-orderable="true">Quantity In Stock</th>
+                                <th data-orderable="true">Quantity Required</th>
+                                <th>Status</th>
+                                <th></th>
 
                             </thead>
                             <tbody>
@@ -123,3 +121,20 @@
 </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#inventory-table').DataTable({
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
+            language: {
+                search: "",
+                searchPlaceholder: "Search",
+            }
+        });
+    });
+</script>
+@endpush
