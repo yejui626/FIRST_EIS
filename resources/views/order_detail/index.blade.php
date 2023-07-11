@@ -5,6 +5,15 @@
 
 @section('content')
 
+<style>
+.customer-info-box {
+    float: right;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 250px;
+}
+</style>
+
 <div class="content">
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +37,7 @@
                             <thead class="text-primary">
                                 <th>Order ID</th>
                                 <th>Customer ID</th>
-                                <th>Price</th>
+                                <th>Total Price (RM)</th>
                                 <th>Status</th>
                                 <th>View Item</th>
                             </thead>
@@ -57,28 +66,42 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <h6>Items:</h6>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered" id="order-{{$od->id}}"> <!-- Added id attribute -->
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Product ID</th>
-                                                                        <th>Product Name</th>
-                                                                        <th>Quantity</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach($od->items as $item)
-                                                                    <tr>
-                                                                        <td>{{ $item->product_id }}</td>
-                                                                        <td>{{ $item->product->product_name }}</td>
-                                                                        <td>{{ $item->product_quantity }}</td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
+                                                        <div class="customer-info-box">
+                                                            <h6>Customer Information</h6>
+                                                            <hr>
+                                                            <p><strong>Customer Name:</strong> {{ $od->user->name }}</p>
+                                                            <p><strong>Address:</strong> {{ $od->payment->address }}</p>
+                                                            <p><strong>Phone Number:</strong> {{ $od->payment->phone }}</p>
+                                                        </div>
+                                                        <div class="order-items">
+                                                            <div class="table-responsive">
+                                                            <h6>Items:</h6>
+                                                                <table class="table table-bordered" id="order-{{$od->id}}">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Product ID</th>
+                                                                            <th>Product Name</th>
+                                                                            <th>Price per Unit (RM)</th>
+                                                                            <th>Quantity</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($od->items as $item)
+                                                                        <tr>
+                                                                            <td>{{ $item->product_id }}</td>
+                                                                            <td>{{ $item->product->product_name }}</td>
+                                                                            <td>{{ $item->product->product_sellingprice }}</td>
+                                                                            <td>{{ $item->product_quantity }}</td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
+
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
