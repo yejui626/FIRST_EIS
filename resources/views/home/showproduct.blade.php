@@ -12,7 +12,7 @@
    <meta name="description" content="" />
    <meta name="author" content="" />
    <link rel="shortcut icon" href="images/favicon.png" type="">
-   <title>Famms - Fashion HTML Template</title>
+   <title>TSK E-Commerce Shopping</title>
    <!-- bootstrap core css -->
    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
    <!-- font awesome style -->
@@ -80,14 +80,29 @@
             </div>
          </div>
 
-         <div id="search_list">
-            <!-- Display search results here -->
+         <div class="row">
+            <div class="col-lg-2">
+               <div class="category-checkboxes">
+                  <h4>Categories:</h4>
+                  @foreach($category as $categories)
+                  <div class="form-check">
+                     <input class="form-check-input category-checkbox" type="checkbox" value="{{ $categories->category_id }}" id="category{{ $categories->category_id }}">
+                     <label class="form-check-label" for="category{{ $categories->category_id }}">
+                        {{ $categories->category_name }}
+                     </label>
+                  </div>
+                  @endforeach
+               </div>
+            </div>
+            <div class="col-lg-10">
+               <div id="search_list">
+                  <!-- Display search results here -->
+               </div>
+               <span style="padding-top: 20px;">
+                  {!!$products->withQueryString()->links('pagination::bootstrap-5')!!}
+               </span>
+            </div>
          </div>
-
-
-         <span style="padding-top: 20px;">
-            {!!$products->withQueryString()->links('pagination::bootstrap-5')!!}
-         </span>
       </div>
    </section>
 
@@ -95,13 +110,7 @@
    <!-- footer start -->
    @include ('home.footer')
    <!-- footer end -->
-   <div class="cpy_">
-      <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
 
-         Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-
-      </p>
-   </div>
    <!-- jQery -->
    <script src="home/js/jquery-3.4.1.min.js"></script>
    <!-- popper js -->
@@ -126,7 +135,22 @@
          $(document).ready(function() {
             var currentPage = 1; // Initialize the current page number
             var query = ''; // Initialize the current search query
+            var selectedCategories = []; // Array to store selected category IDs
             var delayTimer; // Timer for delaying the AJAX request
+
+            // Checkbox change event
+            $(document).on('change', '.category-checkbox', function() {
+               var categoryId = $(this).val();
+               if ($(this).is(':checked')) {
+                  selectedCategories.push(categoryId);
+               } else {
+                  var index = selectedCategories.indexOf(categoryId);
+                  if (index !== -1) {
+                     selectedCategories.splice(index, 1);
+                  }
+               }
+               loadProducts(query, currentPage); // Call the function to load products with the updated query and page parameters
+            });
 
             $('#search').on('keyup', function() {
                clearTimeout(delayTimer); // Clear the previous timer
@@ -153,7 +177,8 @@
                   url: "{{ route('searchdata') }}",
                   data: {
                      'search': query,
-                     'page': page // Pass the current page number in the AJAX request
+                     'page': page,
+                     'categories': selectedCategories // Pass the selected category IDs in the AJAX request
                   },
                   success: function(response) {
                      $('#search_list').html(response.output);
@@ -166,6 +191,7 @@
             }
          });
       </script>
+
 
 
 

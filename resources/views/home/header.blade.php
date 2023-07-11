@@ -20,9 +20,6 @@
                      <li class="nav-item">
                         <a class="nav-link" href="{{url('productshow')}}">Products</a>
                      </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                     </li>
                      <li class="nav-item  active ">
                         <a href="{{ route('login') }}" class="nav-link">
                            <i class="nc-icon nc-tap-01"></i>{{ __('Login') }}

@@ -12,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>TSK E-Commerce Shopping</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="home//css/bootstrap.css" />
     <!-- font awesome style -->
@@ -55,13 +55,7 @@
     <!-- footer start -->
     @include ('home.footer')
     <!-- footer end -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
-
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-
-        </p>
-    </div>
+    
     <!-- jQery -->
     <script src="home/js/jquery-3.4.1.min.js"></script>
     <!-- popper js -->

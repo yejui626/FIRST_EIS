@@ -1,22 +1,17 @@
-<!-- edit.blade.php -->
 @extends('layouts.app', [
     'class' => '',
     'elementActive' => 'profile'
 ])
-<style>
-    input[type="text"], input[type="email"] {
-        text-transform: none !important;
-    }
-</style>
 
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <div class="list-group">
-                <a href="{{ route('profile.edit') }}" class="list-group-item {{ Request::is('profile/edit') ? 'active' : '' }}">{{ __('Edit Profile') }}</a>
-                <a href="{{ route('profile.password.edit') }}" class="list-group-item {{ Request::is('profile/password') ? 'active' : '' }}">{{ __('Change Password') }}</a>
-            </div>
+        <div class="list-group">
+            <a href="{{ route('profile.edit') }}" class="list-group-item {{ Request::is('profile/edit') ? 'active' : '' }}">{{ __('Edit Profile') }}</a>
+            <a href="{{ route('profile.password.edit') }}" class="list-group-item {{ Request::is('profile/password') ? 'active' : '' }}">{{ __('Change Password') }}</a>
+        </div>
+
         </div>
         <div class="col-md-9">
             <div class="content">
@@ -30,36 +25,49 @@
                         {{ session('password_status') }}
                     </div>
                 @endif
-                <form class="col-md-10" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                <form class="col-md-10" action="{{ route('profile.password.edit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="title">{{ __('Edit Profile') }}</h5>
+                            <h5 class="title">{{ __('Change Password') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <label class="col-md-3 col-form-label">{{ __('Name') }}</label>
+                                <label class="col-md-3 col-form-label">{{ __('Old Password') }}</label>
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <input type="text" name="name" class="form-control" placeholder="Name" value="{{ auth()->user()->name }}" required>
+                                        <input type="password" name="old_password" class="form-control" placeholder="Old password" required>
                                     </div>
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('old_password'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('old_password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-3 col-form-label">{{ __('Email') }}</label>
+                                <label class="col-md-3 col-form-label">{{ __('New Password') }}</label>
                                 <div class="col-md-9">
                                     <div class="form-group">
-                                        <input type="email" name="email" class="form-control" placeholder="Email" value="{{ auth()->user()->email }}" required>
+                                        <input type="password" name="password" class="form-control" placeholder="Password" required>
                                     </div>
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('password'))
                                         <span class="invalid-feedback" style="display: block;" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-3 col-form-label">{{ __('Password Confirmation') }}</label>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <input type="password" name="password_confirmation" class="form-control" placeholder="Password Confirmation" required>
+                                    </div>
+                                    @if ($errors->has('password_confirmation'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>{{ $errors->first('password_confirmation') }}</strong>
                                         </span>
                                     @endif
                                 </div>

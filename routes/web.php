@@ -17,6 +17,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\StoreUserController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\Customer;
 use App\Models\Cartdetail;
 use Illuminate\Support\Facades\Auth;
@@ -37,11 +38,21 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
+
+Route::get('/new-address', [CustomerController::class, 'address'])->name('newAddress');
+Route::get('/add-address', [CustomerController::class, 'create'])->name('addAddress');
+Route::post('/save-address', [CustomerController::class, 'save'])->name('saveAddress');
+Route::get('/edit-address/{id}', [CustomerController::class, 'edit'])->name('editAddress');
+Route::post('/saveedit-address', [CustomerController::class, 'saveedit'])->name('saveeditAddress');
+Route::get('/delete-address/{id}', [CustomerController::class, 'delete'])->name('deleteAddress');
+Route::get('records', [CustomerController::class, 'records'])->name('records');
+
+
 Route::get('/order-details/{id}', [CustomerController::class, 'order_details'])->name('order_details');
 
 Route::get('/print_pdf/{id}', [CustomerController::class, 'print_pdf']);
 
-
+Route::match(['get', 'post'], '/receipt/{id}/mail', [App\Http\Controllers\CustomerController::class, 'mailReceipt'])->name('receipt.mail');
 
 // Route::get('/cartform{id}', [App\Http\Controllers\CustomerController::class, 'custdetail'])->name('custdetail');
 
@@ -67,11 +78,11 @@ Route::get('/search', [App\Http\Controllers\CustomerController::class, 'searchda
 Route::get('/customer', [App\Http\Controllers\CustomerController::class, 'index'])->name('cust');
 Route::get('/productshow', [App\Http\Controllers\CustomerController::class, 'productshow']);
 Route::get('/stripe/{token}', [App\Http\Controllers\CustomerController::class, 'stripe'])
-    ->name('stripe')
-    ->middleware('auth');
+	->name('stripe')
+	->middleware('auth');
 Route::post('/stripe/post', [App\Http\Controllers\CustomerController::class, 'stripePost'])
-    ->name('stripe.post')
-    ->middleware('auth');
+	->name('stripe.post')
+	->middleware('auth');
 
 
 
@@ -86,8 +97,8 @@ Route::get('/remove_cart/{id}', [App\Http\Controllers\CustomerController::class,
 Route::get('/addMultipleRow', [App\Http\Controllers\ProductController::class, 'test'])->name('testing-page');
 
 
-Route::post('/add_cart/{id}', [App\Http\Controllers\CustomerController::class, 'add_cart'])->name('add_cart');	
-
+Route::post('/add_cart/{id}', [App\Http\Controllers\CustomerController::class, 'add_cart'])->name('add_cart');
+Route::post('/add_cart_details/{id}', [App\Http\Controllers\CustomerController::class, 'add_cart_details'])->name('add_cart_details');
 
 Route::get('invoice', [InvoiceController::class, 'Invoice']);
 
@@ -101,24 +112,24 @@ Route::get('/sales/dashboard', [SalesController::class, 'dashboard'])->name('sal
 
 
 Route::group(['middleware' => 'role:3'], function () {
-    Route::resource('/order', OrderController::class);
-    Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
-    Route::post('/purchaserequest/create', [PurchaseRequestController::class, 'store'])->name('purchaseRequest.store');
-	 Route::get('purchaserequest/createwithproduct/{product_id}', [PurchaseRequestController::class, 'createwithproduct'])->name('purchaseRequest.createwithproduct');
-	 
-    Route::resource('/quantity', QuantityController::class);
-    Route::put('/purchase-order/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('po.updateStatus');
+	Route::resource('/order', OrderController::class);
+	Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+	Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+	Route::post('/purchaserequest/create', [PurchaseRequestController::class, 'store'])->name('purchaseRequest.store');
+	Route::get('purchaserequest/createwithproduct/{product_id}', [PurchaseRequestController::class, 'createwithproduct'])->name('purchaseRequest.createwithproduct');
+
+	Route::resource('/quantity', QuantityController::class);
+	Route::put('/purchase-order/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('po.updateStatus');
 	Route::get('/grn/create/{id}', [GRNController::class, 'create'])->name('grn.Create');
 });
 
 Route::group(['middleware' => 'role:2'], function () {
-    
-Route::resource('/supplier', SupplierController::class);
-Route::resource('/product', ProductController::class);
-Route::resource('/productcategory', ProductCategoryController::class);
-Route::get('/purchase-order/create/{id}', [PurchaseOrderController::class, 'create'])->name('po.createOrder');
-Route::put('/purchaserequest/{id}/update-status', [PurchaseRequestController::class, 'updateStatus'])->name('purchaseRequest.updateStatus');
+
+	Route::resource('/supplier', SupplierController::class);
+	Route::resource('/product', ProductController::class);
+	Route::resource('/productcategory', ProductCategoryController::class);
+	Route::get('/purchase-order/create/{id}', [PurchaseOrderController::class, 'create'])->name('po.createOrder');
+	Route::put('/purchaserequest/{id}/update-status', [PurchaseRequestController::class, 'updateStatus'])->name('purchaseRequest.updateStatus');
 });
 
 Route::put('/purchase-order/{id}', [PurchaseOrderController::class, 'update'])->name('po.Update');
@@ -170,7 +181,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	Route::get('profile/password', ['as' => 'profile.password.edit', 'uses' => 'App\Http\Controllers\ProfileController@editPassword']);
+	Route::put('profile/password', ['as' => 'profile.password.update', 'uses' => 'App\Http\Controllers\ProfileController@updatePassword']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -180,4 +192,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/store/dashboard', [StoreUserController::class, 'dashboard'])->name('store_dashboard');
 
+Route::get('/email/verify', function () {
+	return view('auth.verify-email');
+})->middleware(['auth'])->name('verification.notice');
 
+Route::get('/email/verify/{id}/{hash}', function (RedirectIfAuthenticated $request) {
+	return redirect('/customer');
+})->middleware(['auth', 'signed', 'throttle:6,1'])->name('verification.verify');

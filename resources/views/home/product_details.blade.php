@@ -13,7 +13,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>TSK E-Commerce Shopping</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="home//css/bootstrap.css" />
     <!-- font awesome style -->
@@ -46,16 +46,27 @@
                 <h5>Quantity: {{ $products->product_quantity }}
                 </h5>
                 <h6>
-                    Price: {{$products->product_sellingprice}}
+                    <strong>Price:</strong> {{$products->product_sellingprice}}
                 </h6>
                 <h6>
-                    Product Code: {{$products->product_code}}
+                    <strong>Product Code:</strong> {{$products->product_code}}
                 </h6>
                 <h6>
                     {{$products->product_details}}
                 </h6>
+                @if ($category)
+                <h6>
+                    <strong>{{$category->specs1}}:</strong> {{$products->specs1}}
+                </h6>
+                <h6>
+                    <strong>{{$category->specs2}}:</strong> {{$products->specs2}}
+                </h6>
+                <h6>
+                    <strong>{{$category->specs3}}:</strong> {{$products->specs3}}
+                </h6>
+                @endif
                 <div style="display: flex; justify-content: center;">
-                    <form action="{{ url('add_cart', $products->id) }}" method="POST">
+                    <form action="{{ route('add_cart_details', $products->id) }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -75,13 +86,7 @@
     <!-- footer start -->
     @include ('home.footer')
     <!-- footer end -->
-    <div class="cpy_">
-        <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
 
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-
-        </p>
-    </div>
     <!-- jQery -->
     <script src="home/js/jquery-3.4.1.min.js"></script>
     <!-- popper js -->

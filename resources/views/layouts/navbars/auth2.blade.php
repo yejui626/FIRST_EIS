@@ -6,7 +6,7 @@
             </div>
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-            {{ __('Creative Tim') }}
+            {{ __('Group 1') }}
         </a>
     </div>
     <div class="sidebar-wrapper">

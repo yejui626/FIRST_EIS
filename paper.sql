@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2023 at 11:43 PM
--- Server version: 10.4.28-MariaDB
+-- Generation Time: Jul 11, 2023 at 03:01 AM
+-- Server version: 10.4.28-MariaDB-log
 -- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -64,6 +64,29 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_quantity`, `created_at`, `updated_at`, `name`, `email`, `phone`, `address`, `product_name`, `product_images`, `price`) VALUES
 (39, 2, 5, 1, '2023-05-26 20:07:58', '2023-05-26 20:07:58', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (40, 4, 3, 1, '2023-06-16 09:09:28', '2023-06-16 09:09:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_address`
+--
+
+CREATE TABLE `customer_address` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `u_id` bigint(20) UNSIGNED NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `phone_number` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_address`
+--
+
+INSERT INTO `customer_address` (`id`, `u_id`, `address`, `created_at`, `updated_at`, `phone_number`) VALUES
+(2, 6, 'Jugle Books', '2023-07-10 14:12:36', '2023-07-10 14:12:36', '0192612066'),
+(3, 7, 'Pantai Timur', '2023-07-10 14:22:46', '2023-07-10 14:22:46', '0173274877');
 
 -- --------------------------------------------------------
 
@@ -160,7 +183,11 @@ INSERT INTO `items` (`id`, `order_id`, `product_id`, `product_quantity`, `create
 (25, 27, 3, 1, '2023-05-26 20:04:29', '2023-05-26 20:04:29'),
 (26, 27, 4, 2, '2023-05-26 20:04:29', '2023-05-26 20:04:29'),
 (27, 27, 5, 1, '2023-05-26 20:04:29', '2023-05-26 20:04:29'),
-(28, 27, 6, 1, '2023-05-26 20:04:29', '2023-05-26 20:04:29');
+(28, 27, 6, 1, '2023-05-26 20:04:29', '2023-05-26 20:04:29'),
+(29, 28, 4, 1, '2023-07-10 14:13:00', '2023-07-10 14:13:00'),
+(30, 28, 5, 1, '2023-07-10 14:13:00', '2023-07-10 14:13:00'),
+(31, 29, 6, 1, '2023-07-10 14:23:25', '2023-07-10 14:23:25'),
+(32, 30, 3, 1, '2023-07-10 15:20:21', '2023-07-10 15:20:21');
 
 -- --------------------------------------------------------
 
@@ -226,7 +253,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2023_05_25_211154_create_orders_table', 1),
 (9, '2023_05_26_005141_create_items_table', 1),
 (11, '2023_05_26_125845_create_items_table', 2),
-(15, '2023_06_16_104454_create_logistic_table', 3);
+(15, '2023_06_16_104454_create_logistic_table', 3),
+(16, '2023_07_10_220350_create_customer_address_table', 4);
 
 -- --------------------------------------------------------
 
@@ -259,7 +287,10 @@ INSERT INTO `orders` (`id`, `user_id`, `payment_id`, `totalprice`, `delivery_sta
 (24, 2, 25, 6923.00, 'pending', '2023-05-26 15:45:30', '2023-05-26 15:45:30'),
 (25, 2, 26, 6794.00, 'pending', '2023-05-26 15:52:39', '2023-05-26 15:52:39'),
 (26, 4, 27, 129.00, 'Cancel', '2023-05-26 19:50:08', '2023-06-24 11:35:58'),
-(27, 4, 28, 13468.00, 'Cancel', '2023-05-26 20:04:29', '2023-06-24 11:36:00');
+(27, 4, 28, 13468.00, 'Cancel', '2023-05-26 20:04:29', '2023-06-24 11:36:00'),
+(28, 6, 29, 3174.00, 'pending', '2023-07-10 14:13:00', '2023-07-10 14:13:00'),
+(29, 7, 30, 3500.00, 'pending', '2023-07-10 14:23:25', '2023-07-10 14:23:25'),
+(30, 7, 31, 3749.00, 'pending', '2023-07-10 15:20:21', '2023-07-10 15:20:21');
 
 -- --------------------------------------------------------
 
@@ -369,7 +400,10 @@ INSERT INTO `payments` (`id`, `cardname`, `cardnumber`, `address`, `phone`, `cre
 (25, 'CIMB', '4242 4242 4242 4242', 'Kulim', '0194703276', '2023-05-26 15:45:30', '2023-05-26 15:45:30', NULL, NULL, NULL),
 (26, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 15:52:39', '2023-05-26 15:52:39', NULL, NULL, NULL),
 (27, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 19:50:08', '2023-05-26 19:50:08', 'Pulau Pinang', 'Bukit Mertajam', '14000'),
-(28, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 20:04:29', '2023-05-26 20:04:29', 'Pulau Pinang', 'Bukit Mertajam', '14000');
+(28, 'CIMB', '4242 4242 4242 4242', 'Kampung Parit Medan', '0194703276', '2023-05-26 20:04:29', '2023-05-26 20:04:29', 'Pulau Pinang', 'Bukit Mertajam', '14000'),
+(29, 'adammmm', '4242 4242 4242 4242', 'Jugle Books', '0192612066', '2023-07-10 14:13:00', '2023-07-10 14:13:00', NULL, NULL, NULL),
+(30, 'adammmm', '4242 4242 4242 4242', 'Pantai Timur', '0173274877', '2023-07-10 14:23:25', '2023-07-10 14:23:25', NULL, NULL, NULL),
+(31, 'adammmm', '4242 4242 4242 4242', 'Pantai Timur', '0173274877', '2023-07-10 15:20:21', '2023-07-10 15:20:21', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -420,10 +454,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_category`, `product_code`, `product_details`, `product_sellingprice`, `product_supplierprice`, `product_quantity`, `product_img1`, `product_img2`, `product_img3`, `created_at`, `updated_at`, `specs1`, `specs2`, `specs3`) VALUES
-(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Color: Quiet Blue\r\nAMD Ryzen™ 7 5800H Processor\r\n16GB DDR4 on board Ram\r\n512GB M.2 NVMe™ PCIe® 3.0 SSD\r\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 8, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-07-10 12:33:50', '8', '15', 'Ryzen'),
-(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 3, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-05-21 02:17:42', NULL, NULL, NULL),
-(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 5, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-05-21 02:21:58', NULL, NULL, NULL),
-(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, NULL, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-05-26 20:02:50', NULL, NULL, NULL),
+(3, 'Asus Vivobook Pro 14', 2, 'M3401Q-CKM128WS', 'Quiet Blue\nAMD Ryzen™ 7 5800H Processor\n16GB DDR4 on board Ram\n512GB M.2 NVMe™ PCIe® 3.0 SSD\nNVIDIA GeForce® RTX™ 3050 4GB GDDR', 3749.00, 3600.00, 7, '/storage/images/1684750541laptop1.jpg', '/storage/images/1684750541laptop2.jpg', '/storage/images/1684753411laptop3.jpg', '2023-05-21 02:15:41', '2023-07-10 15:20:21', '8', '15', 'Ryzen'),
+(4, 'Microsoft Surface', 2, '8QC-00017', '12.4” PixelSense touchscreen\n\nMemory\n\n4GB or 8GB LPDDR4x RAM\n\nProcessor\n\nQuad Core 11th Gen Intel® Core™ i5-1135G7 Processor', 3045.00, 2899.00, 2, '/storage/images/1684750662surface1.jpg', NULL, NULL, '2023-05-21 02:17:42', '2023-07-10 14:13:00', NULL, NULL, NULL),
+(5, 'UGREEN USB-C', 3, '80133', '①Multi Port Type C Docking Station\n\nExpand your Laptop/Macbook with HDMI, VGA, Ethernet, 3 USB 3.0 ports, TF SD card reader and one type c PD 3.0 charging port', 129.00, 100.00, 4, '/storage/images/1684750918ugreen.png', NULL, NULL, '2023-05-21 02:21:58', '2023-07-10 14:13:00', NULL, NULL, NULL),
+(6, 'Macbook Air M1', 2, '12345', 'LEsgoo', 3500.00, 3000.00, -1, '/storage/images/1685160170download.jpg', NULL, NULL, '2023-05-26 20:02:50', '2023-07-10 14:23:25', NULL, NULL, NULL),
 (7, 'Shipping', 1, NULL, NULL, 0.00, 0.00, NULL, '/storage/images/168792242983w7nym3.png', NULL, NULL, '2023-06-09 22:00:40', '2023-06-27 19:20:30', NULL, NULL, NULL),
 (11, 'Laptop', 2, NULL, NULL, 123.00, 123.00, NULL, NULL, NULL, NULL, '2023-07-10 11:39:50', '2023-07-10 11:39:50', 'ram', 'size', 'cpu'),
 (12, 'Aksesori', 3, '1233213', NULL, 123.00, 123.00, NULL, NULL, NULL, NULL, '2023-07-10 11:44:09', '2023-07-10 12:37:07', '1000', 'Yes', 'Closed'),
@@ -632,7 +666,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `role`, `passwo
 (1, 'Imran Hakimi', 'imranhakimi24@gmail.com', NULL, 2, '$2y$10$hPE0xzcPKATufTFOru4Y7egLvUjCsa/ZKrS05/XDOiET8MHwDBcpS', NULL, '2023-05-21 01:21:31', '2023-06-27 03:03:35'),
 (2, 'Min', 'ahmadmuhaimin135@gmail.com', NULL, 5, '$2y$10$qPU5IkSoDo8rRBbkzl6WneBxwN7D.YfNEn.HajioiFkKq9mfTdhWe', NULL, '2023-05-26 01:16:49', '2023-05-26 21:32:25'),
 (3, 'kuki', 'kuki@gmail.com', NULL, 3, '$2y$10$VKFvuyZwDtI4VpIobrSDG.PeV6ahl7NVVPz.nj5e3IdipLPFKeKF2', NULL, '2023-06-08 07:12:24', '2023-06-08 07:12:24'),
-(4, 'GOO', 'yjyejui626@gmail.com', NULL, 4, '$2y$10$NT857/qGCA9vQwSSyIJWpulVdWo0etNL2GkzF.2jvIegCUFv3b4bK', NULL, '2023-06-15 06:09:58', '2023-06-15 06:09:58');
+(4, 'GOO', 'yjyejui626@gmail.com', NULL, 4, '$2y$10$NT857/qGCA9vQwSSyIJWpulVdWo0etNL2GkzF.2jvIegCUFv3b4bK', NULL, '2023-06-15 06:09:58', '2023-06-15 06:09:58'),
+(6, 'wafii', 'wafyde@gmail.com', NULL, 5, '$2y$10$2rSab1Z9jno0PCtR2wfG.e5GSDIuCTL9PPnW5vnmsyMP8xFuOUiF.', NULL, '2023-07-10 14:09:13', '2023-07-10 14:09:13'),
+(7, 'adam', 'adamydee@gmail.com', NULL, 5, '$2y$10$UIP6D/jXOcr44rLa2qgGtORZ/hh2DuIJIGXI.6eO2nj/CJVig7XyW', NULL, '2023-07-10 14:19:26', '2023-07-10 14:19:26');
 
 --
 -- Indexes for dumped tables
@@ -651,6 +687,13 @@ ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `carts_user_id_foreign` (`user_id`),
   ADD KEY `carts_product_id_foreign` (`product_id`);
+
+--
+-- Indexes for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_address_u_id_foreign` (`u_id`);
 
 --
 -- Indexes for table `grn`
@@ -791,7 +834,13 @@ ALTER TABLE `cardtdetails`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `grn`
@@ -809,7 +858,7 @@ ALTER TABLE `grn_items`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `logistic`
@@ -821,19 +870,19 @@ ALTER TABLE `logistic`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -875,7 +924,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -887,6 +936,12 @@ ALTER TABLE `users`
 ALTER TABLE `carts`
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `customer_address`
+--
+ALTER TABLE `customer_address`
+  ADD CONSTRAINT `customer_address_u_id_foreign` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `grn`

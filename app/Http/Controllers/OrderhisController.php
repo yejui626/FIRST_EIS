@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Items;
 use App\Models\Product;
-use App\Models\Logistic;
 
 class OrderhisController extends Controller
 {
@@ -16,21 +15,31 @@ class OrderhisController extends Controller
         return view('home.orderhistory');
     }
 
-
     public function records(Request $request)
     {
         if ($request->ajax()) {
+            $userId = auth()->user()->id;
+
             if ($request->input('start_date') && $request->input('end_date')) {
                 $start_date = Carbon::parse($request->input('start_date'));
                 $end_date = Carbon::parse($request->input('end_date'));
 
                 if ($end_date->greaterThan($start_date)) {
-                    $items = Order::with('payment', 'items.product')->whereBetween('created_at', [$start_date, $end_date])->get();
+                    $items = Order::with('payment', 'items.product')
+                        ->where('user_id', $userId) // Filter by user ID
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->get();
                 } else {
-                    $items = Order::with('payment', 'items.product')->latest()->get();
+                    $items = Order::with('payment', 'items.product')
+                        ->where('user_id', $userId) // Filter by user ID
+                        ->latest()
+                        ->get();
                 }
             } else {
-                $items = Order::with('payment', 'items.product')->latest()->get();
+                $items = Order::with('payment', 'items.product')
+                    ->where('user_id', $userId) // Filter by user ID
+                    ->latest()
+                    ->get();
             }
 
             $formattedItems = $items->map(function ($order) {
@@ -51,9 +60,9 @@ class OrderhisController extends Controller
 
                 return [
                     'id' => $order->id,
-                    'totalprice' => $order->totalprice, // Replace 'totalprice' with the actual field name from the 'orders' table
-                    'delivery_status' => $order->delivery_status, // Replace 'delivery_status' with the actual field name from the 'orders' table
-                    'created_at' => $order->created_at, // Replace 'created_at' with the actual field name from the 'orders' table
+                    'totalprice' => $order->totalprice,
+                    'delivery_status' => $order->delivery_status,
+                    'created_at' => $order->created_at,
                     'payment' => $order->payment,
                     'items' => $formattedItems,
                 ];

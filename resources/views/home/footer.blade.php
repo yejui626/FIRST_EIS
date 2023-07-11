@@ -4,7 +4,7 @@
             <div class="col-md-4">
                <div class="full">
                   <div class="logo_footer">
-                     <a href="#"><img width="210" src="images/favicon.png" alt="#" /></a>
+                     <a href="#"><img width="210" src="/images/favicon.png" alt="#" /></a>
                   </div>
                   <div class="information_f">
                      <p><strong>ADDRESS:</strong> NO. 19, JALAN MEGA 1/8 TAMAN PERINDUSTRIAN NUSA CEMERLANG 79200 ISKANDAR PUTERI JOHOR.</p>

@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html>
+<?php
+
+use Illuminate\Support\Facades\DB;
+
+
+
+$addresses = DB::table('customer_address')->where('u_id', $id)->pluck('address', 'address');
+$phoneNumbers = DB::table('customer_address')->where('u_id', $id)->pluck('phone_number', 'phone_number');
+
+// Store the addresses and phone numbers in the session
+session(['addresses' => $addresses]);
+session(['phone_numbers' => $phoneNumbers]);
+
+?>
 
 <head>
    <style type="text/css">
@@ -55,7 +69,7 @@
    <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet" />
 
    <link rel="shortcut icon" href="{{ asset('home/images/favicon.png') }}" type="">
-   <title>Famms - Fashion HTML Template</title>
+   <title>TSK E-Commerce Shopping</title>
 </head>
 
 <body>
@@ -161,15 +175,28 @@
                         </div>
                         <div class="card-details">
                            <h3 class="title">Credit Card Details</h3>
-                           <div class='row'>
-                              <div class='col-sm-12 form-group required'>
-                                 <label class='control-label'>Delivery Address</label> <input class='form-control' size='4' type='text' name="address">
+                           <div class="row">
+                              <div class="col-sm-12 form-group required">
+                                 <label class="control-label">Delivery Address</label>
+                                 <select class="form-control" name="address">
+                                    <option value="">Select an address</option>
+                                    <?php foreach ($addresses as $address => $value) { ?>
+                                       <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                                    <?php } ?>
+                                 </select>
                               </div>
                            </div>
-                           <div class='form-row row'>
-                              <div class='col-sm-12 form-group required'>
-                                 <label class='control-label'>Phone Number</label> <input class='form-control' size='4' type='text' name="phone">
+                           <div class="form-row row">
+                              <div class="col-sm-12 form-group required">
+                                 <label class="control-label">Phone Number</label>
+                                 <select class="form-control" name="phone">
+                                    <option value="">Select a phone number</option>
+                                    <?php foreach ($phoneNumbers as $phone_number => $value) { ?>
+                                       <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                                    <?php } ?>
+                                 </select>
                               </div>
+                                        
                            </div>
                            <div class="row">
                               <div class="col-sm-7">

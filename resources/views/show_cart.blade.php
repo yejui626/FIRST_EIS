@@ -20,6 +20,18 @@
 
 </head>
 
+<style>
+   .confirm-modal-title {
+      font-size: 18px;
+      /* Adjust the font size to your preference */
+   }
+
+   .confirm-modal-text {
+      font-size: 16px;
+      /* Adjust the font size to your preference */
+   }
+</style>
+
 <body>
    @include('home.headerafter')
    <main class="page shopping-cart-page">
@@ -27,7 +39,7 @@
          <div class="container">
             <div class="block-heading">
                <h2 class="text-info">Shopping Cart</h2>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+               <p>"Inside your cart, discover your handpicked treasures waiting to be claimed."</p>
             </div>
             <div class="content" style="font-size: 20px;">
                <div class="row g-0">
@@ -49,8 +61,35 @@
                                  </div>
                               </div>
                               <div class="apa">
-                                 <div class="col-6 col-md-2 offset-xxl-0 price"><span>RM{{$cartItem->product_quantity * $product->product_sellingprice}}</span><span></span></div>
-                                 <div class="col-6 col-md-2 offset-xxl-8 price"> <a class="btn btn-danger lain" onclick="return confirm('Are you sure to remove this product?')" href="{{url('/remove_cart',$cartItem->id)}}">Remove</a><span></span></div>
+                                 <div class="col-6 col-md-2 offset-xxl-0 price">
+                                    <span>RM{{$cartItem->product_quantity * $product->product_sellingprice}}</span>
+                                    <span></span>
+                                 </div>
+                                 <div class="col-6 col-md-2 offset-xxl-8 price">
+                                    <button class="btn btn-danger lain" data-toggle="modal" data-target="#confirmModal{{$cartItem->id}}">Remove</button>
+                                    <span></span>
+                                 </div>
+                              </div>
+
+                              <!-- Confirmation Modal -->
+                              <div class="modal fade" id="confirmModal{{$cartItem->id}}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel{{$cartItem->id}}" aria-hidden="true">
+                                 <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                       <div class="modal-header">
+                                          <h5 class="modal-title confirm-modal-title" id="confirmModalLabel{{$cartItem->id}}">Confirm Removal</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                             <span aria-hidden="true">&times;</span>
+                                          </button>
+                                       </div>
+                                       <div class="modal-body">
+                                          <p class="confirm-modal-text">Are you sure you want to remove this item from the cart?</p>
+                                       </div>
+                                       <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                          <a class="btn btn-danger" href="{{url('/remove_cart',$cartItem->id)}}">Remove</a>
+                                       </div>
+                                    </div>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -101,13 +140,7 @@
          </div>
       </section>
       @include('home.footer')
-      <div class="cpy_">
-         <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
 
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-
-         </p>
-      </div>
    </main>
    <script src="{{ asset('home/js/jquery-3.4.1.min.js') }}"></script>
    <!-- popper js -->
