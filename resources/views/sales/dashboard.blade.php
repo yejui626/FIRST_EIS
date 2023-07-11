@@ -35,7 +35,8 @@
                         <hr>
                         <div class="stats">
                             <i class="fa fa-clock-o"></i>
-                            @if ($selectedYear!=null) {{ $selectedYear }} @else All Years @endif
+                            @if ($selectedYear!=null) {{ $selectedYear }} @else {{ date('Y') }} @endif
+                            @if ($categoryname!=null) {{ $categoryname }} @else All Categories @endif
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,8 @@
                         <hr>
                         <div class="stats">
                             <i class="fa fa-clock-o"></i>
-                            @if ($selectedYear!=null) {{ $selectedYear }} @else All Years @endif
+                            @if ($selectedYear!=null) {{ $selectedYear }} @else {{ date('Y') }} @endif
+                            @if ($categoryname!=null) {{ $categoryname }} @else All Categories @endif
                         </div>
                     </div>
                 </div>
@@ -89,7 +91,8 @@
                         <hr>
                         <div class="stats">
                             <i class="fa fa-clock-o"></i>
-                            @if ($selectedYear!=null) {{ $selectedYear }} @else All Years @endif
+                            @if ($selectedYear!=null) {{ $selectedYear }} @else {{ date('Y') }} @endif
+                            @if ($categoryname!=null) {{ $categoryname }} @else All Categories @endif
                         </div>
                     </div>
                 </div>
@@ -116,7 +119,8 @@
                         <hr>
                         <div class="stats">
                             <i class="fa fa-clock-o"></i>
-                            @if ($selectedYear!=null) {{ $selectedYear }} @else All Years @endif
+                            @if ($selectedYear!=null) {{ $selectedYear }} @else {{ date('Y') }} @endif
+                            @if ($categoryname!=null) {{ $categoryname }} @else All Categories @endif
                         </div>
                     </div>
                 </div>
@@ -128,7 +132,10 @@
                 <div class="card " style="height:450px;">
                     <div class="card-header ">
                         <h5 class="card-title">Sales by Category </h5>
-                        <p class="card-category">@if ($selectedYear!=null) {{ $selectedYear }} @else All Years @endif</p>
+                        <p class="card-category">
+                            @if ($selectedYear!=null) {{ $selectedYear }} @else {{ date('Y') }} @endif
+                            @if ($categoryname!=null) {{ $categoryname }} @else All Categories @endif
+                        </p>
                     </div>
                     <div class="card-body ">
                         <canvas id="chartEmail" height="100%"></canvas>
@@ -142,17 +149,34 @@
                         <h5 class="card-title">Sales Trend</h5>         
                     </div>
                     <div class="card-description">
-                      <div class="form-group col-3">
-                        <form id="yearFilterForm" method="GET" action="{{ route('sales.dashboard') }}">
-                            <select class="form-control" id="yearFilter" name="year" onchange="document.getElementById('yearFilterForm').submit()">
-                                <option value="">All Years</option>
-                                @foreach ($yearList as $year)
-                                    <option value="{{ $year }}" @if ($selectedYear == $year) selected @endif>{{ $year }}</option>
-                                @endforeach
-                            </select>
-                        </form>
-                      </div>
+                        <div class="form-row">
+                            <div class="form-group col-6 pl-4 pr-2">
+                                <form id="yearFilterForm" method="GET" action="{{ route('sales.dashboard') }}">
+                                    <label for="yearFilter">Year:</label>
+                                    <select class="form-control" id="yearFilter" name="year" onchange="document.getElementById('yearFilterForm').submit()">
+                                        <!--<option value="">All Years</option>-->
+                                        @foreach ($yearList as $year)
+                                            <option value="{{ $year }}" @if ($selectedYear == $year) selected @endif>{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="form-group col-6 pl-2 pr-4">
+                                <form id="categoryFilterForm" method="GET" action="{{ route('sales.dashboard') }}">
+                                    <label for="categoryFilter">Category:</label>
+                                    <select name="category" id="categoryFilter" class="form-control" onchange="document.getElementById('categoryFilterForm').submit()">
+                                        <option value="">All Categories</option>
+                                        @foreach ($categoryList as $categoryId => $categoryName)
+                                            <option value="{{ $categoryId }}" {{ $selectedCategory == $categoryId ? 'selected' : '' }}>
+                                                {{ $categoryName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="card-body">
                         <canvas id="speedChart" height="100%"></canvas>
                     </div>
