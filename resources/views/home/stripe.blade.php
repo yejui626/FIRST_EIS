@@ -4,8 +4,14 @@
 
 use Illuminate\Support\Facades\DB;
 
-$addresses = DB::table('customer_address')->pluck('address', 'address');
-$phone_numbers = DB::table('customer_address')->pluck('phone_number', 'phone_number');
+
+
+$addresses = DB::table('customer_address')->where('u_id', $id)->pluck('address', 'address');
+$phoneNumbers = DB::table('customer_address')->where('u_id', $id)->pluck('phone_number', 'phone_number');
+
+// Store the addresses and phone numbers in the session
+session(['addresses' => $addresses]);
+session(['phone_numbers' => $phoneNumbers]);
 
 ?>
 
@@ -185,7 +191,7 @@ $phone_numbers = DB::table('customer_address')->pluck('phone_number', 'phone_num
                                  <label class="control-label">Phone Number</label>
                                  <select class="form-control" name="phone">
                                     <option value="">Select a phone number</option>
-                                    <?php foreach ($phone_numbers as $phone_number => $value) { ?>
+                                    <?php foreach ($phoneNumbers as $phone_number => $value) { ?>
                                        <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                                     <?php } ?>
                                  </select>
