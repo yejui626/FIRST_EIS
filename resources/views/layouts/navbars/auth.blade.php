@@ -29,6 +29,13 @@
                     <p>{{ __('Dashboard') }}</p>
                 </a>
             </li>
+            @elseif($role == 5)
+            <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
+                <a href="{{url('customer')}}">
+                    <i class="nc-icon nc-bank"></i>
+                    <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
             @else
             <li class="{{ $elementActive == 'dashboard' ? 'active' : '' }}">
                 <a href="{{ route('page.index', 'dashboard') }}">
