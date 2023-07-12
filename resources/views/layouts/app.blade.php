@@ -1,35 +1,34 @@
+<!--
+=========================================================
+ Paper Dashboard - v2.0.0
+=========================================================
+
+ Product Page: https://www.creative-tim.com/product/paper-dashboard
+ Copyright 2019 Creative Tim (https://www.creative-tim.com)
+ UPDIVISION (https://updivision.com)
+ Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard/blob/master/LICENSE)
+
+ Coded by Creative Tim
+
+=========================================================
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    @auth
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <link rel="shortcut icon" href="images/favicon.png" type="">
-    <title>Edit Profile</title>
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('home/css/bootstrap.css') }}" />
-    <!-- font awesome style -->
-    <link href="{{ asset('home/css/font-awesome.min.css') }}" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('home/css/style.css') }}" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="{{ asset('home/css/responsive.css') }}" rel="stylesheet" />
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('paper') }}/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="{{ asset('paper') }}/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    @endauth
     <!-- Extra details for Live View on GitHub Pages -->
-    @guest
+    
     <title>
-    TSK E-COMMERCE SYSTEM
+        {{ __('TSK Synergy Sdn. Bhd.') }}
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
@@ -41,17 +40,15 @@
     <link href="{{ asset('paper') }}/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('paper') }}/demo/demo.css" rel="stylesheet" />
-    @endguest
+
 </head>
 
 <body class="{{ $class }}">
-    <div class="hero_area">
     
     @auth()
         @include('layouts.page_templates.auth')
+        @include('layouts.navbars.fixed-plugin')
     @endauth
-
-    @include('layouts.navbars.fixed-plugin')
     
     @guest
         @include('layouts.page_templates.guest')
