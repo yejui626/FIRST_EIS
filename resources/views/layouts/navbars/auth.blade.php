@@ -38,7 +38,7 @@
             
            
             <li class="{{ $elementActive == 'profile' ? 'active' : '' }}">
-                <a href="{{ route('profile.edit_admin') }}">
+                <a href="{{ route('profile.edit') }}">
                     <i class="nc-icon nc-paper"></i>
                     <p>{{ __('User Profile') }}</p>
                 </a>
