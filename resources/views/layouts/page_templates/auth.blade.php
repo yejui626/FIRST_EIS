@@ -1,15 +1,9 @@
 <div class="wrapper">
 
-        @if(session('role') == '5')
-        @include ('home.headerafter')
-        @else
-        @include ('home.header')
-        @endif
+    @include('layouts.navbars.auth')
 
     <div class="main-panel">
+        @include('layouts.navbars.navs.auth')
         @yield('content')
     </div>
-    <br>
-    <br>
-
 </div>

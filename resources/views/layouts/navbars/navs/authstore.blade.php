@@ -8,7 +8,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a style="color:black; font-size: 20px; text-decoration:none;" href="#pablo">{{ __('TSK Shopping') }}</a>
+            <a style="color:black; font-size: 20px; text-decoration:none;" href="#pablo">{{ __('Paper Dashboard') }}</a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -62,7 +62,6 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" onclick="document.getElementById('formLogOut').submit();">{{ __('Log out') }}</a>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('My profile') }}</a>
-                            <a class="dropdown-item" href="{{ route('new-address') }}">{{ __('My address') }}</a>
                         </div>
                     </div>
                 </li>
