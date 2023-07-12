@@ -105,10 +105,12 @@ class CustomerController extends Controller
         return view('home.showproduct', compact('products', 'category'));
     }
 
-    public function product_details($id)
+    public function product_details($productId)
     {
-        $products = Product::find($id);
-        return view('home.product_details', compact('products'));
+        $products = Product::find($productId);
+        $category = ProductCategory::find($products->product_category);
+
+        return view('home.product_details', ['products' => $products, 'category' => $category]);
     }
     public function add_cart(Request $request, $id)
     {
