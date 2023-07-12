@@ -12,7 +12,7 @@
    <meta name="description" content="" />
    <meta name="author" content="" />
    <link rel="shortcut icon" href="{{ asset('home/images/favicon.png') }}" type="">
-   <title>Famms - Fashion HTML Template</title>
+   <title>TSK E-Commerce Shopping</title>
    <!-- bootstrap core css -->
    <link rel=" stylesheet" type="text/css" href="{{ asset('home/css/bootstrap.css') }}" />
    <link href="{{ asset('home/css/font-awesome.min.css') }}" rel="stylesheet" />
@@ -70,13 +70,7 @@
       <a class="btn btn-warning" href="{{url('show_cart')}}">back</a>
    </div>
    <!-- footer end -->
-   <div class="cpy_">
-      <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
 
-         Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-
-      </p>
-   </div>
    <!-- jQery -->
    <!-- jQery -->
    <script src="{{ asset('home/js/jquery-3.4.1.min.js') }}"></script>

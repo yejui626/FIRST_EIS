@@ -20,7 +20,6 @@ use Stripe\Exception\ApiErrorException;
 use PDF;
 use App\Models\CustomerAddress;
 use App\Models\ProductCategory;
-use App\Models\Category;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -106,12 +105,10 @@ class CustomerController extends Controller
         return view('home.showproduct', compact('products', 'category'));
     }
 
-    public function product_details($productId)
+    public function product_details($id)
     {
-        $products = Product::find($productId);
-        $category = ProductCategory::find($products->product_category);
-
-        return view('home.product_details', ['products' => $products, 'category' => $category]);
+        $products = Product::find($id);
+        return view('home.product_details', compact('products'));
     }
     public function add_cart(Request $request, $id)
     {
