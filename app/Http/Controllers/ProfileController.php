@@ -17,6 +17,10 @@ class ProfileController extends Controller
     {
         return view('profile.edit');
     }
+    public function edit_admin()
+    {
+        return view('profile.edit_admin');
+    }
 
     /**
      * Update the profile
