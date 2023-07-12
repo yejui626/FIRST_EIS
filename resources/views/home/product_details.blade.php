@@ -46,14 +46,25 @@
                 <h5>Quantity: {{ $products->product_quantity }}
                 </h5>
                 <h6>
-                    Price: {{$products->product_sellingprice}}
+                    <strong>Price:</strong> {{$products->product_sellingprice}}
                 </h6>
                 <h6>
-                    Product Code: {{$products->product_code}}
+                    <strong>Product Code:</strong> {{$products->product_code}}
                 </h6>
                 <h6>
                     {{$products->product_details}}
                 </h6>
+                @if ($category)
+                <h6>
+                    <strong>{{$category->specs1}}:</strong> {{$products->specs1}}
+                </h6>
+                <h6>
+                    <strong>{{$category->specs2}}:</strong> {{$products->specs2}}
+                </h6>
+                <h6>
+                    <strong>{{$category->specs3}}:</strong> {{$products->specs3}}
+                </h6>
+                @endif
                 <div style="display: flex; justify-content: center;">
                     <form action="{{ route('add_cart_details', $products->id) }}" method="POST">
                         @csrf
